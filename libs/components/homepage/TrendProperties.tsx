@@ -25,43 +25,38 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 	const [trendProperties, setTrendProperties] = useState<Property[]>([]);
 
 	/** APOLLO REQUESTS **/
-	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY)
+	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
 	const {
 		loading: getPropertiesLoading,
 		data: getPropertiesData,
 		error: getPropertiesError,
 		refetch: getPropertiesRefetch,
 	} = useQuery(GET_PROPERTIES, {
-		fetchPolicy: "cache-and-network",
-		variables: {input: initialInput},
+		fetchPolicy: 'cache-and-network',
+		variables: { input: initialInput },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			if (data?.getProperties?.list) {
-				setTrendProperties(data.getProperties.list);
-			} else {
-				console.error("No properties list found:", data);
-			}
-		}
-		
+			setTrendProperties(data.getProperties.list);
+		},
 	});
 	/** HANDLERS **/
 	const likePropertyHandler = async (user: T, id: string) => {
 		try {
 			if (!id) return;
-			if(!user._id) throw new Error(Message.NOT_AUTHENTICATED);
+			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
 
 			// executed likeTargetProperty Mutation
 			await likeTargetProperty({
-				variables: {input: id},
+				variables: { input: id },
 			});
-			await getPropertiesRefetch({input: initialInput });
+			await getPropertiesRefetch({ input: initialInput });
 
 			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
-			console.log("ERROR, likePropertyHandler:", err.message);
+			console.log('ERROR, likePropertyHandler:', err.message);
 			sweetMixinErrorAlert(err.message).then();
 		}
-	}
+	};
 
 	if (trendProperties) console.log('trendProperties:', trendProperties);
 	if (!trendProperties) return null;

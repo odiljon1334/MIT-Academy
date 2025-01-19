@@ -24,40 +24,38 @@ const TopProperties = (props: TopPropertiesProps) => {
 	const device = useDeviceDetect();
 	const [topProperties, setTopProperties] = useState<Property[]>([]);
 
-	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY)
+	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
 	/** APOLLO REQUESTS **/
 	const {
-			loading: getPropertiesLoading,
-			data: getPropertiesData,
-			error: getPropertiesError,
-			refetch: getPropertiesRefetch,
-		} = useQuery(GET_PROPERTIES, {
-			fetchPolicy: "cache-and-network",
-			variables: {input: initialInput},
-			notifyOnNetworkStatusChange: true,
-			onCompleted: (data: T) => {
-				setTopProperties(data?.getProperties?.list);	
-			}
-			
-		});
+		loading: getPropertiesLoading,
+		data: getPropertiesData,
+		error: getPropertiesError,
+		refetch: getPropertiesRefetch,
+	} = useQuery(GET_PROPERTIES, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: initialInput },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setTopProperties(data?.getProperties?.list);
+		},
+	});
 	/** HANDLERS **/
 	const likePropertyHandler = async (user: T, id: string) => {
-			try {
-				if (!id) return;
-				if(!user._id) throw new Error(Message.NOT_AUTHENTICATED);
-	
-				// executed likeTargetProperty Mutation
-				await likeTargetProperty({
-					variables: {input: id},
-				});
-				await getPropertiesRefetch({input: initialInput });
-	
-				await sweetTopSmallSuccessAlert('success', 800);
-			} catch (err: any) {
-				console.log("ERROR, likePropertyHandler:", err.message);
-				sweetMixinErrorAlert(err.message).then();
-			}
+		try {
+			if (!id) return;
+			if (!user._id) throw new Error(Message.NOT_AUTHENTICATED);
+			// executed likeTargetProperty Mutation
+			await likeTargetProperty({
+				variables: { input: id },
+			});
+			await getPropertiesRefetch({ input: initialInput });
+
+			await sweetTopSmallSuccessAlert('success', 800);
+		} catch (err: any) {
+			console.log('ERROR, likePropertyHandler:', err.message);
+			sweetMixinErrorAlert(err.message).then();
 		}
+	};
 
 	if (device === 'mobile') {
 		return (
