@@ -14,11 +14,12 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 interface CommunityCardProps {
 	boardArticle: BoardArticle;
+	likeArticleHandler?: any;
 	size?: string;
 }
 
 const CommunityCard = (props: CommunityCardProps) => {
-	const { boardArticle, size = 'normal' } = props;
+	const { boardArticle, size = 'normal', likeArticleHandler } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -50,7 +51,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 			<Stack
 				sx={{ width: size === 'small' ? '285px' : '317px' }}
 				className="community-general-card-config"
-				onClick={(e) => chooseArticleHandler(e, boardArticle)}
+				onClick={(e: React.SyntheticEvent<Element, Event>) => chooseArticleHandler(e, boardArticle)}
 			>
 				<Stack className="image-box">
 					<img src={imagePath} alt="" className="card-img" />
@@ -59,7 +60,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 					<Stack>
 						<Typography
 							className="desc"
-							onClick={(e) => {
+							onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 								e.stopPropagation();
 								goMemberPage(boardArticle?.memberData?._id as string);
 							}}
@@ -73,7 +74,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 							<RemoveRedEyeIcon />
 						</IconButton>
 						<Typography className="view-cnt">{boardArticle?.articleViews}</Typography>
-						<IconButton color={'default'}>
+						<IconButton onClick={(e: any) => likeArticleHandler(e, user, boardArticle?._id)} color={'default'}>
 							{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
 								<FavoriteIcon color={'primary'} />
 							) : (
