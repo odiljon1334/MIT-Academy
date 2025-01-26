@@ -99,17 +99,15 @@ export const PropertyCard = (props: PropertyCardProps) => {
 						}}
 					>
 						{property.propertyStatus === 'ACTIVE' && (
-							<>
-								<MenuItem
-									disableRipple
-									onClick={() => {
-										handleClose();
-										updatePropertyHandler(PropertyStatus.SOLD, property?._id);
-									}}
-								>
-									Sold
-								</MenuItem>
-							</>
+							<MenuItem
+								disableRipple
+								onClick={() => {
+									handleClose();
+									updatePropertyHandler(PropertyStatus.SOLD, property?._id);
+								}}
+							>
+								Sold
+							</MenuItem>
 						)}
 					</Menu>
 				)}
