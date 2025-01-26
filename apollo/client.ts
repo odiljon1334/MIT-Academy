@@ -7,6 +7,7 @@ import { onError } from '@apollo/client/link/error';
 import { getJwtToken } from '../libs/auth';
 import { TokenRefreshLink } from 'apollo-link-token-refresh';
 import { sweetErrorAlert } from '../libs/sweetAlert';
+import { socketVar } from './store';
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 function getHeaders() {
@@ -23,10 +24,38 @@ const tokenRefreshLink = new TokenRefreshLink({
 		return true;
 	}, // @ts-ignore
 	fetchAccessToken: () => {
-		// execute refresh token
+		//TODO: execute refresh token
 		return null;
 	},
 });
+
+//NOTE: Custom Websocke Client
+class LoggingWebSocket {
+	private socket: WebSocket;
+
+	constructor(url: string) {
+		this.socket = new WebSocket(`${url}?token=${getJwtToken()}`);
+		socketVar(this.socket);
+
+		this.socket.onopen = () => {
+			console.log('WebSocket connection!');
+		};
+		this.socket.onmessage = (msg: any) => {
+			console.log('WebSocket message!', msg.data);
+		};
+		this.socket.onerror = (err) => {
+			console.log('WebSocket error!', err);
+		};
+	}
+
+	send(data: string | ArrayBuffer | SharedArrayBuffer | Blob | ArrayBufferView) {
+		this.socket.send(data);
+	}
+
+	close() {
+		this.socket.close();
+	}
+}
 
 function createIsomorphicLink() {
 	if (typeof window !== 'undefined') {
@@ -43,12 +72,12 @@ function createIsomorphicLink() {
 
 		// @ts-ignore
 		const link = new createUploadLink({
-			uri: process.env.REACT_APP_API_GRAPHQL_URL,
+			uri: process.env.REACT_APP_API_GRAPHQL_URL ?? 'http://localhost:3007/graphql',
 		});
 
 		/* WEBSOCKET SUBSCRIPTION LINK */
 		const wsLink = new WebSocketLink({
-			uri: process.env.REACT_APP_API_WS ?? 'ws://127.0.0.1:3007',
+			uri: process.env.REACT_APP_API_WS ?? 'ws://localhost:3007',
 			options: {
 				reconnect: false,
 				timeout: 30000,
@@ -56,6 +85,7 @@ function createIsomorphicLink() {
 					return { headers: getHeaders() };
 				},
 			},
+			webSocketImpl: LoggingWebSocket,
 		});
 
 		const errorLink = onError(({ graphQLErrors, networkError, response }) => {
