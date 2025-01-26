@@ -65,6 +65,41 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 		setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
 	}, [router]);
 
+	useEffect(() => {
+		if (!searchFilter?.search?.text) {
+			delete searchFilter.search.text;
+			router
+				.push(
+					`/agent?input=${JSON.stringify({
+						...searchFilter,
+					})}`,
+					`/agent?input=${JSON.stringify({
+						...searchFilter,
+					})}`,
+					{ scroll: false },
+				)
+				.then();
+		} else {
+			router
+				.push(
+					`/agent?input=${JSON.stringify({
+						...searchFilter,
+						search: {
+							...searchFilter.search,
+						},
+					})}`,
+					`/agent?input=${JSON.stringify({
+						...searchFilter,
+						search: {
+							...searchFilter.search,
+						},
+					})}`,
+					{ scroll: false },
+				)
+				.then();
+		}
+	}, [searchFilter.search.text]);
+
 	/** HANDLERS **/
 	const likeMemberHandler = async (user: T, id: string) => {
 		try {
@@ -94,22 +129,50 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 		setAnchorEl(null);
 	};
 
-	const sortingHandler = (e: React.MouseEvent<HTMLLIElement>) => {
+	const sortingHandler = async (e: React.MouseEvent<HTMLLIElement>) => {
 		switch (e.currentTarget.id) {
 			case 'recent':
 				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: 'DESC' });
+				router.push(
+					`/agent?input=${JSON.stringify({
+						...searchFilter,
+						sort: 'createdAt',
+						direction: 'DESC',
+					})}`,
+				);
 				setFilterSortName('Recent');
 				break;
 			case 'old':
 				setSearchFilter({ ...searchFilter, sort: 'createdAt', direction: 'ASC' });
+				router.push(
+					`/agent?input=${JSON.stringify({
+						...searchFilter,
+						sort: 'createdAt',
+						direction: 'ASC',
+					})}`,
+				);
 				setFilterSortName('Oldest order');
 				break;
 			case 'likes':
 				setSearchFilter({ ...searchFilter, sort: 'memberLikes', direction: 'DESC' });
+				router.push(
+					`/agent?input=${JSON.stringify({
+						...searchFilter,
+						sort: 'memberLikes',
+						direction: 'DESC',
+					})}`,
+				);
 				setFilterSortName('Likes');
 				break;
 			case 'views':
 				setSearchFilter({ ...searchFilter, sort: 'memberViews', direction: 'DESC' });
+				router.push(
+					`/agent?input=${JSON.stringify({
+						...searchFilter,
+						sort: 'memberViews',
+						direction: 'DESC',
+					})}`,
+				);
 				setFilterSortName('Views');
 				break;
 		}

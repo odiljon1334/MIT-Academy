@@ -208,9 +208,12 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										className="description-input"
 										placeholder={'Price'}
 										value={insertPropertyData.propertyPrice}
-										onChange={({ target: { value } }) =>
-											setInsertPropertyData({ ...insertPropertyData, propertyPrice: parseInt(value) })
-										}
+										onChange={({ target: { value } }) => {
+											setInsertPropertyData({
+												...insertPropertyData,
+												propertyPrice: value === '' ? 0 : parseInt(value, 10), // Bo'sh qiymat uchun 0 saqlanadi
+											});
+										}}
 									/>
 								</Stack>
 								<Stack className="price-year-after-price">

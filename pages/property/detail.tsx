@@ -121,20 +121,21 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 
 	/** LIFECYCLES **/
 	useEffect(() => {
-		if (router.query.id) {
-			setPropertyId(router.query.id as string);
+		const id = router.query.id as string;
+		if (id) {
+			setPropertyId(id);
 			setCommentInquiry({
 				...commentInquiry,
 				search: {
-					commentRefId: router.query.id as string,
+					commentRefId: id,
 				},
 			});
 			setInsertCommentData({
 				...insertCommentData,
-				commentRefId: router.query.id as string,
+				commentRefId: id,
 			});
 		}
-	}, [router]);
+	}, [router.query.id]);
 
 	useEffect(() => {
 		if (commentInquiry.search.commentRefId) {

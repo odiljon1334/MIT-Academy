@@ -33,14 +33,16 @@ const PropertyCard = (props: PropertyCardType) => {
 		return (
 			<Stack className="card-config">
 				<Stack className="top">
-					<Link
-						href={{
-							pathname: '/property/detail',
-							query: { id: property?._id },
-						}}
-					>
-						<img src={imagePath} alt="" />
-					</Link>
+					{property && property._id && (
+						<Link
+							href={{
+								pathname: '/property/detail',
+								query: { id: property._id },
+							}}
+						>
+							<img src={imagePath} alt="" />
+						</Link>
+					)}
 					{property && property?.propertyRank > topPropertyRank && (
 						<Box component={'div'} className={'top-badge'}>
 							<img src="/img/icons/electricity.svg" alt="" />
@@ -54,14 +56,16 @@ const PropertyCard = (props: PropertyCardType) => {
 				<Stack className="bottom">
 					<Stack className="name-address">
 						<Stack className="name">
-							<Link
-								href={{
-									pathname: '/property/detail',
-									query: { id: property?._id },
-								}}
-							>
-								<Typography>{property.propertyTitle}</Typography>
-							</Link>
+							{property?._id && (
+								<Link
+									href={{
+										pathname: '/property/detail',
+										query: { id: property._id },
+									}}
+								>
+									<Typography>{property?.propertyTitle || 'No title available'}</Typography>
+								</Link>
+							)}
 						</Stack>
 						<Stack className="address">
 							<Typography>
