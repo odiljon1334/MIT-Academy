@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Avatar, Box, Stack } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import Badge from '@mui/material/Badge';
 import CloseFullscreenIcon from '@mui/icons-material/CloseFullscreen';
 import MarkChatUnreadIcon from '@mui/icons-material/MarkChatUnread';
 import { useRouter } from 'next/router';
@@ -73,7 +72,7 @@ const Chat = () => {
 					const newInfo: InfoPayload = data;
 					setOnlineUsers(newInfo.totalClients);
 					break;
-				case 'getMessages':
+				case 'history':
 					const list: MessagePayload[] = data.list;
 					setMessagesList(list);
 					break;
@@ -146,7 +145,7 @@ const Chat = () => {
 							<Box flexDirection={'row'} style={{ display: 'flex' }} sx={{ m: '10px 0px' }} component={'div'}>
 								<div className={'welcome'}>Welcome to Live chat!</div>
 							</Box>
-							{messagesList.map((ele: MessagePayload) => {
+							{messagesList.map((ele: MessagePayload, index: number) => {
 								const { text, memberData } = ele;
 								const memberId = memberData ? memberData._id : null;
 								const memberImage = memberData?.memberImage
@@ -156,7 +155,7 @@ const Chat = () => {
 								return memberData?._id === user?._id ? (
 									<Box
 										component={'div'}
-										key={memberId}
+										key={`${text}-${index}`}
 										flexDirection={'row'}
 										style={{ display: 'flex' }}
 										alignItems={'flex-end'}
@@ -167,7 +166,7 @@ const Chat = () => {
 									</Box>
 								) : (
 									<Box
-										key={memberId || text}
+										key={`${text}-${index}`}
 										flexDirection={'row'}
 										style={{ display: 'flex' }}
 										sx={{ m: '10px 0px' }}
