@@ -148,6 +148,7 @@ const Chat = () => {
 							</Box>
 							{messagesList.map((ele: MessagePayload) => {
 								const { text, memberData } = ele;
+								const memberId = memberData ? memberData._id : null;
 								const memberImage = memberData?.memberImage
 									? `${REACT_APP_API_URL}/${memberData.memberImage}`
 									: `/img/profile/defaultUser.svg`;
@@ -155,6 +156,7 @@ const Chat = () => {
 								return memberData?._id === user?._id ? (
 									<Box
 										component={'div'}
+										key={memberId}
 										flexDirection={'row'}
 										style={{ display: 'flex' }}
 										alignItems={'flex-end'}
@@ -164,7 +166,13 @@ const Chat = () => {
 										<div className={'msg-right'}>{text}</div>
 									</Box>
 								) : (
-									<Box flexDirection={'row'} style={{ display: 'flex' }} sx={{ m: '10px 0px' }} component={'div'}>
+									<Box
+										key={memberId || text}
+										flexDirection={'row'}
+										style={{ display: 'flex' }}
+										sx={{ m: '10px 0px' }}
+										component={'div'}
+									>
 										<Avatar alt={'jonik'} src={memberImage} />
 										<div className={'msg-left'}>{text}</div>
 									</Box>

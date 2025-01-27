@@ -16,12 +16,12 @@ interface MemberFollowingsProps {
 	initialInput: FollowInquiry;
 	subscribeHandler: any;
 	unsubscribeHandler: any;
-	likeMemberHandler: any;
 	redirectToMemberPageHandler: any;
+	likeMemberHandler?: any;
 }
 
 const MemberFollowings = (props: MemberFollowingsProps) => {
-	const { initialInput, subscribeHandler, unsubscribeHandler, likeMemberHandler, redirectToMemberPageHandler } = props;
+	const { likeMemberHandler, initialInput, subscribeHandler, unsubscribeHandler, redirectToMemberPageHandler } = props;
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const [total, setTotal] = useState<number>(0);
@@ -133,7 +133,9 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 												<Button
 													variant="outlined"
 													sx={{ background: '#f78181', ':hover': { background: '#f06363' } }}
-													onClick={() => unsubscribeHandler(follower?.followingData?._id, null, followInquiry)}
+													onClick={() =>
+														unsubscribeHandler(follower?.followingData?._id, getMemberFollowingsRefetch, followInquiry)
+													}
 												>
 													Unfollow
 												</Button>
@@ -142,7 +144,9 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 											<Button
 												variant="contained"
 												sx={{ background: '#60eb60d4', ':hover': { background: '#60eb60d4' } }}
-												onClick={() => subscribeHandler(follower?.followingData?._id, null, followInquiry)}
+												onClick={() =>
+													subscribeHandler(follower?.followingData?._id, getMemberFollowingsRefetch, followInquiry)
+												}
 											>
 												Follow
 											</Button>
