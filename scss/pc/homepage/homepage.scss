@@ -8,34 +8,6 @@
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
-			.left {
-				display: flex;
-				flex-direction: column;
-				span {
-					color: #181a20;
-					font-family: $font;
-					font-size: 34px;
-					font-style: normal;
-					font-weight: 500;
-					line-height: 150%;
-					letter-spacing: -0.646px;
-					text-transform: capitalize;
-					&.white {
-						color: #ffffff;
-					}
-				}
-				p {
-					color: #181a20;
-					font-family: $font;
-					font-size: 14px;
-					font-style: normal;
-					font-weight: 400;
-					line-height: 26px;
-					&.white {
-						color: #ffffff;
-					}
-				}
-			}
 			.right {
 				display: flex;
 				flex-direction: row;
@@ -44,8 +16,14 @@
 					display: flex;
 					flex-direction: row;
 					align-items: center;
-					.swiper-pagination-bullet.swiper-pagination-bullet-active {
-						background: #000000;
+					.swiper-pagination-bullet {
+						width: 9px;
+						height: 9px;
+						background: #ccc;
+						opacity: 1;
+					}
+					.swiper-pagination-bullet.custom-bullet-active {
+						background: #282727; /* Change this to your desired active bullet color */
 					}
 					.swiper-trend-next {
 						margin-left: 20px;
@@ -115,7 +93,7 @@
 			}
 		}
 		.trend-properties {
-			padding: 108px 0px 76px;
+			padding: 90px 0px 80px 0px;
 			width: 100%;
 			height: 697px;
 			display: flex;
@@ -124,9 +102,10 @@
 				flex-direction: column;
 				.card-box {
 					position: relative;
-					margin-top: 64px;
+					margin-top: 50px;
 					display: flex;
 					flex-direction: row;
+					align-items: center;
 					.empty-list {
 						width: 100%;
 						height: 280px;
@@ -140,16 +119,11 @@
 						display: flex;
 						flex-direction: row;
 						.trend-property-slide {
-							width: auto;
-							height: auto;
 							display: flex;
-							margin: 10px 0 0 10px;
 						}
 					}
 					.trend-card-box {
 						position: relative;
-						width: 300px;
-						height: 375px;
 						display: flex;
 						flex-direction: column;
 						transition: transform 0.3s;
@@ -160,7 +134,7 @@
 						.card-img {
 							position: relative;
 							width: 100%;
-							height: 203px;
+							height: 206px;
 							background-size: cover;
 							border-radius: 12px 12px 0px 0px;
 							cursor: pointer;
@@ -180,28 +154,11 @@
 							}
 						}
 						.info {
-							padding: 20px 22px 17px;
 							display: flex;
 							flex-direction: column;
 							box-sizing: border-box;
 							border-radius: 0px 0px 12px 12px;
-							border: 1px solid rgba(196, 196, 196, 0.71);
 							border-top: none;
-							background: #fff;
-							box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
-							.title {
-								overflow: hidden;
-								color: #181a20;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-								font-family: $font;
-								font-size: 15px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: normal;
-								text-transform: capitalize;
-								cursor: pointer;
-							}
 							.desc {
 								margin-top: 5px;
 								overflow: hidden;
@@ -251,16 +208,9 @@
 									line-height: normal;
 									text-transform: capitalize;
 								}
-								button {
-									margin-left: 7px;
-									width: 16px;
-									height: 16px;
-									box-sizing: border-box;
-								}
 								.view-like-box {
 									display: flex;
 									flex-direction: row;
-									gap: 7px;
 									align-items: center;
 									.view-cnt {
 										color: #717171;
@@ -279,12 +229,12 @@
 			}
 		}
 		.popular-properties {
-			padding: 132px 0px 94px;
 			width: 100%;
 			height: 816px;
 			display: flex;
 			flex-direction: row;
-			background: #f6f6f6;
+			align-items: center;
+			justify-content: center;
 			.container {
 				flex-direction: column;
 				align-items: center;
@@ -294,6 +244,7 @@
 					height: auto;
 					display: flex;
 					flex-direction: row;
+					box-shadow: none;
 					justify-content: space-between;
 					.popular-property-swiper {
 						width: 100%;
@@ -304,7 +255,6 @@
 							width: auto;
 							height: auto;
 							display: flex;
-							margin: 10px 0 10px 10px;
 						}
 					}
 					.popular-card-box {
@@ -370,9 +320,7 @@
 							flex-direction: column;
 							box-sizing: border-box;
 							border-radius: 0px 0px 12px 12px;
-							border: 1px solid rgba(196, 196, 196, 0.71);
 							border-top: none;
-							background: #fff;
 							box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 							.title {
 								overflow: hidden;
@@ -407,19 +355,6 @@
 								div {
 									display: flex;
 									flex-direction: row;
-									img {
-										margin-right: 5px;
-										width: 17px;
-										height: 17px;
-									}
-									span {
-										color: #181a20;
-										font-family: $font;
-										font-size: 13px;
-										font-style: normal;
-										font-weight: 400;
-										line-height: normal;
-									}
 								}
 							}
 							.bott {
@@ -436,16 +371,9 @@
 									line-height: normal;
 									text-transform: capitalize;
 								}
-								button {
-									margin-left: 7px;
-									width: 16px;
-									height: 16px;
-									box-sizing: border-box;
-								}
 								.view-like-box {
 									display: flex;
 									flex-direction: row;
-									gap: 7px;
 									align-items: center;
 									.view-cnt {
 										color: #717171;
@@ -466,15 +394,21 @@
 					flex-direction: row;
 					justify-content: center;
 					align-items: center;
-					.swiper-pagination-bullet.swiper-pagination-bullet-active {
-						background: #000000;
+					.swiper-pagination-bullet {
+						width: 9px;
+						height: 9px;
+						background: #ccc;
+						opacity: 1;
+					}
+					.swiper-pagination-bullet.custom-bullet-active {
+						background: #282727; /* Change this to your desired active bullet color */
 					}
 					.swiper-popular-next {
-						margin-left: 20px;
+						margin-left: 18px;
 						cursor: pointer;
 					}
 					.swiper-popular-prev {
-						margin-right: 20px;
+						margin-right: 18px;
 						cursor: pointer;
 					}
 				}
@@ -483,9 +417,9 @@
 		.video-frame {
 			width: 100%;
 			height: 678px;
+			margin-top: 50px;
 			background: black;
 			transform: perspective(0px);
-			box-shadow: -3px 0px 20px 14px #34343480;
 		}
 		.top-properties {
 			padding: 108px 0px 76px;
@@ -509,7 +443,6 @@
 							width: auto;
 							height: auto;
 							display: flex;
-							margin: 10px 0 0 10px;
 						}
 					}
 					.top-card-box {
@@ -551,56 +484,15 @@
 							flex-direction: column;
 							box-sizing: border-box;
 							border-radius: 0px 0px 12px 12px;
-							border: 1px solid rgba(196, 196, 196, 0.71);
 							border-top: none;
-							background: #fff;
-							box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
-							.title {
-								overflow: hidden;
-								color: #181a20;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-								font-family: $font;
-								font-size: 15px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: normal;
-								text-transform: capitalize;
-								cursor: pointer;
-							}
-							.desc {
-								margin-top: 5px;
-								overflow: hidden;
-								color: #717171;
-								font-family: $font;
-								font-size: 13px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: normal;
-								text-overflow: ellipsis;
-								white-space: nowrap;
-							}
 							.options {
-								margin-top: 15px;
+								margin-top: 20px;
 								display: flex;
 								flex-direction: row;
 								justify-content: space-between;
 								div {
 									display: flex;
 									flex-direction: row;
-									img {
-										margin-right: 5px;
-										width: 17px;
-										height: 17px;
-									}
-									span {
-										color: #181a20;
-										font-family: $font;
-										font-size: 13px;
-										font-style: normal;
-										font-weight: 400;
-										line-height: normal;
-									}
 								}
 							}
 							.bott {
@@ -608,38 +500,24 @@
 								flex-direction: row;
 								justify-content: space-between;
 								align-items: center;
-								p {
-									color: #181a20;
-									font-family: $font;
-									font-size: 13px;
-									font-style: normal;
-									font-weight: 400;
-									line-height: normal;
-									text-transform: capitalize;
-								}
-								button {
-									margin-left: 7px;
-									width: 16px;
-									height: 16px;
-									box-sizing: border-box;
-								}
 								.view-like-box {
 									display: flex;
 									flex-direction: row;
-									gap: 7px;
 									align-items: center;
-									.view-cnt {
-										color: #717171;
-										font-family: $font;
-										font-size: 13px;
-										font-style: normal;
-										font-weight: 400;
-										line-height: normal;
-										text-overflow: ellipsis;
-									}
 								}
 							}
 						}
+					}
+				}
+				.pagination-box {
+					.swiper-pagination-bullet {
+						width: 9px;
+						height: 9px;
+						background: #ccc;
+						opacity: 1;
+					}
+					.swiper-pagination-bullet.custom-bullet-active {
+						background: #282727; /* Change this to your desired active bullet color */
 					}
 				}
 			}
@@ -651,7 +529,6 @@
 			height: 722px;
 			display: flex;
 			flex-direction: row;
-			background: #f6f6f6;
 			.container {
 				position: relative;
 				flex-direction: column;
@@ -709,28 +586,12 @@
 								cursor: pointer;
 								object-fit: cover;
 							}
-							strong {
-								margin-top: 20px;
-								color: #181a20;
-								text-align: center;
-								font-family: $font;
-								font-size: 15px;
-								font-style: normal;
-								font-weight: 600;
-								line-height: normal;
-								text-transform: capitalize;
-								cursor: pointer;
-							}
-							span {
-								color: #181a20;
-								text-align: center;
-								font-family: $font;
-								font-size: 15px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: 28px;
-							}
 						}
+					}
+				}
+				.info-box {
+					a {
+						text-decoration: none;
 					}
 				}
 			}

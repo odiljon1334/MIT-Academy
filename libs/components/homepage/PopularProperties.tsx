@@ -12,6 +12,7 @@ import { PropertiesInquiry } from '../../types/property/property.input';
 import { GET_PROPERTIES } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';
 import { T } from '../../types/common';
+import { ArrowUpRight } from 'lucide-react';
 
 interface PopularPropertiesProps {
 	initialInput: PropertiesInquiry;
@@ -24,23 +25,22 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 
 	/** APOLLO REQUESTS **/
 	const {
-			loading: getPropertiesLoading,
-			data: getPropertiesData,
-			error: getPropertiesError,
-			refetch: getPropertiesRefetch,
-		} = useQuery(GET_PROPERTIES, {
-			fetchPolicy: "cache-and-network",
-			variables: {input: initialInput},
-			notifyOnNetworkStatusChange: true,
-			onCompleted: (data: T) => {
-				if (data?.getProperties?.list) {
-					setPopularProperties(data.getProperties.list);
-				} else {
-					console.error("No properties list found:", data);
-				}
+		loading: getPropertiesLoading,
+		data: getPropertiesData,
+		error: getPropertiesError,
+		refetch: getPropertiesRefetch,
+	} = useQuery(GET_PROPERTIES, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: initialInput },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			if (data?.getProperties?.list) {
+				setPopularProperties(data.getProperties.list);
+			} else {
+				console.error('No properties list found:', data);
 			}
-			
-		});
+		},
+	});
 	/** HANDLERS **/
 
 	if (!popularProperties) return null;
@@ -75,26 +75,29 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 	} else {
 		return (
 			<Stack className={'popular-properties'}>
-				<Stack className={'container'}>
-					<Stack className={'info-box'}>
-						<Box component={'div'} className={'left'}>
-							<span>Popular properties</span>
-							<p>Popularity is based on views</p>
+				<Stack className={'container relative'}>
+					<Stack className={'info-box mb-10'}>
+						<Box component={'div'}>
+							<span className="font-openSans font-semibold text-[34px] text-slate-950 dark:text-slate-200">
+								Popular courses
+							</span>
+							<p className="font-openSans font-normal text-slate-500">Popularity is based on views</p>
 						</Box>
-						<Box component={'div'} className={'right'}>
-							<div className={'more-box'}>
-								<Link href={'/property'}>
-									<span>See All Categories</span>
+						<Box component={'div'} className={'flex items-center mr-10 mt-5'}>
+							<div className={'flex'}>
+								<Link href={'/property'} className={'flex flex-row items-center space-x-2'}>
+									<span className="text-md font-openSans font-semibold text-slate-950 dark:text-slate-200">
+										See All Categories
+									</span>
+									<ArrowUpRight className="text-slate-950 dark:text-slate-200" />
 								</Link>
-								<img src="/img/icons/rightup.svg" alt="" />
 							</div>
 						</Box>
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper
 							className={'popular-property-swiper'}
-							slidesPerView={'auto'}
-							spaceBetween={25}
+							slidesPerView={3}
 							modules={[Autoplay, Navigation, Pagination]}
 							navigation={{
 								nextEl: '.swiper-popular-next',
@@ -102,11 +105,18 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 							}}
 							pagination={{
 								el: '.swiper-popular-pagination',
+								clickable: true,
+								bulletActiveClass: 'swiper-pagination-bullet-active custom-bullet-active',
+							}}
+							autoplay={{ delay: 4000 }}
+							breakpoints={{
+								640: { slidesPerView: 2 },
+								768: { slidesPerView: 3 },
 							}}
 						>
 							{popularProperties.map((property: Property) => {
 								return (
-									<SwiperSlide key={property._id} className={'popular-property-slide'}>
+									<SwiperSlide key={property._id} className={'popular-property-slide shadow-none'}>
 										<PopularPropertyCard property={property} />
 									</SwiperSlide>
 								);
@@ -114,9 +124,9 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 						</Swiper>
 					</Stack>
 					<Stack className={'pagination-box'}>
-						<WestIcon className={'swiper-popular-prev'} />
+						<WestIcon className={'swiper-popular-prev dark:bg-slate-800 rounded-full w-[50px] h-[50px] p-3'} />
 						<div className={'swiper-popular-pagination'}></div>
-						<EastIcon className={'swiper-popular-next'} />
+						<EastIcon className={'swiper-popular-next dark:bg-slate-800 rounded-full w-[50px] h-[50px] p-3'} />
 					</Stack>
 				</Stack>
 			</Stack>

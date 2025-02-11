@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Box, Divider, Typography } from '@mui/material';
+import { Stack, Box, Divider, Typography, Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Property } from '../../types/property/property';
@@ -8,6 +8,7 @@ import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import { BookMarked, ChevronRight, Clock, Trophy } from 'lucide-react';
 
 interface PopularPropertyCardProps {
 	property: Property;
@@ -58,27 +59,34 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					</strong>
 					<p className={'desc'}>{property.propertyAddress}</p>
 					<div className={'options'}>
-						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{property?.propertyBeds} bed</span>
+						<div className="flex items-center flex-row">
+							<Clock className="text-gray-500 w-5 h-5 mr-1" />
+							<span className="text-sm font-normal font-openSans flex items-center dark:text-gray-200 text-gray-700">
+								{' '}
+								22hr 30min
+							</span>
 						</div>
-						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{property?.propertyRooms} rooms</span>
+						<div className="flex flex-row space-x-1">
+							<BookMarked className="text-gray-500 w-5 h-5" />
+							<span className="text-sm font-normal font-openSans dark:text-gray-200 text-gray-700 flex items-center">
+								Lesson: 2{property.propertyRooms}
+							</span>
 						</div>
-						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{property?.propertySquare} m2</span>
+						<div className="flex flex-row space-x-1">
+							<Trophy className="text-gray-500 w-5 h-5" />
+							<span className="text-sm font-normal font-openSans dark:text-gray-200 text-gray-700 flex items-center">
+								Beginner
+							</span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
 						<p>{property?.propertyRent ? 'rent' : 'sale'}</p>
 						<div className="view-like-box">
-							<IconButton color={'default'}>
-								<RemoveRedEyeIcon />
+							<IconButton>
+								<RemoveRedEyeIcon className="text-slate-600 dark:text-gray-200" />
 							</IconButton>
-							<Typography className="view-cnt">{property?.propertyViews}</Typography>
+							<Typography className="">{property?.propertyViews}</Typography>
 						</div>
 					</div>
 				</Box>
@@ -89,7 +97,7 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 			<Stack className="popular-card-box">
 				<Box
 					component={'div'}
-					className={'card-img'}
+					className={'card-img border border-solid border-slate-600 border-b-0'}
 					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${property?.propertyImages[0]})` }}
 					onClick={() => {
 						pushDetailHandler(property._id);
@@ -98,7 +106,7 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					{property && property?.propertyRank >= topPropertyRank ? (
 						<div className={'status'}>
 							<img src="/img/icons/electricity.svg" alt="" />
-							<span>top</span>
+							<span>Best</span>
 						</div>
 					) : (
 						''
@@ -106,38 +114,57 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 
 					<div className={'price'}>${property.propertyPrice}</div>
 				</Box>
-				<Box component={'div'} className={'info'}>
-					<strong
+				<Box component={'div'} className={'info border border-solid border-slate-600 bg-white dark:bg-slate-900'}>
+					<p
 						onClick={() => {
 							pushDetailHandler(property._id);
 						}}
-						className={'title'}
+						className="text-md font-openSans font-semibold text-slate-500"
 					>
 						{property.propertyTitle}
-					</strong>
+					</p>
 					<p className={'desc'}>{property.propertyAddress}</p>
 					<div className={'options'}>
-						<div>
-							<img src="/img/icons/bed.svg" alt="" />
-							<span>{property?.propertyBeds} bed</span>
+						<div className="flex items-center flex-row">
+							<Clock className="text-gray-500 w-5 h-5 mr-1" />
+							<span className="text-sm font-normal font-openSans flex items-center dark:text-gray-200 text-gray-700">
+								{' '}
+								22hr 30min
+							</span>
 						</div>
-						<div>
-							<img src="/img/icons/room.svg" alt="" />
-							<span>{property?.propertyRooms} rooms</span>
+						<div className="flex flex-row space-x-1">
+							<BookMarked className="text-gray-500 w-5 h-5" />
+							<span className="text-sm font-normal font-openSans dark:text-gray-200 text-gray-700 flex items-center">
+								Lesson: 2{property.propertyRooms}
+							</span>
 						</div>
-						<div>
-							<img src="/img/icons/expand.svg" alt="" />
-							<span>{property?.propertySquare} m2</span>
+						<div className="flex flex-row space-x-1">
+							<Trophy className="text-gray-500 w-5 h-5" />
+							<span className="text-sm font-normal font-openSans dark:text-gray-200 text-gray-700 flex items-center">
+								Beginner
+							</span>
 						</div>
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
-						<p>{property?.propertyRent ? 'rent' : 'sale'}</p>
+						<Button
+							asChild
+							variant={'outline'}
+							size={'sm'}
+							onClick={() => {
+								pushDetailHandler(property._id);
+							}}
+							className="flex flex-row items-center p-3 dark:bg-lime-800 dark:hover:bg-lime-600 bg-black hover:bg-slate-700 rounded-xl"
+						>
+							<span className="flex items-center font-semibold font-openSans text-[10px]  text-gray-100 outline-none">
+								Start course <ChevronRight className="w-4 h-4" />
+							</span>
+						</Button>
 						<div className="view-like-box">
-							<IconButton color={'default'}>
+							<IconButton className="text-slate-600 dark:text-gray-200">
 								<RemoveRedEyeIcon />
 							</IconButton>
-							<Typography className="view-cnt">{property?.propertyViews}</Typography>
+							<span className="text-sm font-normal text-slate-600 dark:text-gray-100">{property?.propertyViews}</span>
 						</div>
 					</div>
 				</Box>

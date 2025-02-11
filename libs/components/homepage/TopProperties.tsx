@@ -89,30 +89,34 @@ const TopProperties = (props: TopPropertiesProps) => {
 			<Stack className={'top-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<Box component={'div'} className={'left'}>
-							<span>Top properties</span>
-							<p>Check out our Top Properties</p>
+						<Box component={'div'} className="space-y-2">
+							<span className="font-openSans font-semibold text-[34px] text-slate-950 dark:text-slate-200">
+								Top properties
+							</span>
+							<p className="font-openSans font-normal text-slate-500">Check out our Top Properties</p>
 						</Box>
-						<Box component={'div'} className={'right'}>
-							<div className={'pagination-box'}>
-								<WestIcon className={'swiper-top-prev'} />
+						<Box component={'div'} className="flex flex-row items-center">
+							<div className={'pagination-box relative top-6 flex flex-row space-x-4  items-center'}>
+								<WestIcon className={'swiper-top-prev dark:bg-slate-800 rounded-full w-[50px] h-[50px] p-3'} />
 								<div className={'swiper-top-pagination'}></div>
-								<EastIcon className={'swiper-top-next'} />
+								<EastIcon className={'swiper-top-next dark:bg-slate-800 rounded-full w-[50px] h-[50px] p-3'} />
 							</div>
 						</Box>
 					</Stack>
 					<Stack className={'card-box'}>
 						<Swiper
 							className={'top-property-swiper'}
-							slidesPerView={'auto'}
-							spaceBetween={15}
+							slidesPerView={4}
 							modules={[Autoplay, Navigation, Pagination]}
 							navigation={{
 								nextEl: '.swiper-top-next',
 								prevEl: '.swiper-top-prev',
 							}}
+							autoplay={{ delay: 4000 }}
 							pagination={{
 								el: '.swiper-top-pagination',
+								clickable: true,
+								bulletActiveClass: 'swiper-pagination-bullet-active custom-bullet-active',
 							}}
 						>
 							{topProperties.map((property: Property) => {

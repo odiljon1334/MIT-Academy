@@ -99,15 +99,17 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 			<Stack className={'trend-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<Box component={'div'} className={'left'}>
-							<span>Trend Properties</span>
-							<p>Trend is based on likes</p>
+						<Box component={'div'}>
+							<span className="font-openSans font-semibold text-[34px] text-slate-950 dark:text-slate-200">
+								Trend Courses
+							</span>
+							<p className="font-openSans font-normal text-slate-500">Trend is based on likes</p>
 						</Box>
 						<Box component={'div'} className={'right'}>
 							<div className={'pagination-box'}>
-								<WestIcon className={'swiper-trend-prev'} />
-								<div className={'swiper-trend-pagination'}></div>
-								<EastIcon className={'swiper-trend-next'} />
+								<WestIcon className={'swiper-trend-prev dark:bg-slate-800 rounded-full w-[50px] h-[50px] p-3'} />
+								<div className="swiper-trend-pagination space-x-2"></div>
+								<EastIcon className={'swiper-trend-next dark:bg-slate-800 rounded-full w-[50px] h-[50px] p-3'} />
 							</div>
 						</Box>
 					</Stack>
@@ -119,8 +121,7 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 						) : (
 							<Swiper
 								className={'trend-property-swiper'}
-								slidesPerView={'auto'}
-								spaceBetween={15}
+								slidesPerView={4}
 								modules={[Autoplay, Navigation, Pagination]}
 								navigation={{
 									nextEl: '.swiper-trend-next',
@@ -128,11 +129,13 @@ const TrendProperties = (props: TrendPropertiesProps) => {
 								}}
 								pagination={{
 									el: '.swiper-trend-pagination',
+									clickable: true,
+									bulletActiveClass: 'swiper-pagination-bullet-active custom-bullet-active',
 								}}
 							>
 								{trendProperties.map((property: Property) => {
 									return (
-										<SwiperSlide key={property._id} className={'trend-property-slide'}>
+										<SwiperSlide key={property._id} className={'trend-property-slide p-4 shadow-none'}>
 											<TrendPropertyCard property={property} likePropertyHandler={likePropertyHandler} />
 										</SwiperSlide>
 									);

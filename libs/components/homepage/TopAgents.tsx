@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Stack, Box } from '@mui/material';
+import { Stack, Box, Link } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -11,6 +11,9 @@ import { AgentsInquiry } from '../../types/member/member.input';
 import { GET_AGENTS } from '../../../apollo/user/query';
 import { useQuery } from '@apollo/client';
 import { T } from '../../types/common';
+import { ArrowUpRight } from 'lucide-react';
+import agent from '../../../pages/agent';
+import { AgentPropertiesInquiry } from '../../types/property/property.input';
 
 interface TopAgentsProps {
 	initialInput: AgentsInquiry;
@@ -24,24 +27,27 @@ const TopAgents = (props: TopAgentsProps) => {
 
 	/** APOLLO REQUESTS **/
 	const {
-			loading: getAgentsLoading,
-			data: getAgentsData,
-			error: getAgentsError,
-			refetch: getAgentsRefetch,
-		} = useQuery(GET_AGENTS, {
-			fetchPolicy: "cache-and-network",
-			variables: {input: initialInput},
-			notifyOnNetworkStatusChange: true,
-			onCompleted: (data: T) => {
-				if (data?.getAgents?.list) {
-					setTopAgents(data.getAgents.list);
-				} else {
-					console.error("No Agents data:", data);
-				}
+		loading: getAgentsLoading,
+		data: getAgentsData,
+		error: getAgentsError,
+		refetch: getAgentsRefetch,
+	} = useQuery(GET_AGENTS, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: initialInput },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			if (data?.getAgents?.list) {
+				setTopAgents(data.getAgents.list);
+			} else {
+				console.error('No Agents data:', data);
 			}
-			
-		});
+		},
+	});
 	/** HANDLERS **/
+	const pushAgentDetailHandler = async () => {
+		const input: any = initialInput;
+		await router.push({ pathname: '/agent', query: input });
+	};
 
 	if (device === 'mobile') {
 		return (
@@ -75,14 +81,26 @@ const TopAgents = (props: TopAgentsProps) => {
 			<Stack className={'top-agents'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<Box component={'div'} className={'left'}>
-							<span>Top Agents</span>
-							<p>Our Top Agents always ready to serve you</p>
+						<Box component={'div'} className="space-y-2">
+							<span className="font-openSans font-semibold text-[34px] text-slate-950 dark:text-slate-200">
+								Top Agents
+							</span>
+							<p className="font-openSans font-normal text-slate-500">Our Top Agents always ready to serve you</p>
 						</Box>
-						<Box component={'div'} className={'right'}>
-							<div className={'more-box'}>
-								<span>See All Agents</span>
-								<img src="/img/icons/rightup.svg" alt="" />
+						<Box component={'div'} className="flex flex-row items-center mr-10 space-x-2">
+							<div className={'flex'}>
+								<Link
+									href={'#'}
+									onClick={() => {
+										pushAgentDetailHandler();
+									}}
+									className={'flex flex-row items-center space-x-2'}
+								>
+									<span className="text-md font-openSans font-semibold text-slate-950 dark:text-slate-200">
+										See All Categories
+									</span>
+									<ArrowUpRight className="text-slate-950 dark:text-slate-200" />
+								</Link>
 							</div>
 						</Box>
 					</Stack>
