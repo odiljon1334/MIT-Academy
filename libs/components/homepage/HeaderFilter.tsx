@@ -43,9 +43,9 @@ const HeaderFilter = (props: HeaderFilterProps) => {
 	const device = useDeviceDetect();
 	const { t, i18n } = useTranslation('common');
 	const [searchFilter, setSearchFilter] = useState<PropertiesInquiry>(initialInput);
-	const locationRef: any = useRef();
-	const typeRef: any = useRef();
-	const roomsRef: any = useRef();
+	const locationRef: any = useRef(null);
+	const typeRef: any = useRef(null);
+	const roomsRef: any = useRef(null);
 	const router = useRouter();
 	const [openAdvancedFilter, setOpenAdvancedFilter] = useState(false);
 	const [openLocation, setOpenLocation] = useState(false);

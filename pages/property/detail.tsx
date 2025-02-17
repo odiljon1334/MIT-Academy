@@ -41,7 +41,18 @@ export const getStaticProps = async ({ locale }: any) => ({
 	},
 });
 
-const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
+const PropertyDetail: NextPage<{ initialComment?: CommentsInquiry }> = ({
+	initialComment = {
+		page: 1,
+		limit: 5,
+		sort: 'createdAt',
+		direction: 'DESC',
+		search: {
+			commentRefId: '',
+		},
+	},
+	...props
+}: any) => {
 	const device = useDeviceDetect();
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
@@ -654,18 +665,6 @@ const PropertyDetail: NextPage = ({ initialComment, ...props }: any) => {
 			</div>
 		);
 	}
-};
-
-PropertyDetail.defaultProps = {
-	initialComment: {
-		page: 1,
-		limit: 5,
-		sort: 'createdAt',
-		direction: 'DESC',
-		search: {
-			commentRefId: '',
-		},
-	},
 };
 
 export default withLayoutFull(PropertyDetail);

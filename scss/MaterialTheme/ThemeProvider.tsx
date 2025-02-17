@@ -82,7 +82,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 		palette: {
 			mode: theme,
 			primary: {
-				main: theme === 'dark' ? '#ff5252' : '#3f51b5',
+				main: '#ff5252',
 			},
 			background: {
 				default: generatedTheme.colors.background,

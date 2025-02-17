@@ -1,18 +1,17 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useState } from 'react';
 import { useRouter, withRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { getJwtToken, logOut, updateUserInfo } from '../auth';
 import { Stack, Box, FormGroup } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
-import { Moon, Sun } from 'lucide-react';
 import Button from '@mui/material/Button';
 import { alpha, styled } from '@mui/material/styles';
 import Menu, { MenuProps } from '@mui/material/Menu';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { CaretDown } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
-import Switch, { SwitchProps } from '@mui/material/Switch';
+import Switch from '@mui/material/Switch';
 import Link from 'next/link';
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import { useReactiveVar } from '@apollo/client';
@@ -20,6 +19,7 @@ import { userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
 import { useTheme } from '../../scss/MaterialTheme/ThemeProvider';
+import { motion } from 'framer-motion';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 	width: 62,
@@ -92,6 +92,7 @@ const Top = () => {
 	const [logoutAnchor, setLogoutAnchor] = React.useState<null | HTMLElement>(null);
 	const logoutOpen = Boolean(logoutAnchor);
 	const { theme, toggleTheme } = useTheme();
+	const [svgColor, setSvgColor] = useState('url(#gradientId)');
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -116,6 +117,13 @@ const Top = () => {
 	useEffect(() => {
 		const jwt = getJwtToken();
 		if (jwt) updateUserInfo(jwt);
+	}, []);
+
+	useEffect(() => {
+		if (typeof window !== 'undefined') {
+			setSvgColor('url(#gradientId)');
+			window.addEventListener('scroll', changeNavbarColor);
+		}
 	}, []);
 
 	/** HANDLERS **/
@@ -195,9 +203,21 @@ const Top = () => {
 		},
 	}));
 
-	if (typeof window !== 'undefined') {
-		window.addEventListener('scroll', changeNavbarColor);
-	}
+	const Wrapper = styled(motion.div)`
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 10px;
+	`;
+
+	const svg = {
+		start: { pathLength: 0, fillOpacity: 0, fill: 'rgba(255, 255, 255, 0)' },
+		end: {
+			pathLength: 1,
+			fillOpacity: 1,
+			transition: { duration: 13 },
+		},
+	};
 
 	if (device == 'mobile') {
 		return (
@@ -224,9 +244,36 @@ const Top = () => {
 			<Stack className={'navbar'}>
 				<Stack className={`navbar-main ${colorChange ? 'transparent' : ''} ${bgColor ? 'transparent' : ''}`}>
 					<Stack className={'container'}>
-						<Box component={'div'} className={'logo-box'}>
+						<Box component={'div'} className={'flex flex-row space-x-2'}>
 							<Link href={'/'}>
-								<img src="/img/logo/logoWhite.svg" alt="" />
+								<Wrapper>
+									<svg
+										className="w-[60px] h-auto"
+										focusable="false"
+										xmlns="http://www.w3.org/2000/svg"
+										viewBox="0 0 640 512"
+									>
+										<defs>
+											<linearGradient id="gradientId" x1="0%" y1="0%" x2="100%" y2="0%">
+												<stop offset="0%" stopColor="#a5b4fc" />
+												<stop offset="50%" stopColor="rgba(255, 255, 255, 0.9)" />
+												<stop offset="100%" stopColor="#fda4af" />
+											</linearGradient>
+										</defs>
+										<motion.path
+											variants={svg}
+											initial="start"
+											animate="end"
+											stroke="white"
+											strokeWidth={5}
+											style={{ fill: svgColor }}
+											d="M512 337.2l0-284.8L344 77l0 296 168-35.8zM296 373l0-296L128 52.4l0 284.8L296 373zM523.4 2.2C542.7-.7 560 14.3 560 33.8l0 316.3c0 15.1-10.6 28.1-25.3 31.3l-201.3 43c-8.8 1.9-17.9 1.9-26.7 0l-201.3-43C90.6 378.3 80 365.2 80 350.1L80 33.8C80 14.3 97.3-.7 116.6 2.2L320 32 523.4 2.2zM38.3 23.7l10.2 2c-.3 2.7-.5 5.4-.5 8.1l0 40.7 0 267.6 0 66.7 265.8 54.5c2 .4 4.1 .6 6.2 .6s4.2-.2 6.2-.6L592 408.8l0-66.7 0-267.6 0-40.7c0-2.8-.2-5.5-.5-8.1l10.2-2C621.5 19.7 640 34.8 640 55l0 366.9c0 15.2-10.7 28.3-25.6 31.3L335.8 510.4c-5.2 1.1-10.5 1.6-15.8 1.6s-10.6-.5-15.8-1.6L25.6 453.2C10.7 450.2 0 437.1 0 421.9L0 55C0 34.8 18.5 19.7 38.3 23.7z"
+										></motion.path>
+									</svg>
+									<motion.span className="font-openSans font-semibold bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-white/90 to-rose-300 text-[24px]">
+										MIT Academy
+									</motion.span>
+								</Wrapper>
 							</Link>
 						</Box>
 						<Box component={'div'} className={'router-box'}>
@@ -234,10 +281,10 @@ const Top = () => {
 								<div>{t('Home')}</div>
 							</Link>
 							<Link href={'/property'}>
-								<div>{t('Properties')}</div>
+								<div>{t('Courses')}</div>
 							</Link>
 							<Link href={'/agent'}>
-								<div> {t('Agents')} </div>
+								<div> {t('Instructors')} </div>
 							</Link>
 							<Link href={'/community?articleCategory=FREE'}>
 								<div> {t('Community')} </div>

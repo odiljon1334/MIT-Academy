@@ -89,7 +89,7 @@ const TopProperties = (props: TopPropertiesProps) => {
 			<Stack className={'top-properties'}>
 				<Stack className={'container'}>
 					<Stack className={'info-box'}>
-						<Box component={'div'} className="space-y-2">
+						<Box component={'div'} className="space-y-2 mt-5">
 							<span className="font-openSans font-semibold text-[34px] text-slate-950 dark:text-slate-200">
 								Top properties
 							</span>

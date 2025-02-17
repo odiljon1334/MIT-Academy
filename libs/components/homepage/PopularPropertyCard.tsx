@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Box, Divider, Typography, Button } from '@mui/material';
+import { Stack, Box, Divider, Typography, Button, Chip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import { Property } from '../../types/property/property';
@@ -8,7 +8,8 @@ import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
-import { BookMarked, ChevronRight, Clock, Trophy } from 'lucide-react';
+import { ArrowUpRight, BookMarked, ChevronRight, Clock, Trophy } from 'lucide-react';
+import { PropertyStatus } from '../../enums/property.enum';
 
 interface PopularPropertyCardProps {
 	property: Property;
@@ -46,7 +47,7 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 						''
 					)}
 
-					<div className={'price'}>${property.propertyPrice}</div>
+					<div className={'price text-green-600'}>${property.propertyPrice}</div>
 				</Box>
 				<Box component={'div'} className={'info'}>
 					<strong
@@ -112,17 +113,26 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 						''
 					)}
 
-					<div className={'price'}>${property.propertyPrice}</div>
+					<div className={'price text-green-600'}>${property.propertyPrice}</div>
 				</Box>
 				<Box component={'div'} className={'info border border-solid border-slate-600 bg-white dark:bg-slate-900'}>
-					<p
-						onClick={() => {
-							pushDetailHandler(property._id);
-						}}
-						className="text-md font-openSans font-semibold text-slate-500"
-					>
-						{property.propertyTitle}
-					</p>
+					<div className="flex flex-row items-center justify-between">
+						<p
+							onClick={() => {
+								pushDetailHandler(property._id);
+							}}
+							className="flex items-center gap-1 text-md font-openSans font-semibold text-slate-950 dark:text-slate-200 hover:underline"
+						>
+							{property.propertyTitle}
+							<ArrowUpRight className="text-slate-950 dark:text-slate-200 w-5 h-5" />
+						</p>
+						<Chip
+							className="w-[60px] h-5"
+							size="small"
+							label={property?.propertyStatus === PropertyStatus.ACTIVE ? 'Active' : 'Inactive'}
+							color={PropertyStatus.ACTIVE ? 'success' : 'default'}
+						/>
+					</div>
 					<p className={'desc'}>{property.propertyAddress}</p>
 					<div className={'options'}>
 						<div className="flex items-center flex-row">
@@ -147,19 +157,17 @@ const PopularPropertyCard = (props: PopularPropertyCardProps) => {
 					</div>
 					<Divider sx={{ mt: '15px', mb: '17px' }} />
 					<div className={'bott'}>
-						<Button
-							asChild
-							variant={'outline'}
-							size={'sm'}
-							onClick={() => {
-								pushDetailHandler(property._id);
-							}}
-							className="flex flex-row items-center p-3 dark:bg-lime-800 dark:hover:bg-lime-600 bg-black hover:bg-slate-700 rounded-xl"
-						>
-							<span className="flex items-center font-semibold font-openSans text-[10px]  text-gray-100 outline-none">
-								Start course <ChevronRight className="w-4 h-4" />
-							</span>
-						</Button>
+						<div className="flex flex-row space-x-2">
+							<img
+								className="w-[42px] h-[42px] rounded-full object-cover"
+								src={`${REACT_APP_API_URL}/${property.memberData?.memberImage}`}
+								alt=""
+							/>
+							<div className="flex flex-col">
+								<span className="text-sm font-normal">{property?.memberData?.memberNick}</span>
+								<p className="text-sm font-openSans text-slate-500">{property?.memberData?.memberType}</p>
+							</div>
+						</div>
 						<div className="view-like-box">
 							<IconButton className="text-slate-600 dark:text-gray-200">
 								<RemoveRedEyeIcon />

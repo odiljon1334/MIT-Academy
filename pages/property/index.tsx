@@ -36,6 +36,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 	const [sortingOpen, setSortingOpen] = useState(false);
 	const [filterSortName, setFilterSortName] = useState('New');
 
+	console.log('searchFilter: =>', searchFilter);
 	/** APOLLO REQUESTS **/
 	const [likeTargetProperty] = useMutation(LIKE_TARGET_PROPERTY);
 
@@ -64,7 +65,11 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 		setCurrentPage(searchFilter.page === undefined ? 1 : searchFilter.page);
 	}, [router]);
 
-	useEffect(() => {}, [searchFilter]);
+	useEffect(() => {
+		if (searchFilter) {
+			getPropertiesRefetch({ input: searchFilter });
+		}
+	}, [searchFilter]);
 
 	/** HANDLERS **/
 	const likePropertyHandler = async (user: T, id: string) => {
@@ -132,13 +137,22 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 			<div id="property-list-page" style={{ position: 'relative' }}>
 				<div className="container">
 					<Box component={'div'} className={'right'}>
-						<span>Sort by</span>
-						<div>
-							<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
-								{filterSortName}
+						<span className="text-sm font-openSans font-semibold text-slate-950 dark:text-slate-200">Sort by:</span>
+						<div className="">
+							<Button
+								onClick={sortingClickHandler}
+								endIcon={<KeyboardArrowDownRoundedIcon className="dark:text-slate-200" />}
+							>
+								<span className="dark:text-slate-200 font-openSans">{filterSortName}</span>
 							</Button>
-							<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
+							<Menu
+								anchorEl={anchorEl}
+								open={sortingOpen}
+								onClose={sortingCloseHandler}
+								sx={{ paddingTop: '5px', borderRadius: '10px' }}
+							>
 								<MenuItem
+									className="dark:bg-slate-100 dark:text-slate-950 mb-1"
 									onClick={sortingHandler}
 									id={'new'}
 									disableRipple
@@ -147,6 +161,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 									New
 								</MenuItem>
 								<MenuItem
+									className="dark:bg-slate-100 dark:text-slate-950 mb-1"
 									onClick={sortingHandler}
 									id={'lowest'}
 									disableRipple
@@ -155,6 +170,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 									Lowest Price
 								</MenuItem>
 								<MenuItem
+									className="dark:bg-slate-100 dark:text-slate-950"
 									onClick={sortingHandler}
 									id={'highest'}
 									disableRipple
@@ -189,6 +205,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 								{properties.length !== 0 && (
 									<Stack className="pagination-box">
 										<Pagination
+											variant="outlined"
 											page={currentPage}
 											count={Math.ceil(total / searchFilter.limit)}
 											onChange={handlePaginationChange}
@@ -200,7 +217,7 @@ const PropertyList: NextPage = ({ initialInput, ...props }: any) => {
 
 								{properties.length !== 0 && (
 									<Stack className="total-result">
-										<Typography>
+										<Typography className="dark:text-slate-200">
 											Total {total} propert{total > 1 ? 'ies' : 'y'} available
 										</Typography>
 									</Stack>

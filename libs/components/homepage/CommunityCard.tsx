@@ -29,7 +29,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 							<div>{index + 1}</div>
 						</div>
 						<strong>{article?.articleTitle}</strong>
-						<span>Free Board</span>
+						<span className="text-gray-500">Free Board</span>
 					</Box>
 				</Link>
 			);
@@ -41,7 +41,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 							<img src={articleImage} alt="" />
 							<div>
 								<strong>{article.articleTitle}</strong>
-								<span>
+								<span className="text-gray-500">
 									<Moment format="DD.MM.YY">{article?.createdAt}</Moment>
 								</span>
 							</div>

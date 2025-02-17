@@ -46,7 +46,7 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 		error: getAgentsError,
 		refetch: getAgentsRefetch,
 	} = useQuery(GET_AGENTS, {
-		fetchPolicy: 'network-only',
+		fetchPolicy: 'cache-and-network',
 		variables: { input: searchFilter },
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
@@ -197,8 +197,9 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 					<Stack className={'filter'}>
 						<Box component={'div'} className={'left'}>
 							<input
+								className="outline-none dark:bg-slate-200 dark:placeholder-slate-600"
 								type="text"
-								placeholder={'Search for an agent'}
+								placeholder={'Search for an Instructor'}
 								value={searchText}
 								onChange={(e: any) => setSearchText(e.target.value)}
 								onKeyDown={(event: any) => {
@@ -211,10 +212,14 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 								}}
 							/>
 						</Box>
-						<Box component={'div'} className={'right'}>
-							<span>Sort by</span>
+						<Box component={'div'} className={'right space-x-1'}>
+							<span className="text-md font-openSans font-semibold">Sort by:</span>
 							<div>
-								<Button onClick={sortingClickHandler} endIcon={<KeyboardArrowDownRoundedIcon />}>
+								<Button
+									className="text-md font-openSans font-semibold dark:text-slate-300 text-slate-600 hover:underline"
+									onClick={sortingClickHandler}
+									endIcon={<KeyboardArrowDownRoundedIcon />}
+								>
 									{filterSortName}
 								</Button>
 								<Menu anchorEl={anchorEl} open={sortingOpen} onClose={sortingCloseHandler} sx={{ paddingTop: '5px' }}>
@@ -234,9 +239,9 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 							</div>
 						</Box>
 					</Stack>
-					<Stack className={'card-wrap'}>
+					<Stack className={'card-wrap p-5'}>
 						{agents?.length === 0 ? (
-							<div className={'no-data'}>
+							<div className={'no-data space-y-2'}>
 								<img src="/img/icons/icoAlert.svg" alt="" />
 								<p>No Agents found!</p>
 							</div>
@@ -246,11 +251,12 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 							})
 						)}
 					</Stack>
-					<Stack className={'pagination'}>
+					<Stack className={'pagination mt-5'}>
 						<Stack className="pagination-box">
-							{agents.length !== 0 && Math.ceil(total / searchFilter.limit) > 1 && (
+							{agents.length !== 0 && (
 								<Stack className="pagination-box">
 									<Pagination
+										variant="outlined"
 										page={currentPage}
 										count={Math.ceil(total / searchFilter.limit)}
 										onChange={paginationChangeHandler}
@@ -262,8 +268,8 @@ const AgentList: NextPage = ({ initialInput, ...props }: any) => {
 						</Stack>
 
 						{agents.length !== 0 && (
-							<span>
-								Total {total} agent{total > 1 ? 's' : ''} available
+							<span className="font-openSans font-semibold dark:text-slate-300 text-slate-800">
+								Total {total} Instructor{total > 1 ? 's' : ''} available
 							</span>
 						)}
 					</Stack>
@@ -284,6 +290,3 @@ AgentList.defaultProps = {
 };
 
 export default withLayoutBasic(AgentList);
-function likeTargetProperty(arg0: { variables: { input: string } }) {
-	throw new Error('Function not implemented.');
-}

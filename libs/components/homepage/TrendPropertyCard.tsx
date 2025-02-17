@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack, Box, Divider, Typography, Link, Button } from '@mui/material';
+import { Stack, Box, Divider, Typography, Link, Button, Chip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -9,7 +9,8 @@ import { REACT_APP_API_URL } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
-import { Clock, BookMarked, Trophy, ChevronRight } from 'lucide-react';
+import { Clock, BookMarked, Trophy, ChevronRight, ArrowUpRight } from 'lucide-react';
+import { PropertyStatus } from '../../enums/property.enum';
 
 interface TrendPropertyCardProps {
 	property: Property;
@@ -100,17 +101,29 @@ const TrendPropertyCard = (props: TrendPropertyCardProps) => {
 						pushDetailHandler(property._id);
 					}}
 				>
-					<div>${property.propertyPrice}</div>
+					<div className="text-green-600">${property.propertyPrice}</div>
 				</Box>
-				<Box component={'div'} className={'info bg-white border border-solid border-slate-600 dark:bg-slate-900'}>
-					<p
-						onClick={() => {
-							pushDetailHandler(property._id);
-						}}
-						className="text-md font-openSans font-semibold text-slate-500 ml-5 mt-4"
-					>
-						{property.propertyTitle}
-					</p>
+				<Box
+					component={'div'}
+					className={'info bg-white border border-solid border-slate-600 dark:bg-slate-900 cursor-pointer'}
+				>
+					<div className="flex flex-row items-center justify-between mt-4 ml-5">
+						<p
+							onClick={() => {
+								pushDetailHandler(property._id);
+							}}
+							className="flex items-center gap-1 text-md font-openSans font-semibold text-slate-950 dark:text-slate-200 hover:underline"
+						>
+							{property.propertyTitle}
+							<ArrowUpRight className="text-slate-950 dark:text-slate-200 w-5 h-5" />
+						</p>
+						<Chip
+							className="w-[60px] h-5 mr-2"
+							size="small"
+							label={property?.propertyStatus === PropertyStatus.ACTIVE ? 'Active' : 'Inactive'}
+							color={PropertyStatus.ACTIVE ? 'success' : 'default'}
+						/>
+					</div>
 					<p className={'desc ml-5'}>{property.propertyDesc ?? 'no description'}</p>
 					<div className={'flex flox-col items-center justify-between mt-5 p-2'}>
 						<div className="flex items-center flex-row">
@@ -135,19 +148,17 @@ const TrendPropertyCard = (props: TrendPropertyCardProps) => {
 					</div>
 					<Divider sx={{ mt: '15px', mb: '5px' }} />
 					<div className={'bott p-3'}>
-						<Button
-							asChild
-							variant={'outline'}
-							size={'sm'}
-							onClick={() => {
-								pushDetailHandler(property._id);
-							}}
-							className="flex flex-row items-center p-2 mr-2 dark:bg-lime-800 dark:hover:bg-lime-600 bg-black hover:bg-slate-700 rounded-md"
-						>
-							<span className="flex items-center font-semibold font-openSans text-[10px]  text-gray-100 outline-none">
-								Start course <ChevronRight className="w-4 h-4" />
-							</span>
-						</Button>
+						<div className="flex flex-row space-x-2">
+							<img
+								className="w-[42px] h-[42px] rounded-full object-cover"
+								src={`${REACT_APP_API_URL}/${property.memberData?.memberImage}`}
+								alt=""
+							/>
+							<div className="flex flex-col">
+								<span className="text-sm font-normal">{property?.memberData?.memberNick}</span>
+								<p className="text-sm font-openSans text-slate-500">{property?.memberData?.memberType}</p>
+							</div>
+						</div>
 						<div className="view-like-box">
 							<IconButton className="text-slate-600 dark:text-gray-200">
 								<RemoveRedEyeIcon />

@@ -87,7 +87,7 @@ const PopularProperties = (props: PopularPropertiesProps) => {
 							<div className={'flex'}>
 								<Link href={'/property'} className={'flex flex-row items-center space-x-2'}>
 									<span className="text-md font-openSans font-semibold text-slate-950 dark:text-slate-200">
-										See All Categories
+										See All Courses
 									</span>
 									<ArrowUpRight className="text-slate-950 dark:text-slate-200" />
 								</Link>

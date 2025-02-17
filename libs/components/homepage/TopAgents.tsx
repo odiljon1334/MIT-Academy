@@ -83,9 +83,9 @@ const TopAgents = (props: TopAgentsProps) => {
 					<Stack className={'info-box'}>
 						<Box component={'div'} className="space-y-2">
 							<span className="font-openSans font-semibold text-[34px] text-slate-950 dark:text-slate-200">
-								Top Agents
+								Top Instructor
 							</span>
-							<p className="font-openSans font-normal text-slate-500">Our Top Agents always ready to serve you</p>
+							<p className="font-openSans font-normal text-slate-500">Our Top Instructors always ready to serve you</p>
 						</Box>
 						<Box component={'div'} className="flex flex-row items-center mr-10 space-x-2">
 							<div className={'flex'}>
@@ -97,7 +97,7 @@ const TopAgents = (props: TopAgentsProps) => {
 									className={'flex flex-row items-center space-x-2'}
 								>
 									<span className="text-md font-openSans font-semibold text-slate-950 dark:text-slate-200">
-										See All Categories
+										See All Instructors
 									</span>
 									<ArrowUpRight className="text-slate-950 dark:text-slate-200" />
 								</Link>
@@ -105,14 +105,14 @@ const TopAgents = (props: TopAgentsProps) => {
 						</Box>
 					</Stack>
 					<Stack className={'wrapper'}>
-						<Box component={'div'} className={'switch-btn swiper-agents-prev'}>
-							<ArrowBackIosNewIcon />
+						<Box component={'div'} className={'switch-btn swiper-agents-prev dark:bg-slate-200 bg-slate-300'}>
+							<ArrowBackIosNewIcon className="w-5 h-5 dark:text-slate-950" />
 						</Box>
 						<Box component={'div'} className={'card-wrapper'}>
 							<Swiper
 								className={'top-agents-swiper'}
-								slidesPerView={'auto'}
-								spaceBetween={29}
+								slidesPerView={4}
+								spaceBetween={15}
 								modules={[Autoplay, Navigation, Pagination]}
 								navigation={{
 									nextEl: '.swiper-agents-next',
@@ -128,8 +128,8 @@ const TopAgents = (props: TopAgentsProps) => {
 								})}
 							</Swiper>
 						</Box>
-						<Box component={'div'} className={'switch-btn swiper-agents-next'}>
-							<ArrowBackIosNewIcon />
+						<Box component={'div'} className={'switch-btn swiper-agents-next dark:bg-slate-200 bg-slate-300'}>
+							<ArrowBackIosNewIcon className="w-5 h-5 dark:text-slate-950 transform rotate-180" />
 						</Box>
 					</Stack>
 				</Stack>

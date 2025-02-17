@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { cn } from '../../utils';
 import Button from '@mui/material/Button';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
+import Link from 'next/link';
 
 function ElegantShape({
 	className,
@@ -94,7 +94,7 @@ export default function HeroGeometric({
 	const user = useReactiveVar(userVar);
 
 	return (
-		<div className="relative h-[860px] w-full flex items-center justify-center overflow-hidden bg-[#030303]">
+		<div className="relative h-[800px] w-full flex items-center justify-center overflow-hidden bg-[#030303]">
 			<div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.05] via-transparent to-rose-500/[0.05] blur-3xl" />
 
 			<div className="absolute inset-0 overflow-hidden">
@@ -165,16 +165,6 @@ export default function HeroGeometric({
 							We denounce with righteous indignation and dislike men who are so beguiled and demoralized that cannot
 							trouble.
 						</p>
-					</motion.div>
-
-					<motion.div custom={3} variants={fadeUpVariants} initial="hidden" animate="visible">
-						<Button
-							variant="outline"
-							size="lg"
-							className="w-40 h-auto p-4 rounded-2xl font-openSans border-none font-semibold bg-gradient-to-tr from-[#343434] via-transparent to-gray-500 text-gray-100 hover:bg-gradient-to-tr hover:from-[#1b1b1b] hover:to-gray-600 hover:via-transparent hover:text-gray-100"
-						>
-							Get Started
-						</Button>
 					</motion.div>
 				</div>
 			</div>

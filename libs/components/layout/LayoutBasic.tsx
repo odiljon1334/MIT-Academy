@@ -29,9 +29,9 @@ const withLayoutBasic = (Component: any) => {
 
 			switch (router.pathname) {
 				case '/property':
-					title = 'Property Search';
-					desc = 'We are glad to see you again!';
-					bgImage = '/img/banner/properties.png';
+					title = 'Course Search';
+					desc = 'Find your favorite course';
+					bgImage = '/img/banner/mac.jpg';
 					break;
 				case '/agent':
 					title = 'Agents';
@@ -72,7 +72,7 @@ const withLayoutBasic = (Component: any) => {
 				case '/member':
 					title = 'Member Page';
 					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header1.svg';
+					bgImage = '/img/banner/opoy7.jpg';
 					break;
 				default:
 					break;
@@ -115,33 +115,53 @@ const withLayoutBasic = (Component: any) => {
 			return (
 				<>
 					<Head>
-						<title>Nestar</title>
-						<meta name={'title'} content={`Nestar`} />
+						<title>Academy</title>
+						<meta name={'title'} content={`MIT Academy`} />
 					</Head>
 					<Stack id="pc-wrap">
 						<Stack id={'top'}>
 							<Top />
 						</Stack>
 
-						<Stack
-							className={`header-basic ${authHeader && 'auth'}`}
-							style={{
-								backgroundImage: `url(${memoizedValues.bgImage})`,
-								backgroundSize: 'cover',
-								boxShadow: 'inset 10px 40px 150px 40px rgb(24 22 36)',
-							}}
-						>
-							<Stack className={'container'}>
-								<strong>{t(memoizedValues.title)}</strong>
-								<span>{t(memoizedValues.desc)}</span>
+						<div className="flex items-center bg-black">
+							<Stack
+								className={`header-basic ${authHeader && 'auth'}`}
+								style={{
+									backgroundImage: `url(${memoizedValues.bgImage})`,
+									backgroundSize: 'cover',
+									backgroundPosition: 'center',
+									backgroundRepeat: 'no-repeat',
+								}}
+							>
+								<Stack className={'container'}>
+									<strong>{t(memoizedValues.title)}</strong>
+									<span>{t(memoizedValues.desc)}</span>
+								</Stack>
 							</Stack>
-						</Stack>
+						</div>
 
-						<Stack id={'main'}>
+						<Stack id={'main'} className="relative">
+							<div className="absolute inset-0 bg-gradient-to-b dark:from-slate-950 dark:to-slate-900 from-white to-gray-200">
+								{/* Grid pattern overlay */}
+								<div
+									className="absolute inset-0 transition-colors duration-300"
+									style={
+										{
+											backgroundImage: `
+              linear-gradient(to right, var(--grid-color) 2px, transparent 2px),
+              linear-gradient(to bottom, var(--grid-color) 2px, transparent 2px)
+            `,
+											backgroundSize: '150px 150px',
+											maskImage: 'linear-gradient(to bottom, transparent, black 20%, black 90%, transparent)',
+											'--grid-color': 'rgb(148 163 184 / 0.1)',
+										} as React.CSSProperties
+									}
+								/>
+							</div>
 							<Component {...props} />
 						</Stack>
 						<Chat />
-						<Stack id={'footer'}>
+						<Stack id={'footer'} className="bg-slate-950">
 							<Footer />
 						</Stack>
 					</Stack>

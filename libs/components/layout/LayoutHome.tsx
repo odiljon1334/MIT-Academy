@@ -74,7 +74,7 @@ const withLayoutMain = (Component: any) => {
 
 						{user?._id && <Chat />}
 
-						<Stack id={'footer'}>
+						<Stack id={'footer'} className="bg-slate-950">
 							<Footer />
 						</Stack>
 					</Stack>

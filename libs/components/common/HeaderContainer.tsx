@@ -1,6 +1,6 @@
 const HeaderContainer = () => {
 	return (
-		<section className="relative py-20">
+		<section className="relative py-20 dark:bg-inherit bg-slate-200/40">
 			<div className="max-w-7xl mx-auto text-center">
 				<div className="grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-4">
 					{/* Creators stat */}
