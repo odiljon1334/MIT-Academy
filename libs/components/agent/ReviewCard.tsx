@@ -25,14 +25,14 @@ const ReviewCard = (props: ReviewCardProps) => {
 					<div className={'left'}>
 						<img src={imagePath} alt="" />
 						<div>
-							<strong>{comment.memberData?.memberNick}</strong>
-							<span>
+							<strong className="dark:text-slate-100 text-neutral-800">{comment.memberData?.memberNick}</strong>
+							<span className="dark:text-slate-50">
 								<Moment format={'DD MMMM'}>{comment.createdAt}</Moment>
 							</span>
 						</div>
 					</div>
 				</div>
-				<p>{comment.commentContent}</p>
+				<p className="dark:text-slate-50 ml-[65px]">{comment.commentContent}</p>
 				{fromMyPage && (
 					<Stack className="reply-button-box">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">

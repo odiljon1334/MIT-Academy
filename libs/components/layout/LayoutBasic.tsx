@@ -13,6 +13,7 @@ import { useTranslation } from 'next-i18next';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import IconBreadcrumbs from './IconBreadcrumbs';
 
 const withLayoutBasic = (Component: any) => {
 	return (props: any) => {
@@ -21,6 +22,7 @@ const withLayoutBasic = (Component: any) => {
 		const device = useDeviceDetect();
 		const [authHeader, setAuthHeader] = useState<boolean>(false);
 		const user = useReactiveVar(userVar);
+		const showBreadcrumbs = !['/login', '/signup'].includes(router.pathname);
 
 		const memoizedValues = useMemo(() => {
 			let title = '',
@@ -29,38 +31,24 @@ const withLayoutBasic = (Component: any) => {
 
 			switch (router.pathname) {
 				case '/property':
-					title = 'Course Search';
-					desc = 'Find your favorite course';
 					bgImage = '/img/banner/mac.jpg';
 					break;
 				case '/agent':
-					title = 'Agents';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/agents.webp';
+					bgImage = '/img/banner/library2.jpg';
 					break;
 				case '/agent/detail':
-					title = 'Agent Page';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header2.svg';
+					bgImage = '/img/banner/library2.jpg';
 					break;
 				case '/mypage':
-					title = 'my page';
-					desc = 'Home / For Rent';
-					bgImage = '/img/banner/header1.svg';
+					bgImage = '/img/banner/mac.jpg';
 					break;
 				case '/community':
-					title = 'Community';
-					desc = 'Home / For Rent';
 					bgImage = '/img/banner/header2.svg';
 					break;
 				case '/community/detail':
-					title = 'Community Detail';
-					desc = 'Home / For Rent';
 					bgImage = '/img/banner/header2.svg';
 					break;
 				case '/cs':
-					title = 'CS';
-					desc = 'We are glad to see you again!';
 					bgImage = '/img/banner/header2.svg';
 					break;
 				case '/account/join':
@@ -70,8 +58,6 @@ const withLayoutBasic = (Component: any) => {
 					setAuthHeader(true);
 					break;
 				case '/member':
-					title = 'Member Page';
-					desc = 'Home / For Rent';
 					bgImage = '/img/banner/opoy7.jpg';
 					break;
 				default:
@@ -139,7 +125,6 @@ const withLayoutBasic = (Component: any) => {
 								</Stack>
 							</Stack>
 						</div>
-
 						<Stack id={'main'} className="relative">
 							<div className="absolute inset-0 bg-gradient-to-b dark:from-slate-950 dark:to-slate-900 from-white to-gray-200">
 								{/* Grid pattern overlay */}
@@ -158,6 +143,7 @@ const withLayoutBasic = (Component: any) => {
 									}
 								/>
 							</div>
+							{showBreadcrumbs && <IconBreadcrumbs />}
 							<Component {...props} />
 						</Stack>
 						<Chat />

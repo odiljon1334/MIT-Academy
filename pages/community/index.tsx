@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { Stack, Tab, Typography, Button, Pagination } from '@mui/material';
+import { Stack, Tab, Typography, Button, Pagination, Divider } from '@mui/material';
 import CommunityCard from '../../libs/components/common/CommunityCard';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
@@ -16,6 +16,7 @@ import { LIKE_TARGET_BOARD_ARTICLE } from '../../apollo/user/mutation';
 import { GET_BOARD_ARTICLES } from '../../apollo/user/query';
 import { Message } from '../../libs/enums/common.enum';
 import { sweetMixinErrorAlert, sweetTopSmallSuccessAlert } from '../../libs/sweetAlert';
+import NewspaperOutlinedIcon from '@mui/icons-material/NewspaperOutlined';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -108,12 +109,13 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 			<div id="community-list-page">
 				<div className="container">
 					<TabContext value={searchCommunity.search.articleCategory}>
-						<Stack className="main-box">
-							<Stack className="left-config">
+						<Stack className="main-box border border-solid border-neutral-300 dark:border-neutral-600 rounded-lg dark:bg-slate-950/50 bg-neutral-50/50">
+							<Stack className="left-config dark:bg-slate-900 bg-neutral-50 border border-solid border-neutral-300 dark:border-neutral-600">
 								<Stack className={'image-info'}>
-									<img src={'/img/logo/logoText.svg'} />
 									<Stack className={'community-name'}>
-										<Typography className={'name'}>Nestar Community</Typography>
+										<Typography className={'name font-openSans'}>
+											Article Category <NewspaperOutlinedIcon className="text-amber-400 ml-2" />
+										</Typography>
 									</Stack>
 								</Stack>
 
@@ -128,47 +130,59 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 									<Tab
 										value={'FREE'}
 										label={'Free Board'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'FREE' ? 'active' : ''}`}
+										className={`tab-button ${
+											searchCommunity.search.articleCategory == 'FREE' ? 'active' : ''
+										} border border-solid border-neutral-600`}
 									/>
 									<Tab
 										value={'RECOMMEND'}
 										label={'Recommendation'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'RECOMMEND' ? 'active' : ''}`}
+										className={`tab-button ${
+											searchCommunity.search.articleCategory == 'RECOMMEND' ? 'active' : ''
+										} border border-solid border-neutral-600`}
 									/>
 									<Tab
 										value={'NEWS'}
 										label={'News'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'NEWS' ? 'active' : ''}`}
+										className={`tab-button ${
+											searchCommunity.search.articleCategory == 'NEWS' ? 'active' : ''
+										} border border-solid border-neutral-600`}
 									/>
 									<Tab
 										value={'HUMOR'}
 										label={'Humor'}
-										className={`tab-button ${searchCommunity.search.articleCategory == 'HUMOR' ? 'active' : ''}`}
+										className={`tab-button ${
+											searchCommunity.search.articleCategory == 'HUMOR' ? 'active' : ''
+										} border border-solid border-neutral-600`}
 									/>
 								</TabList>
+								<Divider />
+								<Button
+									variant="contained"
+									onClick={() =>
+										router.push({
+											pathname: '/mypage',
+											query: {
+												category: 'writeArticle',
+											},
+										})
+									}
+									className="rounded-md mt-5 p-3 border border-solid border-neutral-600 text-neutral-200 bg-neutral-900 hover:bg-neutral-700 font-openSans font-meduim"
+								>
+									Write new article
+								</Button>
 							</Stack>
 							<Stack className="right-config">
 								<Stack className="panel-config">
 									<Stack className="title-box">
 										<Stack className="left">
-											<Typography className="title">{searchCommunity.search.articleCategory} BOARD</Typography>
-											<Typography className="sub-title">
+											<Typography className="title font-openSans mb-2">
+												{searchCommunity.search.articleCategory} BOARD
+											</Typography>
+											<Typography className="sub-title font-openSans text-gray-600">
 												Express your opinions freely here without content restrictions
 											</Typography>
 										</Stack>
-										<Button
-											onClick={() =>
-												router.push({
-													pathname: '/mypage',
-													query: {
-														category: 'writeArticle',
-													},
-												})
-											}
-											className="right"
-										>
-											Write
-										</Button>
 									</Stack>
 
 									<TabPanel value="FREE">
@@ -260,6 +274,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 						<Stack className="pagination-config">
 							<Stack className="pagination-box">
 								<Pagination
+									variant="outlined"
 									count={Math.ceil(totalCount / searchCommunity.limit)}
 									page={searchCommunity.page}
 									shape="circular"
@@ -286,9 +301,7 @@ Community.defaultProps = {
 		limit: 6,
 		sort: 'createdAt',
 		direction: 'ASC',
-		search: {
-			articleCategory: 'FREE',
-		},
+		search: { articleCategory: 'FREE' },
 	},
 };
 

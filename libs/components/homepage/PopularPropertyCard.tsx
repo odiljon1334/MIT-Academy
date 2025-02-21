@@ -8,7 +8,7 @@ import { REACT_APP_API_URL, topPropertyRank } from '../../config';
 import { useRouter } from 'next/router';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
-import { ArrowUpRight, BookMarked, ChevronRight, Clock, Trophy } from 'lucide-react';
+import { ArrowUpRight, BookMarked, Clock, Trophy } from 'lucide-react';
 import { PropertyStatus } from '../../enums/property.enum';
 
 interface PopularPropertyCardProps {

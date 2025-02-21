@@ -11,6 +11,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { userVar } from '../../../apollo/store';
 import { GET_MEMBER_FOLLOWINGS } from '../../../apollo/user/query';
 import { T } from '../../types/common';
+import { Card, CardContent, CardMedia, Paper } from '@mui/material';
 
 interface MemberFollowingsProps {
 	initialInput: FollowInquiry;
@@ -66,114 +67,147 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 		return <div>NESTAR FOLLOWS MOBILE</div>;
 	} else {
 		return (
-			<div id="member-follows-page">
-				<Stack className="main-title-box">
-					<Stack className="right-box">
-						<Typography className="main-title">{category === 'followers' ? 'Followers' : 'Followings'}</Typography>
+			<>
+				<div id="member-follows-page">
+					<Stack className="main-title-box">
+						<Stack className="right-box">
+							<Typography className="main-title">{category === 'followers' ? 'Followers' : 'Followings'}</Typography>
+						</Stack>
 					</Stack>
-				</Stack>
-				<Stack className="follows-list-box">
-					<Stack className="listing-title-box">
-						<Typography className="title-text">Name</Typography>
-						<Typography className="title-text">Details</Typography>
-						<Typography className="title-text">Subscription</Typography>
-					</Stack>
-					{memberFollowings?.length === 0 && (
-						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="" />
-							<p>No Followings yet!</p>
-						</div>
-					)}
-					{memberFollowings.map((follower: Following) => {
-						const imagePath: string = follower?.followingData?.memberImage
-							? `${REACT_APP_API_URL}/${follower?.followingData?.memberImage}`
-							: '/img/profile/defaultUser.svg';
-						return (
-							<Stack className="follows-card-box" key={follower._id}>
-								<Stack className={'info'} onClick={() => redirectToMemberPageHandler(follower?.followingData?._id)}>
-									<Stack className="image-box">
-										<img src={imagePath} alt="" />
-									</Stack>
-									<Stack className="information-box">
-										<Typography className="name">{follower?.followingData?.memberNick}</Typography>
-									</Stack>
-								</Stack>
-								<Stack className={'details-box'}>
-									<Box className={'info-box'} component={'div'}>
-										<p>Followers</p>
-										<span>({follower?.followingData?.memberFollowers})</span>
-									</Box>
-									<Box className={'info-box'} component={'div'}>
-										<p>Followings</p>
-										<span>({follower?.followingData?.memberFollowings})</span>
-									</Box>
-									<Box className={'info-box'} component={'div'}>
-										{follower?.meLiked && follower?.meLiked[0]?.myFavorite ? (
-											<FavoriteIcon
-												color="primary"
-												onClick={() =>
-													likeMemberHandler(follower?.followingData?._id, getMemberFollowingsRefetch, followInquiry)
-												}
-											/>
-										) : (
-											<FavoriteBorderIcon
-												onClick={() =>
-													likeMemberHandler(follower?.followingData?._id, getMemberFollowingsRefetch, followInquiry)
-												}
-											/>
-										)}
-										<span>({follower?.followingData?.memberLikes})</span>
-									</Box>
-								</Stack>
-								{user?._id !== follower?.followingId && (
-									<Stack className="action-box">
-										{follower.meFollowed && follower.meFollowed[0]?.myFollowing ? (
-											<>
-												<Typography>Following</Typography>
-												<Button
-													variant="outlined"
-													sx={{ background: '#f78181', ':hover': { background: '#f06363' } }}
-													onClick={() =>
-														unsubscribeHandler(follower?.followingData?._id, getMemberFollowingsRefetch, followInquiry)
-													}
-												>
-													Unfollow
-												</Button>
-											</>
-										) : (
-											<Button
-												variant="contained"
-												sx={{ background: '#60eb60d4', ':hover': { background: '#60eb60d4' } }}
-												onClick={() =>
-													subscribeHandler(follower?.followingData?._id, getMemberFollowingsRefetch, followInquiry)
-												}
+					<Stack className="follows-list-box">
+						<Stack className="listing-title-box bg-neutral-200 border border-solid border-neutral-300">
+							<Typography className="title-text">Name</Typography>
+							<Typography className="title-text">Details</Typography>
+							<Typography className="title-text">Subscription</Typography>
+						</Stack>
+						{memberFollowings?.length === 0 && (
+							<div className={'no-data'}>
+								<img src="/img/icons/icoAlert.svg" alt="" />
+								<p>No Followings yet!</p>
+							</div>
+						)}
+						<Box className="w-full flex flex-col justify-center space-y-4">
+							{memberFollowings.map((follower: Following) => {
+								const imagePath: string = follower?.followingData?.memberImage
+									? `${REACT_APP_API_URL}/${follower?.followingData?.memberImage}`
+									: '/img/profile/defaultUser.svg';
+								return (
+									<Card
+										key={follower._id}
+										className="flex flex-row rounded-md shadow-lg w-[100%] p-4 bg-neutral-50 dark:bg-slate-900 border border-solid dark:border-neutral-600 border-neutral-300"
+									>
+										<CardMedia
+											component="img"
+											sx={{ width: 182, height: 182, borderRadius: '8px', objectFit: 'cover' }}
+											image={imagePath}
+											alt="User Image"
+										/>
+										<CardContent className="flex flex-col w-full">
+											<Typography variant="h6" className="font-semibold">
+												{follower?.followingData?.memberNick}
+											</Typography>
+											<Typography variant="body2" color="text.secondary" className="font-medium">
+												Senior Journalist
+											</Typography>
+											<Paper
+												elevation={3}
+												className="p-3 my-3 flex justify-between rounded-lg dark:bg-slate-800 bg-gray-100"
 											>
-												Follow
-											</Button>
-										)}
-									</Stack>
-								)}
-							</Stack>
-						);
-					})}
-				</Stack>
-				{memberFollowings.length !== 0 && (
-					<Stack className="pagination-config">
-						<Stack className="pagination-box">
-							<Pagination
-								page={followInquiry.page}
-								count={Math.ceil(total / followInquiry.limit)}
-								onChange={paginationHandler}
-								shape="circular"
-								color="primary"
-							/>
-						</Stack>
-						<Stack className="total-result">
-							<Typography>{total} followings</Typography>
-						</Stack>
+												<Box className="text-center">
+													<Typography variant="caption" className="font-medium">
+														Properties
+													</Typography>
+													<Typography variant="body1" className="font-bold">
+														{follower?.followingData?.memberProperties}
+													</Typography>
+												</Box>
+												<Box className="text-center">
+													<Typography variant="caption" className="font-medium">
+														Followers
+													</Typography>
+													<Typography variant="body1" className="font-bold">
+														{follower?.followingData?.memberFollowers}
+													</Typography>
+												</Box>
+												<Box className="text-center">
+													<Typography variant="caption" className="font-medium">
+														Followings
+													</Typography>
+													<Typography variant="body1" className="font-bold">
+														{follower?.followingData?.memberFollowings}
+													</Typography>
+												</Box>
+												<Box className="text-center">
+													<Typography variant="caption" className="font-medium">
+														Rating
+													</Typography>
+													<Typography variant="body1" className="font-bold">
+														{follower?.followingData?.memberRank}
+													</Typography>
+												</Box>
+											</Paper>
+											<Box className="flex justify-end">
+												{user?._id !== follower?.followingId && (
+													<Stack className="action-box">
+														{follower.meFollowed && follower.meFollowed[0]?.myFollowing ? (
+															<>
+																<Button
+																	variant="contained"
+																	color="primary"
+																	className="flex rounded-md"
+																	onClick={() =>
+																		unsubscribeHandler(
+																			follower?.followingData?._id,
+																			getMemberFollowingsRefetch,
+																			followInquiry,
+																		)
+																	}
+																>
+																	unfollow
+																</Button>
+															</>
+														) : (
+															<Button
+																variant="contained"
+																sx={{ background: '#60eb60d4', ':hover': { background: '#60eb60d4' } }}
+																onClick={() =>
+																	subscribeHandler(
+																		follower?.followingData?._id,
+																		getMemberFollowingsRefetch,
+																		followInquiry,
+																	)
+																}
+															>
+																Follow
+															</Button>
+														)}
+													</Stack>
+												)}
+											</Box>
+										</CardContent>
+									</Card>
+								);
+							})}
+						</Box>
 					</Stack>
-				)}
-			</div>
+					{memberFollowings.length !== 0 && (
+						<Stack className="pagination-config">
+							<Stack className="pagination-box">
+								<Pagination
+									page={followInquiry.page}
+									count={Math.ceil(total / followInquiry.limit)}
+									onChange={paginationHandler}
+									shape="circular"
+									color="primary"
+								/>
+							</Stack>
+							<Stack className="total-result">
+								<Typography>{total} followings</Typography>
+							</Stack>
+						</Stack>
+					)}
+				</div>
+			</>
 		);
 	}
 };

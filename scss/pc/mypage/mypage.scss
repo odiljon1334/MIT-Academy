@@ -1,6 +1,5 @@
 #pc-wrap {
 	#my-page {
-		background: #f6f6f6;
 		.container {
 			.my-page {
 				position: relative;
@@ -15,31 +14,29 @@
 					flex-direction: row;
 					margin: 100px 0 200px 0;
 					border-radius: 12px;
-					border: 1px solid #c4c4c4;
-					background: #fff;
 					box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 					.left-config {
 						position: relative;
 						padding: 0 0 0 0;
 						width: 266px;
-						height: 700px;
+						height: 750px;
 						border-radius: 12px;
-						background: #fff;
-						border: 1px solid rgba(196, 196, 196, 0.79);
 						box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 						margin: 180px 20px 40px 20px;
 						.profile {
-							margin-top: 5px;
+							width: 230px;
+							display: flex;
+							flex-direction: row;
+							align-items: center;
 							position: relative;
+							border-radius: 8px;
 							display: flex;
 							flex-direction: row;
 							.profile-img {
 								img {
 									width: 79px;
-									height: 79px;
+									height: 69px;
 									border-radius: 50%;
-									right: 30px;
-									bottom: 12px;
 									object-fit: cover;
 								}
 							}
@@ -48,8 +45,6 @@
 								display: flex;
 								flex-direction: column;
 								.user-name {
-									color: #181a20;
-									font-family: $font;
 									font-size: 15px;
 									font-style: normal;
 									font-weight: 600;
@@ -77,13 +72,6 @@
 							margin-top: 30px;
 							.section {
 								height: auto;
-								.title {
-									font-family: $font;
-									font-size: 15px;
-									font-style: normal;
-									font-weight: 400;
-									line-height: 28px;
-								}
 								.sub-section {
 									width: 230px;
 									height: 26px;
@@ -94,7 +82,7 @@
 									padding: 0 5px 0 5px;
 									li {
 										height: 33px;
-										margin-bottom: 6px;
+										margin-bottom: 7px;
 										border-radius: 4px;
 									}
 									.focus {
@@ -120,13 +108,8 @@
 										}
 									}
 								}
-								img {
-									width: 16px;
-									height: 16px;
-								}
 								.sub-title {
 									margin-left: 12px;
-									color: #181a20;
 									font-family: $font;
 									font-size: 14px;
 									font-style: normal;
@@ -223,7 +206,6 @@
 											height: 23px;
 											overflow: hidden;
 											p {
-												color: #181a20;
 												font-family: $font;
 												font-size: 15px;
 												font-style: normal;
@@ -272,16 +254,11 @@
 										margin-bottom: 17px;
 									}
 									.type-buttons {
-										flex-direction: row;
-										width: 100%;
-										justify-content: space-between;
-										align-items: center;
 										.type {
 											flex-direction: row;
 											align-items: center;
 											gap: 7px;
 											p {
-												color: #181a20;
 												font-family: $font;
 												font-style: normal;
 												line-height: normal;
@@ -292,14 +269,6 @@
 												font-style: normal;
 												line-height: normal;
 											}
-										}
-										.buttons {
-											flex-direction: row;
-											width: auto;
-											gap: 12px;
-											justify-content: center;
-											align-items: center;
-											padding-right: 10px;
 										}
 									}
 								}
@@ -316,7 +285,6 @@
 							}
 							.total-result {
 								p {
-									color: #181a20;
 									text-align: center;
 									font-family: $font;
 									font-size: 24px;

@@ -10,6 +10,7 @@ import { userVar } from '../../../apollo/store';
 import { MemberUpdate } from '../../types/member/member.update';
 import { UPDATE_MEMBER } from '../../../apollo/user/mutation';
 import { sweetErrorHandling, sweetMixinSuccessAlert } from '../../sweetAlert';
+import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 
 const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 	const device = useDeviceDetect();
@@ -121,7 +122,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 						<Typography className="sub-title">We are glad to see you again!</Typography>
 					</Stack>
 				</Stack>
-				<Stack className="top-box">
+				<Stack className="top-box bg-neutral-50 dark:bg-slate-900 border border-solid dark:border-neutral-600 border-neutral-300">
 					<Stack className="photo-box">
 						<Typography className="title">Photo</Typography>
 						<Stack className="image-big-box">
@@ -143,7 +144,10 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 									onChange={uploadImage}
 									accept="image/jpg, image/jpeg, image/png"
 								/>
-								<label htmlFor="hidden-input" className="labeler">
+								<label
+									htmlFor="hidden-input"
+									className="labeler border border-solid border-neutral-500 dark:border-neutral-400 hover:underline"
+								>
 									<Typography>Upload Profile Image</Typography>
 								</label>
 								<Typography className="upload-text">A photo must be in JPG, JPEG or PNG format!</Typography>
@@ -154,6 +158,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 						<Stack className="input-box">
 							<Typography className="title">Username</Typography>
 							<input
+								className="border border-solid border-neutral-300 dark:border-neutral-700 placeholder-neutral-700 text-neutral-700"
 								type="text"
 								placeholder="Your username"
 								value={updateData.memberNick}
@@ -163,6 +168,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 						<Stack className="input-box">
 							<Typography className="title">Phone</Typography>
 							<input
+								className="border border-solid border-neutral-300 dark:border-neutral-700 placeholder-neutral-700 text-neutral-700"
 								type="text"
 								placeholder="Your Phone"
 								value={updateData.memberPhone}
@@ -173,6 +179,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 					<Stack className="address-box">
 						<Typography className="title">Address</Typography>
 						<input
+							className="border border-solid border-neutral-300 dark:border-neutral-700 placeholder-neutral-700 text-neutral-700"
 							type="text"
 							placeholder="Your address"
 							value={updateData.memberAddress}
@@ -180,21 +187,13 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 						/>
 					</Stack>
 					<Stack className="about-me-box">
-						<Button className="update-button" onClick={updatePropertyHandler} disabled={doDisabledCheck()}>
+						<Button
+							className="update-button bg-neutral-900 text-slate-200 hover:bg-neutral-700"
+							onClick={updatePropertyHandler}
+							disabled={doDisabledCheck()}
+						>
 							<Typography>Update Profile</Typography>
-							<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
-								<g clipPath="url(#clip0_7065_6985)">
-									<path
-										d="M12.6389 0H4.69446C4.49486 0 4.33334 0.161518 4.33334 0.361122C4.33334 0.560727 4.49486 0.722245 4.69446 0.722245H11.7672L0.105803 12.3836C-0.0352676 12.5247 -0.0352676 12.7532 0.105803 12.8942C0.176321 12.9647 0.268743 13 0.361131 13C0.453519 13 0.545907 12.9647 0.616459 12.8942L12.2778 1.23287V8.30558C12.2778 8.50518 12.4393 8.6667 12.6389 8.6667C12.8385 8.6667 13 8.50518 13 8.30558V0.361122C13 0.161518 12.8385 0 12.6389 0Z"
-										fill="white"
-									/>
-								</g>
-								<defs>
-									<clipPath id="clip0_7065_6985">
-										<rect width="13" height="13" fill="white" />
-									</clipPath>
-								</defs>
-							</svg>
+							<ArrowOutwardIcon fontSize="medium" />
 						</Button>
 					</Stack>
 				</Stack>

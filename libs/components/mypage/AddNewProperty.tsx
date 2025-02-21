@@ -12,6 +12,8 @@ import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
 import { CREATE_PROPERTY, UPDATE_PROPERTY } from '../../../apollo/user/mutation';
 import { GET_PROPERTY } from '../../../apollo/user/query';
+import { styled } from '@mui/material/styles';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 const AddProperty = ({ initialValues, ...props }: any) => {
 	const device = useDeviceDetect();
@@ -185,7 +187,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 				</Stack>
 
 				<div>
-					<Stack className="config">
+					<Stack className="config bg-neutral-50 dark:bg-slate-900 border border-solid dark:border-neutral-600 border-neutral-300">
 						<Stack className="description-box">
 							<Stack className="config-column">
 								<Typography className="title">Title</Typography>
@@ -407,7 +409,7 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 
 						<Typography className="upload-title">Upload photos of your property</Typography>
 						<Stack className="images-box">
-							<Stack className="upload-box">
+							<Stack className="upload-box border border-dashed border-neutral-600">
 								<svg xmlns="http://www.w3.org/2000/svg" width="121" height="120" viewBox="0 0 121 120" fill="none">
 									<g clipPath="url(#clip0_7037_5336)">
 										<path
@@ -454,12 +456,15 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 									<Typography className="format-title">Photos must be JPEG or PNG format and least 2048x768</Typography>
 								</Stack>
 								<Button
-									className="browse-button"
+									variant="outlined"
+									color="inherit"
+									startIcon={<CloudUploadIcon />}
+									className="browse-button border border-solid border-neutral-400 rounded-md p-3 bg-ring ring-1 ring-zinc-800"
 									onClick={() => {
 										inputRef.current.click();
 									}}
 								>
-									<Typography className="browse-button-text">Browse Files</Typography>
+									<Typography className="browse-button-text">Upload files</Typography>
 									<input
 										ref={inputRef}
 										type="file"
@@ -468,19 +473,6 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 										multiple={true}
 										accept="image/jpg, image/jpeg, image/png"
 									/>
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-										<g clipPath="url(#clip0_7309_3249)">
-											<path
-												d="M15.5556 0H5.7778C5.53214 0 5.33334 0.198792 5.33334 0.444458C5.33334 0.690125 5.53214 0.888917 5.7778 0.888917H14.4827L0.130219 15.2413C-0.0434062 15.415 -0.0434062 15.6962 0.130219 15.8698C0.21701 15.9566 0.33076 16 0.444469 16C0.558177 16 0.671885 15.9566 0.758719 15.8698L15.1111 1.51737V10.2222C15.1111 10.4679 15.3099 10.6667 15.5556 10.6667C15.8013 10.6667 16.0001 10.4679 16.0001 10.2222V0.444458C16 0.198792 15.8012 0 15.5556 0Z"
-												fill="#181A20"
-											/>
-										</g>
-										<defs>
-											<clipPath id="clip0_7309_3249">
-												<rect width="16" height="16" fill="white" />
-											</clipPath>
-										</defs>
-									</svg>
 								</Button>
 							</Stack>
 							<Stack className="gallery-box">
@@ -497,11 +489,22 @@ const AddProperty = ({ initialValues, ...props }: any) => {
 
 						<Stack className="buttons-row">
 							{router.query.propertyId ? (
-								<Button className="next-button" disabled={doDisabledCheck()} onClick={updatePropertyHandler}>
+								<Button
+									className="next-button border border-solid border-neutral-400 rounded-md p-3 dark:bg-zinc-950"
+									variant="contained"
+									color="inherit"
+									disabled={doDisabledCheck()}
+									onClick={updatePropertyHandler}
+								>
 									<Typography className="next-button-text">Save</Typography>
 								</Button>
 							) : (
-								<Button className="next-button" disabled={doDisabledCheck()} onClick={insertPropertyHandler}>
+								<Button
+									variant="contained"
+									className="next-button border border-solid border-neutral-400 rounded-md p-3 dark:bg-zinc-950"
+									disabled={doDisabledCheck()}
+									onClick={insertPropertyHandler}
+								>
 									<Typography className="next-button-text">Save</Typography>
 								</Button>
 							)}

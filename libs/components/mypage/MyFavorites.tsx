@@ -90,6 +90,7 @@ const MyFavorites: NextPage = () => {
 					<Stack className="pagination-config">
 						<Stack className="pagination-box">
 							<Pagination
+								variant="outlined"
 								count={Math.ceil(total / searchFavorites.limit)}
 								page={searchFavorites.page}
 								shape="circular"

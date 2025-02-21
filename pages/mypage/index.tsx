@@ -40,8 +40,15 @@ const MyPage: NextPage = () => {
 
 	/** LIFECYCLES **/
 	useEffect(() => {
-		if (!user._id) router.push('/').then();
-	}, [user]);
+		const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+		if (typeof user?._id === 'undefined' && storedUser?._id) {
+			userVar(storedUser);
+			return;
+		}
+		// if (!user?._id && router.pathname !== '/') {
+		// 	router.push('/');
+		// }
+	}, [user?._id, router.pathname]);
 
 	/** HANDLERS **/
 	const subscribeHandler = async (id: string, refetch: any, query: any) => {
@@ -109,8 +116,16 @@ const MyPage: NextPage = () => {
 			<div id="my-page" style={{ position: 'relative' }}>
 				<div className="container">
 					<Stack className={'my-page'}>
-						<Stack className={'back-frame'}>
-							<Stack className={'left-config'}>
+						<Stack
+							className={
+								'back-frame bg-neutral-50/50 dark:bg-slate-900/50 border border-solid dark:border-neutral-600 border-neutral-300'
+							}
+						>
+							<Stack
+								className={
+									'left-config bg-neutral-50 dark:bg-slate-900 border border-solid dark:border-neutral-600 border-neutral-300'
+								}
+							>
 								<MyMenu />
 							</Stack>
 							<Stack className="main-config" mb={'76px'}>

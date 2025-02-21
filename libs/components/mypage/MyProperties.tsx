@@ -96,7 +96,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 					</Stack>
 				</Stack>
 				<Stack className="property-list-box">
-					<Stack className="tab-name-box">
+					<Stack className="tab-name-box bg-neutral-100 dark:bg-slate-800 border border-solid dark:border-neutral-600 border-neutral-300">
 						<Typography
 							onClick={() => changeStatusHandler(PropertyStatus.ACTIVE)}
 							className={searchFilter.search.propertyStatus === 'ACTIVE' ? 'active-tab-name' : 'tab-name'}
@@ -110,8 +110,8 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 							On Sold
 						</Typography>
 					</Stack>
-					<Stack className="list-box">
-						<Stack className="listing-title-box">
+					<Stack className="list-box bg-neutral-50 dark:bg-slate-900 border border-solid dark:border-neutral-600 border-neutral-300">
+						<Stack className="listing-title-box bg-neutral-100 dark:bg-slate-700 border border-solid dark:border-neutral-600 border-neutral-300">
 							<Typography className="title-text">Listing title</Typography>
 							<Typography className="title-text">Date Published</Typography>
 							<Typography className="title-text">Status</Typography>
@@ -141,6 +141,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 							<Stack className="pagination-config">
 								<Stack className="pagination-box">
 									<Pagination
+										variant="outlined"
 										count={Math.ceil(total / searchFilter.limit)}
 										page={searchFilter.page}
 										shape="circular"
@@ -149,7 +150,7 @@ const MyProperties: NextPage = ({ initialInput, ...props }: any) => {
 									/>
 								</Stack>
 								<Stack className="total-result">
-									<Typography>{total} property available</Typography>
+									<Typography className="dark:text-slate-200">{total} property available</Typography>
 								</Stack>
 							</Stack>
 						)}

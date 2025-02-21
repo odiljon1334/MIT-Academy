@@ -34,7 +34,7 @@ const PropertyCard = (props: PropertyCardType) => {
 	} else {
 		return (
 			<Stack className="card-config">
-				<Stack className="top border border-b-0 border-slate-600 rounded-t-[12px] border-solid">
+				<Stack className="top border border-b-0 border-slate-600 rounded-t-[13px] border-solid">
 					{property && property._id && (
 						<Link
 							href={{
@@ -68,12 +68,15 @@ const PropertyCard = (props: PropertyCardType) => {
 											}}
 										>
 											<Typography className="flex items-center text-md font-openSans font-semibold text-slate-950 dark:text-slate-300 hover:underline">
-												{property?.propertyTitle || 'No title available'}
+												{property?.propertyTitle
+													? property.propertyTitle.length > 15
+														? property.propertyTitle.substring(0, 17) + '...'
+														: property.propertyTitle
+													: 'No title available'}
 												<ArrowUpRight className="text-slate-950 dark:text-slate-300 w-5 h-5" />
 											</Typography>
 										</Link>
 										<Chip
-											className="w-[60px] h-5"
 											size="small"
 											label={property?.propertyStatus === PropertyStatus.ACTIVE ? 'Active' : 'Inactive'}
 											color={PropertyStatus.ACTIVE ? 'success' : 'default'}

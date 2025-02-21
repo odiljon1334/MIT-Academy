@@ -67,7 +67,7 @@ export const PropertyCard = (props: PropertyCardProps) => {
 				</Stack>
 				<Stack className="date-box">
 					<Typography className="date">
-						<Moment format="DD MMMM, YYYY">{property.createdAt}</Moment>
+						<Moment format="DD MMM, YYYY">{property.createdAt}</Moment>
 					</Typography>
 				</Stack>
 				<Stack className="status-box">

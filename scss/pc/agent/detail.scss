@@ -12,74 +12,29 @@
 			flex-direction: column;
 			align-items: center;
 			.agent-info {
-				margin-left: 58px;
 				width: 100%;
 				display: flex;
 				flex-direction: row;
 				align-items: center;
-				img {
-					margin-right: 32px;
-					width: 135px;
-					height: 135px;
-					border-radius: 50%;
-					cursor: pointer;
-					object-fit: cover;
-				}
-				.info {
-					display: flex;
-					flex-direction: column;
-					strong {
-						color: #181a20;
-						font-family: $font;
-						font-size: 24px;
-						font-style: normal;
-						font-weight: 600;
-						line-height: normal;
-						text-transform: capitalize;
-						cursor: pointer;
-					}
-					div {
-						margin-top: 13px;
-						display: flex;
-						flex-direction: row;
-						align-items: center;
-						img {
-							margin-right: 10px;
-							width: 16px;
-							height: 16px;
-						}
-						span {
-							color: #181a20;
-							font-family: $font;
-							font-size: 20px;
-							font-style: normal;
-							font-weight: 400;
-							line-height: 28px;
-						}
-					}
-				}
 			}
 			.agent-home-list {
 				position: relative;
 				width: 100%;
+				padding-bottom: 30px;
 				margin-top: 33px;
-				padding: 0px 0 46px;
 				display: flex;
 				flex-direction: column;
 				border-radius: 12px;
-				background: #fff;
 				box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 				.card-wrap {
 					position: relative;
-					margin-top: 35px;
+					padding: 35px;
 					width: 100%;
 					height: auto;
 					display: flex;
 					flex-direction: row;
 					flex-wrap: wrap;
 					.wrap-main {
-						margin-right: 0px;
-						margin-left: 5px;
 						display: flex;
 						flex-direction: row;
 						flex-wrap: wrap;
@@ -91,7 +46,6 @@
 					align-items: center;
 					span {
 						margin-top: 20px;
-						color: #181a20;
 						font-family: $font;
 						font-size: 14px;
 						font-style: normal;
@@ -107,12 +61,10 @@
 				width: 95%;
 				height: auto;
 				border-radius: 24px;
-				background: #f6f6f6;
 				.main-intro {
 					display: flex;
 					flex-direction: column;
 					span {
-						color: #181a20;
 						font-family: $font;
 						font-size: 30px;
 						font-style: normal;
@@ -122,7 +74,6 @@
 						text-transform: capitalize;
 					}
 					p {
-						color: #181a20;
 						font-family: $font;
 						font-size: 14px;
 						font-style: normal;
@@ -136,8 +87,6 @@
 					display: flex;
 					flex-direction: column;
 					border-radius: 12px;
-					background: #fff;
-					box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 					.title-box {
 						svg {
 							width: 10px;
@@ -145,7 +94,6 @@
 						}
 						span {
 							margin-left: 8px;
-							color: #181a20;
 							font-family: $font;
 							font-size: 17px;
 							font-style: normal;
@@ -177,7 +125,6 @@
 									display: flex;
 									flex-direction: column;
 									strong {
-										color: #181a20;
 										font-family: $font;
 										font-size: 15px;
 										font-style: normal;
@@ -186,7 +133,6 @@
 									}
 									span {
 										margin-top: 4px;
-										color: #181a20;
 										font-family: $font;
 										font-size: 13px;
 										font-style: normal;
@@ -205,7 +151,6 @@
 						}
 						p {
 							margin-top: 10px;
-							color: #181a20;
 							font-family: $font;
 							font-size: 14px;
 							font-style: normal;
@@ -224,11 +169,9 @@
 				.leave-review-config {
 					margin-top: 15px;
 					border-radius: 12px;
-					background: #fff;
 					box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 					padding: 30px 38px;
 					.main-title {
-						color: #181a20;
 						font-family: $font;
 						font-size: 17px;
 						font-style: normal;
@@ -237,7 +180,6 @@
 					}
 					.review-title {
 						margin-top: 20px;
-						color: #181a20;
 						font-family: $font;
 						font-size: 14px;
 						font-style: normal;
@@ -249,8 +191,8 @@
 						height: 120px;
 						margin-top: 8px;
 						padding: 20px;
+						border: 1px solid #c4c4c4;
 						border-radius: 8px;
-						border: 1px solid #ddd;
 						color: #717171;
 						font-family: $font;
 						font-size: 14px;
@@ -262,9 +204,6 @@
 						width: 100%;
 						display: flex;
 						justify-content: flex-end;
-						button:disabled {
-							background: #dfdfdf;
-						}
 						.submit-review {
 							display: flex;
 							width: 256px;
@@ -277,7 +216,6 @@
 							border: 1px solid #c4c4c4;
 							cursor: pointer;
 							.title {
-								color: #181a20;
 								font-family: $font;
 								font-size: 15px;
 								font-style: normal;

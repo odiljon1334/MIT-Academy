@@ -5,6 +5,11 @@ import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import PropertyBigCard from '../../libs/components/common/PropertyBigCard';
 import ReviewCard from '../../libs/components/agent/ReviewCard';
 import { Box, Button, Pagination, Stack, Typography } from '@mui/material';
+import Link from '@mui/material/Link';
+import Card from '@mui/material/Card';
+import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 import StarIcon from '@mui/icons-material/Star';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
@@ -22,6 +27,7 @@ import { GET_COMMENTS, GET_MEMBER, GET_PROPERTIES } from '../../apollo/user/quer
 import { T } from '../../libs/types/common';
 import { CREATE_COMMENT, LIKE_TARGET_PROPERTY } from '../../apollo/user/mutation';
 import { Message } from '../../libs/enums/common.enum';
+import PhoneIcon from '@mui/icons-material/Phone';
 
 export const getStaticProps = async ({ locale }: any) => ({
 	props: {
@@ -190,122 +196,158 @@ const AgentDetail: NextPage = ({ initialInput, initialComment, ...props }: any) 
 		return <div>AGENT DETAIL PAGE MOBILE</div>;
 	} else {
 		return (
-			<Stack className={'agent-detail-page'}>
-				<Stack className={'container'}>
-					<Stack className={'agent-info'}>
-						<img
-							src={agent?.memberImage ? `${REACT_APP_API_URL}/${agent?.memberImage}` : '/img/profile/defaultUser.svg'}
-							alt=""
-						/>
-						<Box component={'div'} className={'info'} onClick={() => redirectToMemberPageHandler(agent?._id as string)}>
-							<strong>{agent?.memberFullName ?? agent?.memberNick}</strong>
-							<div>
-								<img src="/img/icons/call.svg" alt="" />
-								<span>{agent?.memberPhone}</span>
-							</div>
-						</Box>
-					</Stack>
-					<Stack className={'agent-home-list'}>
-						<Stack className={'card-wrap'}>
-							{agentProperties.map((property: Property) => {
-								return (
-									<div className={'wrap-main'} key={property?._id}>
-										<PropertyBigCard
-											property={property}
-											key={property?._id}
-											likePropertyHandler={likePropertyHandler}
-										/>
-									</div>
-								);
-							})}
+			<>
+				<Stack className={'agent-detail-page'}>
+					<Stack className={'container'}>
+						<Stack className={'agent-info'}>
+							<Card
+								className="dark:bg-slate-950/50 rounded-md cursor-pointer boder border-solid dark:border-slate-600"
+								variant="outlined"
+								sx={{
+									width: 352,
+									display: 'flex',
+									flexDirection: 'row',
+									alignItems: 'center',
+								}}
+							>
+								<CardMedia
+									component="img"
+									className="rounded-full ml-5"
+									sx={{ width: 100, height: 100, objectFit: 'cover' }}
+									image={
+										agent?.memberImage ? `${REACT_APP_API_URL}/${agent?.memberImage}` : '/img/profile/defaultUser.svg'
+									}
+									alt="Member Image"
+								/>
+								<CardContent>
+									<Typography
+										variant="h6"
+										component="div"
+										className="hover:underline"
+										onClick={() => redirectToMemberPageHandler(agent?._id as string)}
+									>
+										{agent?.memberFullName ?? agent?.memberNick}
+									</Typography>
+									<Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+										<Link href="#" underline="none" color="inherit">
+											<PhoneIcon fontSize="small" />
+											<span className="font-openSans font-normal dark:text-slate-300 text-slate-800 text-[15px] ml-1">
+												{agent?.memberPhone}
+											</span>
+										</Link>
+									</Typography>
+									<span className="font-openSans font-normal text-md text-slate-500">UI/UX Design</span>
+								</CardContent>
+							</Card>
 						</Stack>
-						<Stack className={'pagination'}>
-							{propertyTotal ? (
-								<>
-									<Stack className="pagination-box">
+						<Stack
+							className={
+								'agent-home-list dark:bg-slate-900/50 bg-slate-100/50 border border-solid border-gray-300 dark:border-gray-700'
+							}
+						>
+							<Stack className={'card-wrap'}>
+								{agentProperties.map((property: Property) => {
+									return (
+										<div className={'wrap-main'} key={property?._id}>
+											<PropertyBigCard
+												property={property}
+												key={property?._id}
+												likePropertyHandler={likePropertyHandler}
+											/>
+										</div>
+									);
+								})}
+							</Stack>
+							<Stack className={'pagination'}>
+								{propertyTotal ? (
+									<>
+										<Stack className="pagination-box">
+											<Pagination
+												variant="outlined"
+												page={searchFilter.page}
+												count={Math.ceil(propertyTotal / searchFilter.limit) || 1}
+												onChange={propertyPaginationChangeHandler}
+												shape="circular"
+											/>
+										</Stack>
+										<span>
+											Total {propertyTotal} propert{propertyTotal > 1 ? 'ies' : 'y'} available
+										</span>
+									</>
+								) : (
+									<div className={'no-data'}>
+										<img src="/img/icons/icoAlert.svg" alt="" />
+										<p>No properties found!</p>
+									</div>
+								)}
+							</Stack>
+						</Stack>
+						<Stack
+							className={
+								'review-box dark:bg-slate-900/50 bg-slate-100/50 border border-solid border-gray-300 dark:border-gray-700'
+							}
+						>
+							<Stack className={'main-intro'}>
+								<span>Reviews</span>
+								<p>we are glad to see you again</p>
+							</Stack>
+							{commentTotal !== 0 && (
+								<Stack
+									className={
+										'review-wrap dark:bg-slate-800 bg-white border border-solid border-gray-300 dark:border-gray-500'
+									}
+								>
+									<Box component={'div'} className={'title-box'}>
+										<StarIcon />
+										<span>
+											{commentTotal} review{commentTotal > 1 ? 's' : ''}
+										</span>
+									</Box>
+									{agentComments?.map((comment: Comment) => {
+										return <ReviewCard comment={comment} key={comment?._id} />;
+									})}
+									<Box component={'div'} className={'pagination-box'}>
 										<Pagination
-											page={searchFilter.page}
-											count={Math.ceil(propertyTotal / searchFilter.limit) || 1}
-											onChange={propertyPaginationChangeHandler}
+											page={commentInquiry.page}
+											count={Math.ceil(commentTotal / commentInquiry.limit) || 1}
+											onChange={commentPaginationChangeHandler}
 											shape="circular"
 											color="primary"
 										/>
-									</Stack>
-									<span>
-										Total {propertyTotal} propert{propertyTotal > 1 ? 'ies' : 'y'} available
-									</span>
-								</>
-							) : (
-								<div className={'no-data'}>
-									<img src="/img/icons/icoAlert.svg" alt="" />
-									<p>No properties found!</p>
-								</div>
+									</Box>
+								</Stack>
 							)}
-						</Stack>
-					</Stack>
-					<Stack className={'review-box'}>
-						<Stack className={'main-intro'}>
-							<span>Reviews</span>
-							<p>we are glad to see you again</p>
-						</Stack>
-						{commentTotal !== 0 && (
-							<Stack className={'review-wrap'}>
-								<Box component={'div'} className={'title-box'}>
-									<StarIcon />
-									<span>
-										{commentTotal} review{commentTotal > 1 ? 's' : ''}
-									</span>
-								</Box>
-								{agentComments?.map((comment: Comment) => {
-									return <ReviewCard comment={comment} key={comment?._id} />;
-								})}
-								<Box component={'div'} className={'pagination-box'}>
-									<Pagination
-										page={commentInquiry.page}
-										count={Math.ceil(commentTotal / commentInquiry.limit) || 1}
-										onChange={commentPaginationChangeHandler}
-										shape="circular"
-										color="primary"
-									/>
+
+							<Stack
+								className={
+									'leave-review-config dark:bg-slate-800 bg-white border border-solid border-gray-300 dark:border-gray-500'
+								}
+							>
+								<Typography className={'main-title'}>Leave A Review</Typography>
+								<Typography className={'review-title'}>Review</Typography>
+								<textarea
+									onChange={({ target: { value } }: any) => {
+										setInsertCommentData({ ...insertCommentData, commentContent: value });
+									}}
+									value={insertCommentData.commentContent}
+								></textarea>
+								<Box className={'submit-btn'} component={'div'}>
+									<Button
+										variant="contained"
+										color="success"
+										className={'submit-review'}
+										disabled={insertCommentData.commentContent === '' || user?._id === ''}
+										onClick={createCommentHandler}
+									>
+										<Typography className={'title'}>Submit Review</Typography>
+										<ArrowOutwardIcon fontSize="medium" />
+									</Button>
 								</Box>
 							</Stack>
-						)}
-
-						<Stack className={'leave-review-config'}>
-							<Typography className={'main-title'}>Leave A Review</Typography>
-							<Typography className={'review-title'}>Review</Typography>
-							<textarea
-								onChange={({ target: { value } }: any) => {
-									setInsertCommentData({ ...insertCommentData, commentContent: value });
-								}}
-								value={insertCommentData.commentContent}
-							></textarea>
-							<Box className={'submit-btn'} component={'div'}>
-								<Button
-									className={'submit-review'}
-									disabled={insertCommentData.commentContent === '' || user?._id === ''}
-									onClick={createCommentHandler}
-								>
-									<Typography className={'title'}>Submit Review</Typography>
-									<svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
-										<g clipPath="url(#clip0_6975_3642)">
-											<path
-												d="M16.1571 0.5H6.37936C6.1337 0.5 5.93491 0.698792 5.93491 0.944458C5.93491 1.19012 6.1337 1.38892 6.37936 1.38892H15.0842L0.731781 15.7413C0.558156 15.915 0.558156 16.1962 0.731781 16.3698C0.818573 16.4566 0.932323 16.5 1.04603 16.5C1.15974 16.5 1.27345 16.4566 1.36028 16.3698L15.7127 2.01737V10.7222C15.7127 10.9679 15.9115 11.1667 16.1572 11.1667C16.4028 11.1667 16.6016 10.9679 16.6016 10.7222V0.944458C16.6016 0.698792 16.4028 0.5 16.1571 0.5Z"
-												fill="#181A20"
-											/>
-										</g>
-										<defs>
-											<clipPath id="clip0_6975_3642">
-												<rect width="16" height="16" fill="white" transform="translate(0.601562 0.5)" />
-											</clipPath>
-										</defs>
-									</svg>
-								</Button>
-							</Box>
 						</Stack>
 					</Stack>
 				</Stack>
-			</Stack>
+			</>
 		);
 	}
 };
