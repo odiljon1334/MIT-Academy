@@ -1,8 +1,6 @@
 #pc-wrap {
 	#property-detail-page {
 		position: relative;
-		background: #fff;
-		padding-top: 87px;
 		padding-bottom: 200px;
 		.property-detail-config {
 			width: 100%;
@@ -22,7 +20,6 @@
 						width: 50%;
 						height: auto;
 						.title-main {
-							color: #181a20;
 							font-family: $font;
 							font-size: 30px;
 							font-style: normal;
@@ -201,19 +198,18 @@
 						width: 100%;
 						height: auto;
 						flex-direction: row;
-						gap: 47.5px;
+						justify-content: space-between;
 						.option {
 							width: auto;
 							height: auto;
 							flex-direction: row;
 							gap: 17px;
 							.svg-box {
-								width: 56px;
+								width: 65px;
 								height: 50px;
 								align-items: center;
 								justify-content: center;
 								border-radius: 12px;
-								border: 1px solid #ddd;
 								img {
 									width: 35px;
 									height: auto;
@@ -247,27 +243,16 @@
 						gap: 50px;
 						padding: 29px 38px 50px 38px;
 						border-radius: 12px;
-						border: 1px solid #c4c4c4;
 						.top {
 							width: 100%;
 							height: auto;
-							gap: 30px;
+							gap: 10px;
 							.title {
-								color: #181a20;
 								font-family: $font;
 								font-size: 17px;
 								font-style: normal;
 								font-weight: 600;
 								line-height: normal;
-							}
-							.desc {
-								color: #181a20;
-								font-family: $font;
-								font-size: 14px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: 26px;
-								max-height: 104px;
 							}
 						}
 						.bottom {
@@ -275,7 +260,6 @@
 							height: auto;
 							gap: 30px;
 							.title {
-								color: #181a20;
 								font-family: $font;
 								font-size: 17px;
 								font-style: normal;
@@ -294,10 +278,9 @@
 										height: auto;
 										display: flex;
 										flex-direction: row;
-										gap: 38px;
+										gap: 25px;
 										.title {
 											width: 121px;
-											color: #181a20;
 											font-family: $font;
 											font-size: 14px;
 											font-style: normal;
@@ -305,8 +288,7 @@
 											line-height: 35px;
 										}
 										.data {
-											width: 88px;
-											color: #181a20;
+											width: 80px;
 											font-family: $font;
 											font-size: 14px;
 											font-style: normal;
@@ -321,58 +303,13 @@
 					.floor-plans-config {
 						width: 100%;
 						height: auto;
-						gap: 30px;
-						padding: 30px 38px;
 						border-radius: 12px;
-						border: 1px solid #c4c4c4;
-						.title {
-							color: #181a20;
-							font-family: $font;
-							font-size: 17px;
-							font-style: normal;
-							font-weight: 600;
-							line-height: normal;
-						}
-						.image-box {
-							width: 100%;
-							height: 510px;
-							border: 1px solid #c4c4c4;
-							img {
-								width: 100%;
-								height: 100%;
-								object-fit: cover;
-							}
-						}
-					}
-					.address-config {
-						width: 100%;
-						height: auto;
-						gap: 30px;
-						padding: 30px 38px;
-						border-radius: 12px;
-						border: 1px solid #c4c4c4;
-						.title {
-							color: #181a20;
-							font-family: $font;
-							font-size: 17px;
-							font-style: normal;
-							font-weight: 600;
-							line-height: normal;
-						}
-						.map-box {
-							width: 100%;
-							height: 400px;
-							iframe {
-								border-radius: 12px;
-							}
-						}
 					}
 					.reviews-config {
 						width: 100%;
 						height: auto;
 						padding: 30px 38px 45px 38px;
 						border-radius: 12px;
-						border: 1px solid #c4c4c4;
 						.filter-box {
 							width: 100%;
 							height: auto;
@@ -387,7 +324,6 @@
 								gap: 12px;
 								.reviews {
 									width: 153.6px;
-									color: #181a20;
 									font-family: $font;
 									font-size: 17px;
 									font-style: normal;
@@ -452,9 +388,8 @@
 										}
 										.name {
 											width: 100%;
-											color: #181a20;
 											font-family: $font;
-											font-size: 15px;
+											font-size: 18px;
 											font-style: normal;
 											font-weight: 600;
 											line-height: normal;
@@ -462,7 +397,7 @@
 										}
 										.date {
 											width: 100%;
-											color: #181a20;
+											color: #b9b9b9;
 											font-family: $font;
 											font-size: 13px;
 											font-style: normal;
@@ -479,9 +414,8 @@
 									height: auto;
 									margin-top: 15px;
 									.description {
-										color: #181a20;
 										font-family: $font;
-										font-size: 14px;
+										font-size: 16px;
 										font-style: normal;
 										font-weight: 400;
 										line-height: 26px;
@@ -499,12 +433,8 @@
 					}
 					.leave-review-config {
 						border-radius: 12px;
-						border: 1px solid #c4c4c4;
-						background: #fff;
-						box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 						padding: 30px 38px;
 						.main-title {
-							color: #181a20;
 							font-family: $font;
 							font-size: 17px;
 							font-style: normal;
@@ -513,7 +443,6 @@
 						}
 						.review-title {
 							margin-top: 20px;
-							color: #181a20;
 							font-family: $font;
 							font-size: 14px;
 							font-style: normal;
@@ -527,7 +456,7 @@
 							padding: 20px;
 							border-radius: 8px;
 							border: 1px solid #ddd;
-							color: #717171;
+							color: #181a20;
 							font-family: $font;
 							font-size: 14px;
 							font-style: normal;
@@ -570,15 +499,10 @@
 					padding: 30px 25px;
 					gap: 20px;
 					border-radius: 12px;
-					border: 1px solid rgba(196, 196, 196, 0.79);
-					background: #fff;
-					box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 					.info-box {
-						position: relative;
 						width: 100%;
 						gap: 8px;
 						.main-title {
-							color: #181a20;
 							font-family: $font;
 							font-size: 17px;
 							font-style: normal;
@@ -589,7 +513,7 @@
 						.image-info {
 							width: 100%;
 							flex-direction: row;
-							gap: 18px;
+							gap: 10px;
 							img {
 								width: 95px;
 								height: 95px;
@@ -597,31 +521,15 @@
 								object-fit: cover;
 							}
 							.name-phone-listings {
-								gap: 5px;
+								gap: 7px;
 								.name {
-									color: #181a20;
 									font-family: $font;
-									font-size: 15px;
+									font-size: 18px;
 									font-style: normal;
 									font-weight: 600;
 									line-height: normal;
 								}
-								.phone-number {
-									width: 100%;
-									flex-direction: row;
-									align-items: center;
-									gap: 10px;
-									.number {
-										color: #181a20;
-										font-family: $font;
-										font-size: 15px;
-										font-style: normal;
-										font-weight: 400;
-										line-height: 28px;
-									}
-								}
 								.listings {
-									color: #181a20;
 									font-family: $font;
 									font-size: 14px;
 									font-style: normal;
@@ -632,55 +540,11 @@
 							}
 						}
 						.sub-title {
-							color: #181a20;
 							font-family: $font;
 							font-size: 14px;
 							font-style: normal;
 							font-weight: 600;
 							line-height: normal;
-						}
-						input {
-							width: 100%;
-							height: 55px;
-							padding: 15px;
-							border-radius: 8px;
-							border: 1px solid #ddd;
-							background: #fff;
-							outline: none;
-							&::placeholder {
-								color: #717171;
-								font-family: $font;
-								font-size: 14px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: 26px;
-							}
-							&:focus {
-								border: 1px solid black;
-							}
-						}
-						textarea {
-							width: 100%;
-							height: 120px;
-							padding: 20px;
-							border-radius: 8px;
-							border: 1px solid #ddd;
-							font-family: $font;
-							font-size: 14px;
-							font-style: normal;
-							font-weight: 400;
-							line-height: 26px;
-							&::placeholder {
-								color: #717171;
-								font-family: $font;
-								font-size: 14px;
-								font-style: normal;
-								font-weight: 400;
-								line-height: 26px;
-							}
-							&:focus {
-								border: 1px solid black;
-							}
 						}
 						.send-message {
 							display: flex;
@@ -690,11 +554,10 @@
 							align-items: center;
 							gap: 10px;
 							border-radius: 12px;
-							background: #eb6753;
 							.title {
 								color: #fff;
 								font-family: $font;
-								font-size: 15px;
+								font-size: 14px;
 								font-style: normal;
 								font-weight: 600;
 								line-height: normal;
@@ -716,7 +579,6 @@
 					.title-box {
 						width: 30%;
 						.main-title {
-							color: #181a20;
 							font-family: $font;
 							font-size: 30px;
 							font-style: normal;
@@ -726,7 +588,6 @@
 							text-transform: capitalize;
 						}
 						.sub-title {
-							color: #181a20;
 							font-family: $font;
 							font-size: 14px;
 							font-style: normal;

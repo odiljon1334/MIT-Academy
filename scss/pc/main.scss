@@ -23,6 +23,7 @@
 @import '/scss/pc/community/write.scss';
 
 @import '/scss/pc/cs/cs.scss';
+@import '/styles/globals.css';
 
 @import '/scss/pc/about/about.scss';
 @import '/scss/pc/account/join.scss';
@@ -44,6 +45,9 @@ body::-webkit-scrollbar {
 }
 
 #pc-wrap {
+	width: 100%;
+	height: 100%;
+	display: flex;
 	#top {
 		.navbar {
 			.navbar-main {

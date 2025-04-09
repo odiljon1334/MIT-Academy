@@ -15,11 +15,12 @@ export const SIGN_UP = gql`
 			memberNick
 			memberFullName
 			memberImage
+			memberPosition
 			memberAddress
 			memberDesc
 			memberWarnings
 			memberBlocks
-			memberProperties
+			memberCourses
 			memberRank
 			memberArticles
 			memberPoints
@@ -48,7 +49,7 @@ export const LOGIN = gql`
 			memberDesc
 			memberWarnings
 			memberBlocks
-			memberProperties
+			memberCourses
 			memberRank
 			memberPoints
 			memberLikes
@@ -73,8 +74,9 @@ export const UPDATE_MEMBER = gql`
 			memberFullName
 			memberImage
 			memberAddress
+			memberPosition
 			memberDesc
-			memberProperties
+			memberCourses
 			memberRank
 			memberArticles
 			memberPoints
@@ -103,9 +105,10 @@ export const LIKE_TARGET_MEMBER = gql`
 			memberImage
 			memberAddress
 			memberDesc
+			memberPosition
 			memberWarnings
 			memberBlocks
-			memberProperties
+			memberCourses
 			memberRank
 			memberPoints
 			memberLikes
@@ -122,89 +125,111 @@ export const LIKE_TARGET_MEMBER = gql`
  *        PROPERTY        *
  *************************/
 
-export const CREATE_PROPERTY = gql`
-	mutation CreateProperty($input: PropertyInput!) {
-		createProperty(input: $input) {
+export const CREATE_COURSE = gql`
+	mutation createCourse($input: CourseInput!) {
+		createCourse(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			courseType
+			courseStatus
+			courseCategory
+			courseTitle
+			coursePrice
+			courseViews
+			courseLikes
+			courseComments
+			courseRank
+			courseImage
+			courseDesc
 			memberId
 			soldAt
 			deletedAt
 			constructedAt
 			createdAt
 			updatedAt
+			courseModuls {
+				moduleTitle
+				moduleOrder
+				lessons {
+					lessonTitle
+					lessonOrder
+					lessonVideo
+					lessonDuration
+				}
+			}
 		}
 	}
 `;
 
-export const UPDATE_PROPERTY = gql`
-	mutation UpdateProperty($input: PropertyUpdate!) {
-		updateProperty(input: $input) {
+export const UPDATE_COURSE = gql`
+	mutation UpdateCourse($input: CourseUpdate!) {
+		updateCourse(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			courseType
+			courseStatus
+			courseCategory
+			courseTitle
+			coursePrice
+			courseViews
+			courseLikes
+			courseComments
+			courseRank
+			courseImage
+			courseDesc
 			memberId
 			soldAt
 			deletedAt
 			constructedAt
 			createdAt
 			updatedAt
+			courseModuls {
+				moduleTitle
+				moduleOrder
+				lessons {
+					lessonTitle
+					lessonOrder
+					lessonVideo
+					completedLesson
+					lessonDuration
+				}
+			}
 		}
 	}
 `;
 
-export const LIKE_TARGET_PROPERTY = gql`
-	mutation LikeTargetProperty($input: String!) {
-		likeTargetProperty(propertyId: $input) {
+export const LIKE_TARGET_COURSE = gql`
+	mutation LikeTargetCourse($input: String!) {
+		likeTargetCourse(courseId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			courseType
+			courseStatus
+			courseCategory
+			courseTitle
+			coursePrice
+			courseViews
+			courseLikes
+			courseComments
+			courseRank
+			courseImage
+			courseDesc
 			memberId
 			soldAt
 			deletedAt
 			constructedAt
 			createdAt
 			updatedAt
+			courseModuls {
+				_id
+				moduleTitle
+				moduleOrder
+				lessons {
+					_id
+					lessonTitle
+					lessonOrder
+					lessonVideo
+					completedLesson
+					lessonDuration
+				}
+			}
 		}
 	}
 `;

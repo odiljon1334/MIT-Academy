@@ -106,7 +106,7 @@ const Top = () => {
 
 	useEffect(() => {
 		switch (router.pathname) {
-			case '/property/detail':
+			case '/course/detail':
 				setBgColor(true);
 				break;
 			default:
@@ -225,11 +225,11 @@ const Top = () => {
 				<Link href={'/'}>
 					<div>{t('Home')}</div>
 				</Link>
-				<Link href={'/property'}>
-					<div>{t('Properties')}</div>
+				<Link href={'/course'}>
+					<div>{t('Courses')}</div>
 				</Link>
-				<Link href={'/agent'}>
-					<div> {t('Agents')} </div>
+				<Link href={'/instructor'}>
+					<div> {t('Instructor')} </div>
 				</Link>
 				<Link href={'/community?articleCategory=FREE'}>
 					<div> {t('Community')} </div>
@@ -271,7 +271,7 @@ const Top = () => {
 										></motion.path>
 									</svg>
 									<motion.span className="font-openSans font-semibold bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-white/90 to-rose-300 text-[24px]">
-										MIT Academy
+										EDUcampus
 									</motion.span>
 								</Wrapper>
 							</Link>
@@ -280,10 +280,10 @@ const Top = () => {
 							<Link href={'/'}>
 								<div>{t('Home')}</div>
 							</Link>
-							<Link href={'/property'}>
+							<Link href={'/course'}>
 								<div>{t('Courses')}</div>
 							</Link>
-							<Link href={'/agent'}>
+							<Link href={'/instructor'}>
 								<div> {t('Instructors')} </div>
 							</Link>
 							<Link href={'/community?articleCategory=FREE'}>
@@ -307,7 +307,8 @@ const Top = () => {
 												user?.memberImage ? `${REACT_APP_API_URL}/${user?.memberImage}` : '/img/profile/defaultUser.svg'
 											}
 											alt=""
-											className="w-[45px] h-[45px] rounded-full"
+											style={{ objectFit: 'cover' }}
+											className="w-[50px] h-[50px] rounded-full"
 										/>
 									</div>
 
@@ -342,7 +343,7 @@ const Top = () => {
 								</FormGroup>
 							</div>
 							<div className={'lan-box space-x-2'}>
-								{user?._id && <NotificationsOutlinedIcon className={'notification-icon w-8 h-8 mr-2'} />}
+								{user?._id && <NotificationsOutlinedIcon className={'notification-icon w-8 h-8 mr-2 cursor-pointer'} />}
 								<Button
 									disableRipple
 									className="btn-lang"

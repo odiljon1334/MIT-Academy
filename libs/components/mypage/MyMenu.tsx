@@ -52,73 +52,81 @@ const MyMenu = () => {
 						/>
 					</Box>
 					<Stack className={'user-info'}>
-						<Typography className={'user-name font-openSans'}>{user?.memberNick}</Typography>
-						<Box component={'div'} className={'user-phone space-x-1'}>
+						<Typography className={'user-name text-neutral-900 dark:text-neutral-200 font-openSans'}>
+							{user?.memberNick}
+						</Typography>
+						<Box component={'div'} className={'user-phone text-neutral-900 dark:text-neutral-200 space-x-1'}>
 							{user?._id && user?.memberPhone ? <PhoneIcon /> : null}
-							<Typography className={'p-number mb-2'}>{user?.memberPhone}</Typography>
+							<Typography className={'p-number text-neutral-900 dark:text-neutral-200 mb-2'}>
+								{user?.memberPhone}
+							</Typography>
 						</Box>
 						{user._id && user?.memberType === 'ADMIN' ? (
 							<a href="/_admin/users" target={'_blank'}>
 								<Chip color="success" icon={<FaceIcon />} label={`${user?.memberType}`} variant="outlined" />
 							</a>
 						) : null}
-						{user?._id && user?.memberType === 'AGENT' ? (
-							<Chip color="success" icon={<FaceIcon />} label={`${user?.memberType}`} variant="outlined" />
+						{user?._id && user?.memberType === 'INSTRUCTOR' ? (
+							<Chip color="success" icon={<FaceIcon />} label={'Instructor'} variant="outlined" />
 						) : null}
 					</Stack>
 				</Stack>
 				<Stack className={'sections'}>
-					<Stack className={'section'} style={{ height: user.memberType === 'AGENT' ? '228px' : '153px' }}>
+					<Stack className={'section'} style={{ height: user.memberType === 'INSTRUCTOR' ? '228px' : '153px' }}>
 						<Typography className="title text-lg mb-2 font-openSans font-semibold text-neutral-600 dark:text-neutral-400">
 							MANAGE LISTINGS
 						</Typography>
 						<List className={'sub-section'}>
-							{user.memberType === 'AGENT' && (
+							{user.memberType === 'INSTRUCTOR' && (
 								<>
-									<ListItem className={pathname === 'addProperty' ? 'focus' : ''}>
+									<ListItem className={pathname === 'addCourse' ? 'focus' : ''}>
 										<Link
 											href={{
 												pathname: '/mypage',
-												query: { category: 'addProperty' },
+												query: { category: 'addCourse' },
 											}}
 											scroll={false}
 										>
 											<div className={'flex-box'}>
 												<LibraryAddCheckIcon
 													fontSize="medium"
-													className={
-														category === 'addProperty' ? 'text-slate-100' : 'text-slate-900 dark:text-slate-50'
-													}
+													className={category === 'addCourse' ? 'text-slate-100' : 'text-slate-900 dark:text-slate-50'}
 												/>
-												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-													Add Property
+												<Typography
+													className={'sub-title text-neutral-900 dark:text-neutral-200'}
+													variant={'subtitle1'}
+													component={'p'}
+												>
+													Add Course
 												</Typography>
-												<IconButton aria-label="delete" sx={{ ml: '40px' }}>
-													<PortraitIcon style={{ color: 'red' }} />
+												<IconButton aria-label="delete" sx={{ ml: '30px' }}>
+													<PortraitIcon style={{ color: 'green' }} />
 												</IconButton>
 											</div>
 										</Link>
 									</ListItem>
-									<ListItem className={pathname === 'myProperties' ? 'focus' : ''}>
+									<ListItem className={pathname === 'myCourses' ? 'focus' : ''}>
 										<Link
 											href={{
 												pathname: '/mypage',
-												query: { category: 'myProperties' },
+												query: { category: 'myCourses' },
 											}}
 											scroll={false}
 										>
 											<div className={'flex-box'}>
 												<HomeRoundedIcon
 													fontSize="medium"
-													className={
-														category === 'myProperties' ? 'text-slate-100' : 'text-slate-900 dark:text-slate-50'
-													}
+													className={category === 'myCourses' ? 'text-slate-100' : 'text-slate-900 dark:text-slate-50'}
 												/>
-												<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
-													My Properties
+												<Typography
+													className={'sub-title text-neutral-900 dark:text-neutral-200'}
+													variant={'subtitle1'}
+													component={'p'}
+												>
+													My Courses
 												</Typography>
-												<IconButton aria-label="delete" sx={{ ml: '36px' }}>
-													<PortraitIcon style={{ color: 'red' }} />
+												<IconButton aria-label="delete" sx={{ ml: '30px' }}>
+													<PortraitIcon style={{ color: 'green' }} />
 												</IconButton>
 											</div>
 										</Link>
@@ -138,7 +146,11 @@ const MyMenu = () => {
 											fontSize="medium"
 											className={category === 'myFavorites' ? 'text-slate-100' : 'text-slate-900 dark:text-slate-50'}
 										/>
-										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+										<Typography
+											className={'sub-title text-neutral-900 dark:text-neutral-200'}
+											variant={'subtitle1'}
+											component={'p'}
+										>
 											My Favorites
 										</Typography>
 									</div>
@@ -159,7 +171,11 @@ const MyMenu = () => {
 												category === 'recentlyVisited' ? 'text-slate-100' : 'text-slate-900 dark:text-slate-50'
 											}
 										/>
-										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+										<Typography
+											className={'sub-title text-neutral-900 dark:text-neutral-200'}
+											variant={'subtitle1'}
+											component={'p'}
+										>
 											Recently Visited
 										</Typography>
 									</div>
@@ -178,7 +194,11 @@ const MyMenu = () => {
 											fontSize="medium"
 											className={category === 'followers' ? 'text-slate-100' : 'text-slate-900 dark:text-slate-50'}
 										/>
-										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+										<Typography
+											className={'sub-title text-neutral-900 dark:text-neutral-200'}
+											variant={'subtitle1'}
+											component={'p'}
+										>
 											My Followers
 										</Typography>
 									</div>
@@ -197,7 +217,11 @@ const MyMenu = () => {
 											fontSize="medium"
 											className={category === 'followings' ? 'text-slate-100' : 'text-slate-900 dark:text-slate-50'}
 										/>
-										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+										<Typography
+											className={'sub-title text-neutral-900 dark:text-neutral-200'}
+											variant={'subtitle1'}
+											component={'p'}
+										>
 											My Followings
 										</Typography>
 									</div>
@@ -224,7 +248,11 @@ const MyMenu = () => {
 												fontSize="medium"
 												className={category === 'myArticles' ? 'text-slate-100' : 'text-slate-900 dark:text-slate-50'}
 											/>
-											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+											<Typography
+												className={'sub-title text-neutral-900 dark:text-neutral-200'}
+												variant={'subtitle1'}
+												component={'p'}
+											>
 												Articles
 											</Typography>
 										</div>
@@ -243,7 +271,11 @@ const MyMenu = () => {
 												fontSize="medium"
 												className={category === 'writeArticle' ? 'text-slate-100' : 'text-slate-900 dark:text-slate-50'}
 											/>
-											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+											<Typography
+												className={'sub-title text-neutral-900 dark:text-neutral-200'}
+												variant={'subtitle1'}
+												component={'p'}
+											>
 												Write Article
 											</Typography>
 										</div>
@@ -270,7 +302,11 @@ const MyMenu = () => {
 											fontSize="medium"
 											className={category === 'myProfile' ? 'text-slate-100' : 'text-slate-900 dark:text-slate-50'}
 										/>
-										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+										<Typography
+											className={'sub-title text-neutral-900 dark:text-neutral-200'}
+											variant={'subtitle1'}
+											component={'p'}
+										>
 											My Profile
 										</Typography>
 									</div>
@@ -278,8 +314,8 @@ const MyMenu = () => {
 							</ListItem>
 							<ListItem onClick={logoutHandler}>
 								<div className={'flex-box'}>
-									<LoginOutlinedIcon fontSize="medium" className={'dark:text-slate-100 text-slate-900'} />
-									<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
+									<LoginOutlinedIcon fontSize="medium" className={'text-red-400'} />
+									<Typography className={'sub-title text-red-400'} variant={'subtitle1'} component={'p'}>
 										Logout
 									</Typography>
 								</div>

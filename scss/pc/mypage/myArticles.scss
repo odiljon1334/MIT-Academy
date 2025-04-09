@@ -10,7 +10,6 @@
 			.right-box {
 				width: 315px;
 				.main-title {
-					color: #181a20;
 					font-family: $font;
 					font-size: 30px;
 					font-style: normal;
@@ -20,7 +19,6 @@
 					text-transform: capitalize;
 				}
 				.sub-title {
-					color: #181a20;
 					font-family: $font;
 					font-size: 14px;
 					font-style: normal;
@@ -45,8 +43,8 @@
 			align-items: center;
 			margin-top: 30px;
 			.total {
+				margin-top: 10px;
 				p {
-					color: #181a20;
 					font-size: 14px;
 					text-align: center;
 					font-family: $font;

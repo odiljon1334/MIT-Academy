@@ -4,9 +4,9 @@ import { gql } from '@apollo/client';
  *         MEMBER         *
  *************************/
 
-export const GET_AGENTS = gql`
-	query GetAgents($input: AgentsInquiry!) {
-		getAgents(input: $input) {
+export const GET_INSTRUCTOR = gql`
+	query GetInstructor($input: InstructorInquiry!) {
+		getInstructor(input: $input) {
 			list {
 				_id
 				memberType
@@ -14,17 +14,22 @@ export const GET_AGENTS = gql`
 				memberAuthType
 				memberPhone
 				memberNick
+				memberPosition
 				memberFullName
 				memberImage
 				memberAddress
 				memberDesc
-				memberWarnings
-				memberBlocks
-				memberProperties
-				memberRank
+				memberCourses
+				memberArticles
+				memberFollowers
+				memberFollowings
 				memberPoints
 				memberLikes
 				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
 				deletedAt
 				createdAt
 				updatedAt
@@ -55,7 +60,8 @@ query GetMember($input: String!) {
         memberImage
         memberAddress
         memberDesc
-        memberProperties
+				memberPosition
+        memberCourses
         memberArticles
         memberPoints
         memberLikes
@@ -82,31 +88,40 @@ query GetMember($input: String!) {
  *        PROPERTY        *
  *************************/
 
-export const GET_PROPERTY = gql`
-	query GetProperty($input: String!) {
-		getProperty(propertyId: $input) {
+export const GET_COURSE = gql`
+	query GetCourse($input: String!) {
+		getCourse(courseId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			courseType
+			courseStatus
+			courseCategory
+			courseTitle
+			coursePrice
+			courseViews
+			courseLikes
+			courseComments
+			courseRank
+			courseImage
+			courseDesc
 			memberId
 			soldAt
 			deletedAt
 			constructedAt
 			createdAt
 			updatedAt
+			courseModuls {
+				_id
+				moduleTitle
+				moduleOrder
+				lessons {
+					_id
+					lessonTitle
+					lessonOrder
+					lessonVideo
+					completedLesson
+					lessonDuration
+				}
+			}
 			memberData {
 				_id
 				memberType
@@ -114,15 +129,22 @@ export const GET_PROPERTY = gql`
 				memberAuthType
 				memberPhone
 				memberNick
+				memberPosition
 				memberFullName
 				memberImage
 				memberAddress
 				memberDesc
-				memberWarnings
-				memberBlocks
+				memberCourses
+				memberArticles
+				memberFollowers
+				memberFollowings
 				memberPoints
 				memberLikes
 				memberViews
+				memberComments
+				memberRank
+				memberWarnings
+				memberBlocks
 				deletedAt
 				createdAt
 				updatedAt
@@ -137,33 +159,41 @@ export const GET_PROPERTY = gql`
 	}
 `;
 
-export const GET_PROPERTIES = gql`
-	query GetProperties($input: PropertiesInquiry!) {
-		getProperties(input: $input) {
+export const GET_COURSES = gql`
+	query GetCourses($input: CoursesInquiry!) {
+		getCourses(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyRank
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				courseType
+				courseStatus
+				courseCategory
+				courseTitle
+				coursePrice
+				courseViews
+				courseLikes
+				courseComments
+				courseRank
+				courseImage
+				courseDesc
 				memberId
 				soldAt
 				deletedAt
 				constructedAt
 				createdAt
 				updatedAt
+				courseModuls {
+					_id
+					moduleTitle
+					moduleOrder
+					lessons {
+						_id
+						lessonTitle
+						lessonOrder
+						lessonVideo
+						completedLesson
+						lessonDuration
+					}
+				}
 				memberData {
 					_id
 					memberType
@@ -171,20 +201,26 @@ export const GET_PROPERTIES = gql`
 					memberAuthType
 					memberPhone
 					memberNick
+					memberPosition
 					memberFullName
 					memberImage
 					memberAddress
 					memberDesc
-					memberWarnings
-					memberBlocks
-					memberProperties
-					memberRank
+					memberCourses
+					memberArticles
+					memberFollowers
+					memberFollowings
 					memberPoints
 					memberLikes
 					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
 					deletedAt
 					createdAt
 					updatedAt
+					accessToken
 				}
 				meLiked {
 					memberId
@@ -199,26 +235,22 @@ export const GET_PROPERTIES = gql`
 	}
 `;
 
-export const GET_AGENT_PROPERTIES = gql`
-	query GetAgentProperties($input: AgentPropertiesInquiry!) {
-		getAgentProperties(input: $input) {
+export const GET_INTRUCTOR_COURSES = gql`
+	query GetInstructorCourses($input: InstructorCourseInquiry!) {
+		getInstructorCourses(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				courseType
+				courseStatus
+				courseCategory
+				courseTitle
+				coursePrice
+				courseViews
+				courseLikes
+				courseComments
+				courseRank
+				courseImage
+				courseDesc
 				memberId
 				soldAt
 				deletedAt
@@ -238,29 +270,36 @@ export const GET_FAVORITES = gql`
 		getFavorites(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyComments
-				propertyRank
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				courseType
+				courseStatus
+				courseCategory
+				courseTitle
+				coursePrice
+				courseViews
+				courseLikes
+				courseComments
+				courseRank
+				courseImage
+				courseDesc
 				memberId
 				soldAt
 				deletedAt
 				constructedAt
 				createdAt
 				updatedAt
+				courseModuls {
+					_id
+					moduleTitle
+					moduleOrder
+					lessons {
+						_id
+						lessonTitle
+						lessonOrder
+						lessonVideo
+						completedLesson
+						lessonDuration
+					}
+				}
 				memberData {
 					_id
 					memberType
@@ -268,18 +307,19 @@ export const GET_FAVORITES = gql`
 					memberAuthType
 					memberPhone
 					memberNick
+					memberPosition
 					memberFullName
 					memberImage
 					memberAddress
 					memberDesc
-					memberProperties
+					memberCourses
 					memberArticles
+					memberFollowers
+					memberFollowings
 					memberPoints
 					memberLikes
 					memberViews
 					memberComments
-					memberFollowings
-					memberFollowers
 					memberRank
 					memberWarnings
 					memberBlocks
@@ -287,6 +327,21 @@ export const GET_FAVORITES = gql`
 					createdAt
 					updatedAt
 					accessToken
+					meLiked {
+						memberId
+						likeRefId
+						myFavorite
+					}
+					meFollowed {
+						followingId
+						followerId
+						myFollowing
+					}
+				}
+				meLiked {
+					memberId
+					likeRefId
+					myFavorite
 				}
 			}
 			metaCounter {
@@ -301,29 +356,36 @@ export const GET_VISITED = gql`
 		getVisited(input: $input) {
 			list {
 				_id
-				propertyType
-				propertyStatus
-				propertyLocation
-				propertyAddress
-				propertyTitle
-				propertyPrice
-				propertySquare
-				propertyBeds
-				propertyRooms
-				propertyViews
-				propertyLikes
-				propertyComments
-				propertyRank
-				propertyImages
-				propertyDesc
-				propertyBarter
-				propertyRent
+				courseType
+				courseStatus
+				courseCategory
+				courseTitle
+				coursePrice
+				courseViews
+				courseLikes
+				courseComments
+				courseRank
+				courseImage
+				courseDesc
 				memberId
 				soldAt
 				deletedAt
 				constructedAt
 				createdAt
 				updatedAt
+				courseModuls {
+					_id
+					moduleTitle
+					moduleOrder
+					lessons {
+						_id
+						lessonTitle
+						lessonOrder
+						lessonVideo
+						completedLesson
+						lessonDuration
+					}
+				}
 				memberData {
 					_id
 					memberType
@@ -335,14 +397,15 @@ export const GET_VISITED = gql`
 					memberImage
 					memberAddress
 					memberDesc
-					memberProperties
+					memberPosition
+					memberCourses
 					memberArticles
+					memberFollowers
+					memberFollowings
 					memberPoints
 					memberLikes
 					memberViews
 					memberComments
-					memberFollowings
-					memberFollowers
 					memberRank
 					memberWarnings
 					memberBlocks
@@ -389,9 +452,10 @@ export const GET_BOARD_ARTICLE = gql`
 				memberImage
 				memberAddress
 				memberDesc
+				memberPosition
 				memberWarnings
 				memberBlocks
-				memberProperties
+				memberCourses
 				memberRank
 				memberPoints
 				memberLikes
@@ -441,9 +505,10 @@ export const GET_BOARD_ARTICLES = gql`
 					memberImage
 					memberAddress
 					memberDesc
+					memberPosition
 					memberWarnings
 					memberBlocks
-					memberProperties
+					memberCourses
 					memberRank
 					memberPoints
 					memberLikes
@@ -487,9 +552,10 @@ export const GET_COMMENTS = gql`
 					memberImage
 					memberAddress
 					memberDesc
+					memberPosition
 					memberWarnings
 					memberBlocks
-					memberProperties
+					memberCourses
 					memberRank
 					memberPoints
 					memberLikes
@@ -540,7 +606,8 @@ export const GET_MEMBER_FOLLOWERS = gql`
 					memberImage
 					memberAddress
 					memberDesc
-					memberProperties
+					memberPosition
+					memberCourses
 					memberArticles
 					memberPoints
 					memberLikes
@@ -583,7 +650,8 @@ export const GET_MEMBER_FOLLOWINGS = gql`
 					memberImage
 					memberAddress
 					memberDesc
-					memberProperties
+					memberPosition
+					memberCourses
 					memberArticles
 					memberPoints
 					memberLikes

@@ -14,6 +14,13 @@ export const getStaticProps = async ({ locale }: any) => ({
 	},
 });
 
+function a11yProps(index: number) {
+	return {
+		id: `full-width-tab-${index}`,
+		'aria-controls': `full-width-tabpanel-${index}`,
+	};
+}
+
 const CS: NextPage = () => {
 	const device = useDeviceDetect();
 	const router = useRouter();
@@ -39,8 +46,8 @@ const CS: NextPage = () => {
 				<Stack className={'container'}>
 					<Box component={'div'} className={'cs-main-info'}>
 						<Box component={'div'} className={'info'}>
-							<span>Cs center</span>
-							<p>I will answer your questions</p>
+							<span className="text-neutral-800 dark:text-slate-200">Cs center</span>
+							<p className="text-slate-500">I will answer your questions</p>
 						</Box>
 						<Box component={'div'} className={'btns'}>
 							<div

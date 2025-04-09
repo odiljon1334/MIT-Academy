@@ -13,11 +13,12 @@ export const UPDATE_MEMBER_BY_ADMIN = gql`
 			memberAuthType
 			memberPhone
 			memberNick
+			memberPosition
 			memberFullName
 			memberImage
 			memberAddress
 			memberDesc
-			memberProperties
+			memberCourses
 			memberRank
 			memberArticles
 			memberPoints
@@ -37,60 +38,78 @@ export const UPDATE_MEMBER_BY_ADMIN = gql`
  *        PROPERTY        *
  *************************/
 
-export const UPDATE_PROPERTY_BY_ADMIN = gql`
+export const UPDATE_COURSE_BY_ADMIN = gql`
 	mutation UpdatePropertyByAdmin($input: PropertyUpdate!) {
 		updatePropertyByAdmin(input: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			courseType
+			courseStatus
+			courseCategory
+			courseTitle
+			coursePrice
+			courseViews
+			courseLikes
+			courseComments
+			courseRank
+			courseImage
+			courseDesc
 			memberId
 			soldAt
 			deletedAt
 			constructedAt
 			createdAt
 			updatedAt
+			courseModuls {
+				_id
+				moduleTitle
+				moduleOrder
+				lessons {
+					_id
+					lessonTitle
+					lessonOrder
+					lessonVideo
+					completedLesson
+					lessonDuration
+				}
+			}
 		}
 	}
 `;
 
-export const REMOVE_PROPERTY_BY_ADMIN = gql`
+export const REMOVE_COURSE_BY_ADMIN = gql`
 	mutation RemovePropertyByAdmin($input: String!) {
 		removePropertyByAdmin(propertyId: $input) {
 			_id
-			propertyType
-			propertyStatus
-			propertyLocation
-			propertyAddress
-			propertyTitle
-			propertyPrice
-			propertySquare
-			propertyBeds
-			propertyRooms
-			propertyViews
-			propertyLikes
-			propertyImages
-			propertyDesc
-			propertyBarter
-			propertyRent
+			courseType
+			courseStatus
+			courseCategory
+			courseTitle
+			coursePrice
+			courseViews
+			courseLikes
+			courseComments
+			courseRank
+			courseImage
+			courseDesc
 			memberId
 			soldAt
 			deletedAt
 			constructedAt
 			createdAt
 			updatedAt
+			courseModuls {
+				_id
+				moduleTitle
+				moduleOrder
+				lessons {
+					_id
+					lessonTitle
+					lessonOrder
+					lessonVideo
+					completedLesson
+					lessonDuration
+				}
+			}
 		}
 	}
 `;

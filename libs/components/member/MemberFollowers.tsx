@@ -12,6 +12,7 @@ import { userVar } from '../../../apollo/store';
 import { T } from '../../types/common';
 import { GET_MEMBER_FOLLOWERS } from '../../../apollo/user/query';
 import { Card, CardContent, CardMedia, Paper } from '@mui/material';
+import { UserRoundPlus } from 'lucide-react';
 
 interface MemberFollowsProps {
 	initialInput: FollowInquiry;
@@ -70,7 +71,9 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 			<div id="member-follows-page">
 				<Stack className="main-title-box">
 					<Stack className="right-box">
-						<Typography className="main-title">{category === 'followers' ? 'Followers' : 'Followings'}</Typography>
+						<Typography className="main-title text-neutral-900 dark:text-slate-200">
+							{category === 'followers' ? 'Followers' : 'Followings'}
+						</Typography>
 					</Stack>
 				</Stack>
 				<Stack className="follows-list-box">
@@ -80,9 +83,23 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 						<Typography className="title-text">Subscription</Typography>
 					</Stack>
 					{memberFollowers?.length === 0 && (
-						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="" />
-							<p>No Followers yet!</p>
+						<div className={'no-data space-y-2'}>
+							<div className="flex flex-col items-center justify-center p-12 text-center min-h-[600px]">
+								<div className="relative">
+									<div className="absolute inset-0 -m-10 bg-blue-100/50 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+									<div className="relative rounded-full bg-white p-6 mb-6 shadow-lg border border-indigo-100 transform transition-all duration-300 hover:scale-105">
+										<UserRoundPlus className="h-14 w-14 text-indigo-500" />
+									</div>
+								</div>
+								<Typography variant="h4" className="font-semibold mb-3 mt-2 text-neutral-900 dark:text-slate-200">
+									No Followers yet!
+								</Typography>
+								<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">
+									We don't have any followers to display at the moment. Check back soon as our list is updated
+									regularly.
+								</Typography>
+								<div className="w-full max-w-xs h-1 bg-gradient-to-r from-transparent via-indigo-200 to-transparent rounded-full"></div>
+							</div>
 						</div>
 					)}
 					{memberFollowers.map((follower: Follower) => {
@@ -121,7 +138,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 													Properties
 												</Typography>
 												<Typography variant="body1" className="font-bold">
-													{follower?.followerData?.memberProperties}
+													{follower?.followerData?.memberCourses}
 												</Typography>
 											</Box>
 											<Box className="text-center">
@@ -191,9 +208,10 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 					})}
 				</Stack>
 				{memberFollowers.length !== 0 && (
-					<Stack className="pagination-config">
+					<Stack className="pagination-config space-y-2">
 						<Stack className="pagination-box">
 							<Pagination
+								variant="outlined"
 								page={followInquiry.page}
 								count={Math.ceil(total / followInquiry.limit)}
 								onChange={paginationHandler}
@@ -202,7 +220,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 							/>
 						</Stack>
 						<Stack className="total-result">
-							<Typography>{total} followers</Typography>
+							<Typography>Total followers ( {total} )</Typography>
 						</Stack>
 					</Stack>
 				)}

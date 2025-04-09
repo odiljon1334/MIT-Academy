@@ -4,6 +4,7 @@ import { userVar } from '../../apollo/store';
 import { CustomJwtPayload } from '../types/customJwtPayload';
 import { sweetMixinErrorAlert } from '../sweetAlert';
 import { LOGIN, SIGN_UP } from '../../apollo/user/mutation';
+import { useEffect } from 'react';
 
 export function getJwtToken(): any {
 	if (typeof window !== 'undefined') {
@@ -64,9 +65,15 @@ const requestJwtToken = async ({
 	}
 };
 
-export const signUp = async (nick: string, password: string, phone: string, type: string): Promise<void> => {
+export const signUp = async (
+	nick: string,
+	password: string,
+	phone: string,
+	type: string,
+	position: string,
+): Promise<void> => {
 	try {
-		const { jwtToken } = await requestSignUpJwtToken({ nick, password, phone, type });
+		const { jwtToken } = await requestSignUpJwtToken({ nick, password, phone, type, position });
 
 		if (jwtToken) {
 			updateStorage({ jwtToken });
@@ -84,9 +91,11 @@ const requestSignUpJwtToken = async ({
 	password,
 	phone,
 	type,
+	position,
 }: {
 	nick: string;
 	password: string;
+	position: string;
 	phone: string;
 	type: string;
 }): Promise<{ jwtToken: string }> => {
@@ -96,7 +105,13 @@ const requestSignUpJwtToken = async ({
 		const result = await apolloClient.mutate({
 			mutation: SIGN_UP,
 			variables: {
-				input: { memberNick: nick, memberPassword: password, memberPhone: phone, memberType: type },
+				input: {
+					memberNick: nick,
+					memberPassword: password,
+					memberPhone: phone,
+					memberType: type,
+					memberPosition: position,
+				},
 			},
 			fetchPolicy: 'network-only',
 		});
@@ -135,6 +150,7 @@ export const updateUserInfo = (jwtToken: any) => {
 		memberAuthType: claims.memberAuthType,
 		memberPhone: claims.memberPhone ?? '',
 		memberNick: claims.memberNick ?? '',
+		memberPosition: claims.memberPosition ?? '',
 		memberFullName: claims.memberFullName ?? '',
 		memberImage:
 			claims.memberImage === null || claims.memberImage === undefined
@@ -176,6 +192,7 @@ const deleteUserInfo = () => {
 		memberImage: '',
 		memberAddress: '',
 		memberDesc: '',
+		memberPosition: '',
 		memberProperties: 0,
 		memberRank: 0,
 		memberArticles: 0,

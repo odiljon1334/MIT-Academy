@@ -1,23 +1,23 @@
-export enum PropertyType {
-	APARTMENT = 'APARTMENT',
-	VILLA = 'VILLA',
-	HOUSE = 'HOUSE',
+export enum CourseType {
+	BEGINNER = 'BEGINNER',
+	INTERMEDIATE = 'INTERMEDIATE',
+	ADVANCED = 'ADVANCED',
 }
 
-export enum PropertyStatus {
+export enum CourseStatus {
 	ACTIVE = 'ACTIVE',
 	SOLD = 'SOLD',
+	INACTIVE = 'INACTIVE',
 	DELETE = 'DELETE',
 }
 
-export enum PropertyLocation {
-	SEOUL = 'SEOUL',
-	BUSAN = 'BUSAN',
-	INCHEON = 'INCHEON',
-	DAEGU = 'DAEGU',
-	GYEONGJU = 'GYEONGJU',
-	GWANGJU = 'GWANGJU',
-	CHONJU = 'CHONJU',
-	DAEJON = 'DAEJON',
-	JEJU = 'JEJU',
+export enum CourseCategory {
+	JAVASCRIPT = 'JAVASCRIPT',
+	TYPESCRIPT = 'TYPESCRIPT',
+	PYTHON = 'PYTHON',
+	WEB_DEVELOPMENT = 'WEB_DEVELOPMENT',
+	MOBILE_DEVELOPMENT = 'MOBILE_DEVELOPMENT',
+	DATA_SCIENCE = 'DATA_SCIENCE',
+	UI_UX_DESIGN = 'UI_UX_DESIGN',
+	DEVOPS = 'DEVOPS',
 }

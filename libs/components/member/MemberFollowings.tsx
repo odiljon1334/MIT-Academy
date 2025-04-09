@@ -12,6 +12,7 @@ import { userVar } from '../../../apollo/store';
 import { GET_MEMBER_FOLLOWINGS } from '../../../apollo/user/query';
 import { T } from '../../types/common';
 import { Card, CardContent, CardMedia, Paper } from '@mui/material';
+import { UserRoundPlus } from 'lucide-react';
 
 interface MemberFollowingsProps {
 	initialInput: FollowInquiry;
@@ -71,7 +72,9 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 				<div id="member-follows-page">
 					<Stack className="main-title-box">
 						<Stack className="right-box">
-							<Typography className="main-title">{category === 'followers' ? 'Followers' : 'Followings'}</Typography>
+							<Typography className="main-title text-neutral-900 dark:text-slate-200">
+								{category === 'followers' ? 'Followers' : 'Followings'}
+							</Typography>
 						</Stack>
 					</Stack>
 					<Stack className="follows-list-box">
@@ -81,9 +84,23 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 							<Typography className="title-text">Subscription</Typography>
 						</Stack>
 						{memberFollowings?.length === 0 && (
-							<div className={'no-data'}>
-								<img src="/img/icons/icoAlert.svg" alt="" />
-								<p>No Followings yet!</p>
+							<div className={'no-data space-y-2'}>
+								<div className="flex flex-col items-center justify-center p-12 text-center min-h-[600px]">
+									<div className="relative">
+										<div className="absolute inset-0 -m-10 bg-blue-100/50 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+										<div className="relative rounded-full bg-white p-6 mb-6 shadow-lg border border-indigo-100 transform transition-all duration-300 hover:scale-105">
+											<UserRoundPlus className="h-14 w-14 text-indigo-500" />
+										</div>
+									</div>
+									<Typography variant="h4" className="font-semibold mb-3 mt-2 text-neutral-900 dark:text-slate-200">
+										No Followings yet!
+									</Typography>
+									<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">
+										We don't have any followings to display at the moment. Check back soon as our list is updated
+										regularly.
+									</Typography>
+									<div className="w-full max-w-xs h-1 bg-gradient-to-r from-transparent via-indigo-200 to-transparent rounded-full"></div>
+								</div>
 							</div>
 						)}
 						<Box className="w-full flex flex-col justify-center space-y-4">
@@ -118,7 +135,7 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 														Properties
 													</Typography>
 													<Typography variant="body1" className="font-bold">
-														{follower?.followingData?.memberProperties}
+														{follower?.followingData?.memberCourses}
 													</Typography>
 												</Box>
 												<Box className="text-center">
@@ -169,7 +186,8 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 														) : (
 															<Button
 																variant="contained"
-																sx={{ background: '#60eb60d4', ':hover': { background: '#60eb60d4' } }}
+																className="rounded-md"
+																color="success"
 																onClick={() =>
 																	subscribeHandler(
 																		follower?.followingData?._id,
@@ -191,9 +209,10 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 						</Box>
 					</Stack>
 					{memberFollowings.length !== 0 && (
-						<Stack className="pagination-config">
+						<Stack className="pagination-config space-y-2">
 							<Stack className="pagination-box">
 								<Pagination
+									variant="outlined"
 									page={followInquiry.page}
 									count={Math.ceil(total / followInquiry.limit)}
 									onChange={paginationHandler}
@@ -202,7 +221,7 @@ const MemberFollowings = (props: MemberFollowingsProps) => {
 								/>
 							</Stack>
 							<Stack className="total-result">
-								<Typography>{total} followings</Typography>
+								<Typography>Total followings ( {total} )</Typography>
 							</Stack>
 						</Stack>
 					)}

@@ -1,5 +1,15 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { Box, Button, FormControl, MenuItem, Stack, Typography, Select, TextField } from '@mui/material';
+import {
+	Box,
+	Button,
+	FormControl,
+	MenuItem,
+	Stack,
+	Typography,
+	Select,
+	TextField,
+	outlinedInputClasses,
+} from '@mui/material';
 import { BoardArticleCategory } from '../../enums/board-article.enum';
 import { Editor } from '@toast-ui/react-editor';
 import { getJwtToken } from '../../auth';
@@ -12,6 +22,7 @@ import { useMutation } from '@apollo/client';
 import { CREATE_BOARD_ARTICLE } from '../../../apollo/user/mutation';
 import { sweetErrorHandling, sweetTopSuccessAlert } from '../../sweetAlert';
 import { Message } from '../../enums/common.enum';
+import InputLabel from '@mui/material/InputLabel';
 
 const TuiEditor = () => {
 	const editorRef = useRef<Editor>(null),
@@ -37,8 +48,8 @@ const TuiEditor = () => {
 			formData.append(
 				'operations',
 				JSON.stringify({
-					query: `mutation ImageUploader($file: Upload!, $target: String!) {
-						imageUploader(file: $file, target: $target) 
+					query: `mutation fileUploader($file: Upload!, $target: String!) {
+						fileUploader(file: $file, target: $target) 
 				  }`,
 					variables: {
 						file: null,
@@ -62,7 +73,7 @@ const TuiEditor = () => {
 				},
 			});
 
-			const responseImage = response.data.data.imageUploader;
+			const responseImage = response.data.data.fileUploader;
 			console.log('=responseImage: ', responseImage);
 			memoizedValues.articleImage = responseImage;
 
@@ -120,34 +131,37 @@ const TuiEditor = () => {
 		<Stack>
 			<Stack direction="row" style={{ margin: '40px' }} justifyContent="space-evenly">
 				<Box component={'div'} className={'form_row'} style={{ width: '300px' }}>
-					<Typography style={{ color: '#7f838d', margin: '10px' }} variant="h3">
+					<Typography style={{ marginBottom: '20px' }} variant="h5" className="text-neutral-800 dark:text-slate-200">
 						Category
 					</Typography>
-					<FormControl sx={{ width: '100%', background: 'white' }}>
+					<FormControl className="rounded-[10px]" sx={{ minWidth: '100%' }} size="medium" color="success">
+						<InputLabel id="demo-select-small-label">Category</InputLabel>
 						<Select
+							variant="outlined"
+							labelId="demo-select-small-label"
+							id="demo-select-small"
 							value={articleCategory}
 							onChange={changeCategoryHandler}
-							displayEmpty
-							inputProps={{ 'aria-label': 'Without label' }}
+							defaultValue={BoardArticleCategory.FREE}
+							label="category"
+							sx={{ borderRadius: '8px', outline: 'none' }}
 						>
-							<MenuItem value={BoardArticleCategory.FREE}>
-								<span>Free</span>
-							</MenuItem>
-							<MenuItem value={BoardArticleCategory.HUMOR}>Humor</MenuItem>
+							<MenuItem value={BoardArticleCategory.FREE}>Educate</MenuItem>
+							<MenuItem value={BoardArticleCategory.HUMOR}>Academy</MenuItem>
 							<MenuItem value={BoardArticleCategory.NEWS}>News</MenuItem>
 							<MenuItem value={BoardArticleCategory.RECOMMEND}>Recommendation</MenuItem>
 						</Select>
 					</FormControl>
 				</Box>
 				<Box component={'div'} style={{ width: '300px', flexDirection: 'column' }}>
-					<Typography style={{ color: '#7f838d', margin: '10px' }} variant="h3">
+					<Typography style={{ color: '#7f838d', marginBottom: '20px' }} variant="h5">
 						Title
 					</Typography>
-					<TextField
+					<input
 						onChange={articleTitleHandler}
 						id="filled-basic"
-						label="Type Title"
-						style={{ width: '300px', background: 'white' }}
+						style={{ width: '300px', outline: 'none', background: 'none' }}
+						className="border border-solid border-neutral-400 dark:border-neutral-600 rounded-[8px] text-neutral-900 dark:text-slate-200 p-4"
 					/>
 				</Box>
 			</Stack>
@@ -180,7 +194,7 @@ const TuiEditor = () => {
 			<Stack direction="row" justifyContent="center">
 				<Button
 					variant="contained"
-					color="primary"
+					className="bg-lime-700 hover:bg-lime-600 rounded-lg font-openSans font-semibold"
 					style={{ margin: '30px', width: '250px', height: '45px' }}
 					onClick={handleRegisterButton}
 				>

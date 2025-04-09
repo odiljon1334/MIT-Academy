@@ -4,7 +4,7 @@ import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
 import { Stack } from '@mui/material';
 import MemberMenu from '../../libs/components/member/MemberMenu';
-import MemberProperties from '../../libs/components/member/MemberProperties';
+import MemberProperties from '../../libs/components/member/MemberCourses';
 import { useRouter } from 'next/router';
 import MemberFollowers from '../../libs/components/member/MemberFollowers';
 import MemberArticles from '../../libs/components/member/MemberArticles';
@@ -39,7 +39,7 @@ const MemberPage: NextPage = () => {
 			router.replace(
 				{
 					pathname: router.pathname,
-					query: { ...router.query, category: 'properties' },
+					query: { ...router.query, category: 'course' },
 				},
 				undefined,
 				{ shallow: true },
@@ -113,8 +113,16 @@ const MemberPage: NextPage = () => {
 			<div id="member-page" style={{ position: 'relative' }}>
 				<div className="container">
 					<Stack className={'member-page'}>
-						<Stack className={'back-frame'}>
-							<Stack className={'left-config'}>
+						<Stack
+							className={
+								'back-frame bg-neutral-50/50 dark:bg-slate-900/50 border border-solid dark:border-neutral-600 border-neutral-300 rounded-lg'
+							}
+						>
+							<Stack
+								className={
+									'left-config bg-neutral-50 dark:bg-slate-900 border border-solid dark:border-neutral-600 border-neutral-300 rounded-lg'
+								}
+							>
 								<MemberMenu subscribeHandler={subscribeHandler} unsubscribeHandler={unsubscribeHandler} />
 							</Stack>
 							<Stack className="main-config" mb={'76px'}>

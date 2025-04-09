@@ -3,8 +3,9 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { createTheme, ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { grey } from '@mui/material/colors';
 
-type Theme = 'light' | 'dark';
+type Theme = 'dark' | 'light';
 
 type ThemeContextType = {
 	theme: Theme;
@@ -48,7 +49,7 @@ const generateTheme = (mode: Theme) => {
 };
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-	const [theme, setTheme] = useState<Theme>('light');
+	const [theme, setTheme] = useState<Theme>('dark');
 
 	useEffect(() => {
 		const savedTheme = localStorage.getItem('theme') as Theme | null;
@@ -73,7 +74,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 	}, [theme]);
 
 	const toggleTheme = () => {
-		setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+		setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
 	};
 
 	const generatedTheme = generateTheme(theme);
@@ -82,7 +83,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 		palette: {
 			mode: theme,
 			primary: {
-				main: '#ff5252',
+				light: '#3f51b5',
+				main: '#f50057',
+				dark: '#bdbdbd',
+				contrastText: '#fff',
 			},
 			background: {
 				default: generatedTheme.colors.background,
@@ -90,6 +94,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 			},
 			text: {
 				primary: generatedTheme.colors.foreground,
+				secondary: grey[700],
 			},
 		},
 		typography: {

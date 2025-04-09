@@ -130,7 +130,7 @@ const Chat = () => {
 	return (
 		<Stack className="chatting">
 			{openButton ? (
-				<button className="chat-button" onClick={handleOpenChat}>
+				<button className="chat-button dark:bg-white" onClick={handleOpenChat}>
 					{open ? <CloseFullscreenIcon /> : <MarkChatUnreadIcon />}
 				</button>
 			) : null}

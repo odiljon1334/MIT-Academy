@@ -13,6 +13,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Card, CardContent, CardMedia } from '@mui/material';
 import { CalendarMonth } from '@mui/icons-material';
+import { MemberPosition } from '../../enums/member.enum';
 
 interface CommunityCardProps {
 	boardArticle: BoardArticle;
@@ -57,13 +58,13 @@ const CommunityCard = (props: CommunityCardProps) => {
 					className="dark:bg-slate-900 border border-solid border-neutral-300 dark:border-neutral-700 shadow-lg rounded-lg overflow-hidden"
 				>
 					<CardMedia
-						style={{ width: 300, height: 220, objectFit: 'cover' }}
+						style={{ width: 300, height: 220, objectFit: 'fill', cursor: 'pointer' }}
 						component="img"
 						image={imagePath}
 						alt={'article image'}
 					/>
 					<CardContent sx={{ width: 300 }}>
-						<Typography variant="h6" className="font-semibold">
+						<Typography variant="h6" className="font-semibold cursor-pointer hover:underline">
 							{boardArticle.articleTitle}
 						</Typography>
 						<div className="flex items-center text-gray-500 text-sm mt-2">
@@ -90,7 +91,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 									style={{ width: 50, height: 50, borderRadius: 50, objectFit: 'cover' }}
 								/>
 								<div
-									className="flex flex-col space-y-1"
+									className="flex flex-col space-y-2"
 									onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 										e.stopPropagation();
 										goMemberPage(boardArticle?.memberData?._id as string);
@@ -99,8 +100,32 @@ const CommunityCard = (props: CommunityCardProps) => {
 									<span className="text-md font-openSans font-semibold dark:text-neutral-200 hover:underline">
 										{boardArticle.memberData?.memberNick}
 									</span>
-									<p className="text-[13px] font-openSans font-meduim text-neutral-600">
-										{boardArticle?.memberData?.memberType}
+									<p className="text-[13px] font-openSans font-meduim text-neutral-400">
+										{boardArticle?.memberData?.memberPosition === MemberPosition.UI_UX_DESIGNER
+											? 'UI/UX Designer'
+											: boardArticle?.memberData?.memberPosition === MemberPosition.SOFTWARE_ENGINEER
+											? 'Software Engineer'
+											: boardArticle?.memberData?.memberPosition === MemberPosition.FRONTEND_DEVELOPER
+											? 'Frontend Developer'
+											: boardArticle?.memberData?.memberPosition === MemberPosition.BACKEND_DEVELOPER
+											? 'Backend Developer'
+											: boardArticle?.memberData?.memberPosition === MemberPosition.FULLSTACK_DEVELOPER
+											? 'Fullstack Developer'
+											: boardArticle?.memberData?.memberPosition === MemberPosition.DATA_SCIENTIST
+											? 'Data Scientist'
+											: boardArticle?.memberData?.memberPosition === MemberPosition.WEB_DEVELOPER
+											? 'Web Developer'
+											: boardArticle?.memberData?.memberPosition === MemberPosition.MOBILE_DEVELOPER
+											? 'Mobile Developer'
+											: boardArticle?.memberData?.memberPosition === MemberPosition.MACHINE_LEARNING_ENGINEER
+											? 'Machine Learning Eng'
+											: boardArticle?.memberData?.memberPosition === MemberPosition.DEVOPS_ENGINEER
+											? 'DevOps Engineer'
+											: boardArticle?.memberData?.memberPosition === MemberPosition.GAME_DEVELOPER
+											? 'Game Developer'
+											: boardArticle?.memberData?.memberPosition === MemberPosition.GRAPHIC_DESIGNER
+											? 'Graphic Designer'
+											: null}
 									</p>
 								</div>
 							</div>

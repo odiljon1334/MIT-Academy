@@ -11,6 +11,7 @@ import { LIKE_TARGET_BOARD_ARTICLE } from '../../../apollo/user/mutation';
 import { GET_BOARD_ARTICLES } from '../../../apollo/user/query';
 import { Messages } from '../../config';
 import { sweetMixinErrorAlert, sweetTopSuccessAlert } from '../../sweetAlert';
+import NewspaperOutlinedIcon from '@mui/icons-material/NewspaperOutlined';
 
 const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 	const device = useDeviceDetect();
@@ -74,8 +75,8 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 			<div id="my-articles-page">
 				<Stack className="main-title-box">
 					<Stack className="right-box">
-						<Typography className="main-title">Article</Typography>
-						<Typography className="sub-title">We are glad to see you again!</Typography>
+						<Typography className="main-title text-neutral-900 dark:text-slate-200">Article</Typography>
+						<Typography className="sub-title text-slate-500">We are glad to see you again!</Typography>
 					</Stack>
 				</Stack>
 				<Stack className="article-list-box">
@@ -91,9 +92,23 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 							);
 						})
 					) : (
-						<div className={'no-data'}>
-							<img src="/img/icons/icoAlert.svg" alt="" />
-							<p>No Articles found!</p>
+						<div className={'no-data space-y-2'}>
+							<div className="flex flex-col items-center justify-center p-12 text-center min-h-[600px]">
+								<div className="relative">
+									<div className="absolute inset-0 -m-10 bg-blue-100/50 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+									<div className="relative rounded-full bg-white p-6 mb-6 shadow-lg border border-indigo-100 transform transition-all duration-300 hover:scale-105">
+										<NewspaperOutlinedIcon className="h-14 w-14 text-indigo-500" />
+									</div>
+								</div>
+								<Typography variant="h4" className="font-semibold mb-3 mt-2 text-neutral-900 dark:text-slate-200">
+									No Articles found!
+								</Typography>
+								<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">
+									We don't have any articles to display at the moment. Check back soon as our listings are updated
+									regularly.
+								</Typography>
+								<div className="w-full max-w-xs h-1 bg-gradient-to-r from-transparent via-indigo-200 to-transparent rounded-full"></div>
+							</div>
 						</div>
 					)}
 				</Stack>
@@ -102,6 +117,7 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 					<Stack className="pagination-conf">
 						<Stack className="pagination-box">
 							<Pagination
+								variant="outlined"
 								count={Math.ceil(totalCount / searchCommunity.limit)}
 								page={searchCommunity.page}
 								shape="circular"
@@ -110,7 +126,9 @@ const MyArticles: NextPage = ({ initialInput, ...props }: T) => {
 							/>
 						</Stack>
 						<Stack className="total">
-							<Typography>Total {totalCount ?? 0} article(s) available</Typography>
+							<Typography className="text-neutral-900 dark:text-slate-200">
+								Total {totalCount ?? 0} article{totalCount > 1 ? 's' : ' '} available
+							</Typography>
 						</Stack>
 					</Stack>
 				)}

@@ -10,15 +10,23 @@ const IconBreadcumbs = () => {
 	const router = useRouter();
 	const pathMap: Record<string, { name: string; icon: JSX.Element }> = {
 		'/': { name: 'Home', icon: <HomeIcon sx={{ mr: 0.5 }} fontSize="medium" /> },
-		'/property': {
+		'/course': {
 			name: 'Courses',
 			icon: <WhatshotIcon className="text-slate-400" sx={{ mr: 0.5 }} fontSize="medium" />,
 		},
-		'/agent': {
+		'/course/detail': {
+			name: 'Courses Deatil',
+			icon: <GrainIcon className="text-slate-400" sx={{ mr: 0.5 }} fontSize="medium" />,
+		},
+		'/course/lesson': {
+			name: 'Courses Videos',
+			icon: <GrainIcon className="text-slate-400" sx={{ mr: 0.5 }} fontSize="medium" />,
+		},
+		'/instructor': {
 			name: 'Instructors',
 			icon: <WhatshotIcon className="text-slate-400" sx={{ mr: 0.5 }} fontSize="medium" />,
 		},
-		'/agent/detail': {
+		'/instructor/detail': {
 			name: 'Instructors Detail',
 			icon: <GrainIcon className="text-slate-400" sx={{ mr: 0.5 }} fontSize="medium" />,
 		},

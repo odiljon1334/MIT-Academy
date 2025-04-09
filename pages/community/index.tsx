@@ -107,13 +107,13 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 	} else {
 		return (
 			<div id="community-list-page">
-				<div className="container">
+				<div className="container py-24">
 					<TabContext value={searchCommunity.search.articleCategory}>
 						<Stack className="main-box border border-solid border-neutral-300 dark:border-neutral-600 rounded-lg dark:bg-slate-950/50 bg-neutral-50/50">
 							<Stack className="left-config dark:bg-slate-900 bg-neutral-50 border border-solid border-neutral-300 dark:border-neutral-600">
 								<Stack className={'image-info'}>
 									<Stack className={'community-name'}>
-										<Typography className={'name font-openSans'}>
+										<Typography className={'name text-neutral-900 dark:text-neutral-200 font-openSans'}>
 											Article Category <NewspaperOutlinedIcon className="text-amber-400 ml-2" />
 										</Typography>
 									</Stack>
@@ -176,7 +176,7 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 								<Stack className="panel-config">
 									<Stack className="title-box">
 										<Stack className="left">
-											<Typography className="title font-openSans mb-2">
+											<Typography className="title text-neutral-900 dark:text-neutral-200 font-openSans mb-2">
 												{searchCommunity.search.articleCategory} BOARD
 											</Typography>
 											<Typography className="sub-title font-openSans text-gray-600">
@@ -199,8 +199,22 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 												})
 											) : (
 												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
-													<p>No Article found!</p>
+													<div className="flex flex-col items-center justify-center p-12 text-center min-h-[600px]">
+														<div className="relative">
+															<div className="absolute inset-0 -m-10 bg-blue-100/50 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+															<div className="relative rounded-full bg-white p-6 mb-6 shadow-lg border border-indigo-100 transform transition-all duration-300 hover:scale-105">
+																<NewspaperOutlinedIcon className="h-14 w-14 text-indigo-500" />
+															</div>
+														</div>
+														<Typography variant="h4" className="font-semibold mb-3 mt-2">
+															No Articles Found!
+														</Typography>
+														<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">
+															We don't have any articles to display at the moment. Check back soon as our listings are
+															updated regularly.
+														</Typography>
+														<div className="w-full max-w-xs h-1 bg-gradient-to-r from-transparent via-indigo-200 to-transparent rounded-full"></div>
+													</div>
 												</Stack>
 											)}
 										</Stack>
@@ -219,8 +233,22 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 												})
 											) : (
 												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
-													<p>No Article found!</p>
+													<div className="flex flex-col items-center justify-center p-12 text-center min-h-[600px]">
+														<div className="relative">
+															<div className="absolute inset-0 -m-10 bg-blue-100/50 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+															<div className="relative rounded-full bg-white p-6 mb-6 shadow-lg border border-indigo-100 transform transition-all duration-300 hover:scale-105">
+																<NewspaperOutlinedIcon className="h-14 w-14 text-indigo-500" />
+															</div>
+														</div>
+														<Typography variant="h4" className="font-semibold mb-3 mt-2">
+															No Articles Found!
+														</Typography>
+														<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">
+															We don't have any articles to display at the moment. Check back soon as our listings are
+															updated regularly.
+														</Typography>
+														<div className="w-full max-w-xs h-1 bg-gradient-to-r from-transparent via-indigo-200 to-transparent rounded-full"></div>
+													</div>
 												</Stack>
 											)}
 										</Stack>
@@ -239,8 +267,22 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 												})
 											) : (
 												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
-													<p>No Article found!</p>
+													<div className="flex flex-col items-center justify-center p-12 text-center min-h-[600px]">
+														<div className="relative">
+															<div className="absolute inset-0 -m-10 bg-blue-100/50 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+															<div className="relative rounded-full bg-white p-6 mb-6 shadow-lg border border-indigo-100 transform transition-all duration-300 hover:scale-105">
+																<NewspaperOutlinedIcon className="h-14 w-14 text-indigo-500" />
+															</div>
+														</div>
+														<Typography variant="h4" className="font-semibold mb-3 mt-2">
+															No Articles Found!
+														</Typography>
+														<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">
+															We don't have any articles to display at the moment. Check back soon as our listings are
+															updated regularly.
+														</Typography>
+														<div className="w-full max-w-xs h-1 bg-gradient-to-r from-transparent via-indigo-200 to-transparent rounded-full"></div>
+													</div>
 												</Stack>
 											)}
 										</Stack>
@@ -259,8 +301,22 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 												})
 											) : (
 												<Stack className={'no-data'}>
-													<img src="/img/icons/icoAlert.svg" alt="" />
-													<p>No Article found!</p>
+													<div className="flex flex-col items-center justify-center p-12 text-center min-h-[600px]">
+														<div className="relative">
+															<div className="absolute inset-0 -m-10 bg-blue-100/50 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+															<div className="relative rounded-full bg-white p-6 mb-6 shadow-lg border border-indigo-100 transform transition-all duration-300 hover:scale-105">
+																<NewspaperOutlinedIcon className="h-14 w-14 text-indigo-500" />
+															</div>
+														</div>
+														<Typography variant="h4" className="font-semibold mb-3 mt-2">
+															No Articles Found!
+														</Typography>
+														<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">
+															We don't have any articles to display at the moment. Check back soon as our listings are
+															updated regularly.
+														</Typography>
+														<div className="w-full max-w-xs h-1 bg-gradient-to-r from-transparent via-indigo-200 to-transparent rounded-full"></div>
+													</div>
 												</Stack>
 											)}
 										</Stack>
@@ -283,9 +339,9 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 								/>
 							</Stack>
 							<Stack className="total-result">
-								<Typography>
+								<span className="text-slate-800 dark:text-slate-200 font-openSans font-normal text-md">
 									Total {totalCount} article{totalCount > 1 ? 's' : ''} available
-								</Typography>
+								</span>
 							</Stack>
 						</Stack>
 					)}

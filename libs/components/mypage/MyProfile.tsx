@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, Stack, Typography } from '@mui/material';
 import axios from 'axios';
 import { Messages, REACT_APP_API_URL } from '../../config';
 import { getJwtToken, updateStorage, updateUserInfo } from '../../auth';
@@ -11,6 +11,7 @@ import { MemberUpdate } from '../../types/member/member.update';
 import { UPDATE_MEMBER } from '../../../apollo/user/mutation';
 import { sweetErrorHandling, sweetMixinSuccessAlert } from '../../sweetAlert';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
+import { MemberPosition } from '../../enums/member.enum';
 
 const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 	const device = useDeviceDetect();
@@ -23,14 +24,16 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 
 	/** LIFECYCLES **/
 	useEffect(() => {
-		setUpdateData({
-			...updateData,
+		setUpdateData((prevState) => ({
+			...prevState,
 			memberNick: user.memberNick,
 			memberPhone: user.memberPhone,
 			memberAddress: user.memberAddress,
+			memberPosition: user.memberPosition as MemberPosition,
 			memberImage: user.memberImage,
-		});
+		}));
 	}, [user]);
+	console.log('user:', user);
 
 	/** HANDLERS **/
 	const uploadImage = async (e: any) => {
@@ -42,8 +45,8 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 			formData.append(
 				'operations',
 				JSON.stringify({
-					query: `mutation ImageUploader($file: Upload!, $target: String!) {
-						imageUploader(file: $file, target: $target) 
+					query: `mutation fileUploader($file: Upload!, $target: String!) {
+						fileUploader(file: $file, target: $target) 
 				  }`,
 					variables: {
 						file: null,
@@ -67,7 +70,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 				},
 			});
 
-			const responseImage = response.data.data.imageUploader;
+			const responseImage = response.data.data.fileUploader;
 			console.log('+responseImage: ', responseImage);
 			updateData.memberImage = responseImage;
 			setUpdateData({ ...updateData });
@@ -103,6 +106,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 			updateData.memberNick === '' ||
 			updateData.memberPhone === '' ||
 			updateData.memberAddress === '' ||
+			updateData.memberPosition === ('' as MemberPosition) ||
 			updateData.memberImage === ''
 		) {
 			return true;
@@ -118,13 +122,13 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 			<div id="my-profile-page">
 				<Stack className="main-title-box">
 					<Stack className="right-box">
-						<Typography className="main-title">My Profile</Typography>
-						<Typography className="sub-title">We are glad to see you again!</Typography>
+						<Typography className="main-title text-neutral-800 dark:text-slate-200">My Profile</Typography>
+						<Typography className="sub-title text-slate-500">Welcome back to EduCampus!!</Typography>
 					</Stack>
 				</Stack>
 				<Stack className="top-box bg-neutral-50 dark:bg-slate-900 border border-solid dark:border-neutral-600 border-neutral-300">
 					<Stack className="photo-box">
-						<Typography className="title">Photo</Typography>
+						<Typography className="title text-neutral-800 dark:text-slate-200">Photo</Typography>
 						<Stack className="image-big-box">
 							<Stack className="image-box">
 								<img
@@ -148,15 +152,17 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 									htmlFor="hidden-input"
 									className="labeler border border-solid border-neutral-500 dark:border-neutral-400 hover:underline"
 								>
-									<Typography>Upload Profile Image</Typography>
+									<Typography className="text-neutral-800 dark:text-slate-200">Upload Profile Image</Typography>
 								</label>
-								<Typography className="upload-text">A photo must be in JPG, JPEG or PNG format!</Typography>
+								<Typography className="upload-text text-slate-500">
+									A photo must be in JPG, JPEG or PNG format!
+								</Typography>
 							</Stack>
 						</Stack>
 					</Stack>
 					<Stack className="small-input-box">
 						<Stack className="input-box">
-							<Typography className="title">Username</Typography>
+							<Typography className="title text-neutral-800 dark:text-slate-200">Username</Typography>
 							<input
 								className="border border-solid border-neutral-300 dark:border-neutral-700 placeholder-neutral-700 text-neutral-700"
 								type="text"
@@ -166,7 +172,7 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 							/>
 						</Stack>
 						<Stack className="input-box">
-							<Typography className="title">Phone</Typography>
+							<Typography className="title text-neutral-800 dark:text-slate-200">Phone</Typography>
 							<input
 								className="border border-solid border-neutral-300 dark:border-neutral-700 placeholder-neutral-700 text-neutral-700"
 								type="text"
@@ -177,14 +183,39 @@ const MyProfile: NextPage = ({ initialValues, ...props }: any) => {
 						</Stack>
 					</Stack>
 					<Stack className="address-box">
-						<Typography className="title">Address</Typography>
-						<input
-							className="border border-solid border-neutral-300 dark:border-neutral-700 placeholder-neutral-700 text-neutral-700"
-							type="text"
-							placeholder="Your address"
-							value={updateData.memberAddress}
-							onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberAddress: value })}
-						/>
+						<div className="flex flex-row items-center w-full space-x-8">
+							<label
+								htmlFor=""
+								className="w-full flex flex-col text-neutral-800 dark:text-slate-200 text-md font-openSans font-semibold"
+							>
+								Address
+								<input
+									className="font-openSans font-normal border border-solid border-neutral-300 dark:border-neutral-700 placeholder-neutral-700 text-neutral-700"
+									type="text"
+									placeholder="Your address"
+									value={updateData.memberAddress}
+									onChange={({ target: { value } }) => setUpdateData({ ...updateData, memberAddress: value })}
+								/>
+							</label>
+							<FormControl className="w-full mt-5">
+								<Select
+									color="success"
+									className="font-openSans font-normal bg-white rounded-md text-slate-950"
+									labelId="demo-simple-select-label"
+									id="demo-simple-select"
+									value={updateData.memberPosition || ''}
+									onChange={(event) =>
+										setUpdateData({ ...updateData, memberPosition: event.target.value as MemberPosition })
+									}
+								>
+									{Object.values(MemberPosition).map((position) => (
+										<MenuItem key={position.length} value={position} sx={{ borderRadius: '8px' }}>
+											{position}
+										</MenuItem>
+									))}
+								</Select>
+							</FormControl>
+						</div>
 					</Stack>
 					<Stack className="about-me-box">
 						<Button
@@ -208,6 +239,7 @@ MyProfile.defaultProps = {
 		memberNick: '',
 		memberPhone: '',
 		memberAddress: '',
+		memberPosition: '',
 	},
 };
 

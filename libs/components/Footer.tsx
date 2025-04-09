@@ -59,7 +59,7 @@ const Footer = () => {
 									></motion.path>
 								</svg>
 								<motion.span className="font-openSans font-semibold bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-white/90 to-rose-300 text-[24px]">
-									MIT Academy
+									EDUcampus
 								</motion.span>
 							</Wrapper>
 						</Box>
@@ -145,7 +145,7 @@ const Footer = () => {
 										></motion.path>
 									</svg>
 									<motion.div className="font-openSans font-semibold bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-white/90 to-rose-300 text-[24px]">
-										MIT Academy™
+										EDUcampus™
 									</motion.div>
 								</Wrapper>
 							</Link>
@@ -213,7 +213,7 @@ const Footer = () => {
 					</Stack>
 				</Stack>
 				<Stack className={'second'}>
-					<span>© MIT Academy - All rights reserved. Academy {moment().year()}</span>
+					<span>© EDUcampus - All rights reserved. Academy {moment().year()}</span>
 					<span>Privacy · Terms · Sitemap</span>
 				</Stack>
 			</Stack>

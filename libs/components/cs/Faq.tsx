@@ -38,7 +38,7 @@ const Faq = () => {
 
 	/** APOLLO REQUESTS **/
 	/** LIFECYCLES **/
-	
+
 	/** HANDLERS **/
 	const changeCategoryHandler = (category: string) => {
 		setCategory(category);
@@ -496,10 +496,20 @@ const Faq = () => {
 						Other
 					</div>
 				</Box>
-				<Box className={'wrap'} component={'div'}>
+				<Box
+					className={
+						'wrap py-10 border border-solid border-neutral-300 dark:border-neutral-600 rounded-lg dark:bg-slate-950/50 bg-neutral-50/50'
+					}
+					component={'div'}
+				>
 					{data[category] &&
 						data[category].map((ele: any) => (
-							<Accordion expanded={expanded === ele?.id} onChange={handleChange(ele?.id)} key={ele?.subject}>
+							<Accordion
+								className="w-[1300px] border border-solid border-neutral-300 dark:border-neutral-600 dark:bg-slate-950 bg-neutral-50/50"
+								expanded={expanded === ele?.id}
+								onChange={handleChange(ele?.id)}
+								key={ele?.subject}
+							>
 								<AccordionSummary id="panel1d-header" className="question" aria-controls="panel1d-content">
 									<Typography className="badge" variant={'h4'}>
 										Q

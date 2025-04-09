@@ -1,9 +1,7 @@
 import { motion } from 'framer-motion';
 import { cn } from '../../utils';
-import Button from '@mui/material/Button';
 import { useReactiveVar } from '@apollo/client';
 import { userVar } from '../../../apollo/store';
-import Link from 'next/link';
 
 function ElegantShape({
 	className,

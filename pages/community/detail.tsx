@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import useDeviceDetect from '../../libs/hooks/useDeviceDetect';
 import withLayoutBasic from '../../libs/components/layout/LayoutBasic';
-import { Button, Stack, Typography, Tab, Tabs, IconButton, Backdrop, Pagination } from '@mui/material';
+import { Button, Stack, Typography, Tab, Tabs, IconButton, Backdrop, Pagination, Divider } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import Moment from 'react-moment';
@@ -23,6 +23,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { BoardArticle } from '../../libs/types/board-article/board-article';
 import { CREATE_COMMENT, LIKE_TARGET_BOARD_ARTICLE, UPDATE_COMMENT } from '../../apollo/user/mutation';
 import { GET_BOARD_ARTICLE, GET_COMMENTS } from '../../apollo/user/query';
+import NewspaperOutlinedIcon from '@mui/icons-material/NewspaperOutlined';
 import {
 	sweetConfirmAlert,
 	sweetMixinErrorAlert,
@@ -234,12 +235,13 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 		return (
 			<div id="community-detail-page">
 				<div className="container">
-					<Stack className="main-box">
-						<Stack className="left-config">
+					<Stack className="main-box border border-solid border-neutral-300 dark:border-neutral-600 rounded-lg dark:bg-slate-950/50 bg-neutral-50/50">
+						<Stack className="left-config dark:bg-slate-900 bg-neutral-50 border border-solid border-neutral-300 dark:border-neutral-600">
 							<Stack className={'image-info'}>
-								<img src={'/img/logo/logoText.svg'} />
 								<Stack className={'community-name'}>
-									<Typography className={'name'}>Community Board Article</Typography>
+									<Typography className={'name text-neutral-900 dark:text-neutral-200 font-openSans'}>
+										Article Category <NewspaperOutlinedIcon className="text-amber-400 ml-2" />
+									</Typography>
 								</Stack>
 							</Stack>
 							<Tabs
@@ -254,52 +256,66 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 								<Tab
 									value={'FREE'}
 									label={'Free Board'}
-									className={`tab-button ${articleCategory === 'FREE' ? 'active' : ''}`}
+									className={`tab-button ${
+										articleCategory === 'FREE' ? 'active' : ''
+									} border border-solid border-neutral-600`}
 								/>
 								<Tab
 									value={'RECOMMEND'}
 									label={'Recommendation'}
-									className={`tab-button ${articleCategory === 'RECOMMEND' ? 'active' : ''}`}
+									className={`tab-button ${
+										articleCategory === 'RECOMMEND' ? 'active' : ''
+									} border border-solid border-neutral-600`}
 								/>
 								<Tab
 									value={'NEWS'}
 									label={'News'}
-									className={`tab-button ${articleCategory === 'NEWS' ? 'active' : ''}`}
+									className={`tab-button ${
+										articleCategory === 'NEWS' ? 'active' : ''
+									} border border-solid border-neutral-600`}
 								/>
 								<Tab
 									value={'HUMOR'}
 									label={'Humor'}
-									className={`tab-button ${articleCategory === 'HUMOR' ? 'active' : ''}`}
+									className={`tab-button ${
+										articleCategory === 'HUMOR' ? 'active' : ''
+									} border border-solid border-neutral-600`}
 								/>
 							</Tabs>
+							<Divider />
+							<Button
+								variant="contained"
+								onClick={() =>
+									router.push({
+										pathname: '/mypage',
+										query: {
+											category: 'writeArticle',
+										},
+									})
+								}
+								className="rounded-md mt-10 p-3 border border-solid border-neutral-600 text-neutral-200 bg-neutral-900 hover:bg-neutral-700 font-openSans font-meduim"
+							>
+								Write new article
+							</Button>
 						</Stack>
 						<div className="community-detail-config">
 							<Stack className="title-box">
 								<Stack className="left">
-									<Typography className="title">{articleCategory} BOARD</Typography>
+									<Typography className="title text-neutral-900 dark:text-neutral-200">
+										{articleCategory} BOARD
+									</Typography>
 									<Typography className="sub-title">
 										Express your opinions freely here without content restrictions
 									</Typography>
 								</Stack>
-								<Button
-									onClick={() =>
-										router.push({
-											pathname: '/mypage',
-											query: {
-												category: 'writeArticle',
-											},
-										})
-									}
-									className="right"
-								>
-									Write
-								</Button>
 							</Stack>
 							<div className="config">
-								<Stack className="first-box-config">
+								<Stack className="first-box-config p-4 dark:bg-slate-900 bg-neutral-50 rounded-lg border border-solid border-neutral-300 dark:border-neutral-600">
 									<Stack className="content-and-info">
 										<Stack className="content">
-											<Typography className="content-data">{boardArticle?.articleTitle}</Typography>
+											<Typography className="content-data text-neutral-900 dark:text-neutral-200">
+												{boardArticle?.articleTitle}
+											</Typography>
 											<Stack className="member-info">
 												<img
 													src={memberImage}
@@ -307,45 +323,63 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 													className="member-img"
 													onClick={() => goMemberPage(boardArticle?.memberData?._id)}
 												/>
-												<Typography className="member-nick" onClick={() => goMemberPage(boardArticle?.memberData?._id)}>
-													{boardArticle?.memberData?.memberNick}
-												</Typography>
-												<Stack className="divider"></Stack>
-												<Moment className={'time-added'} format={'DD.MM.YY HH:mm'}>
-													{boardArticle?.createdAt}
-												</Moment>
+												<div className="flex flex-col">
+													<Typography
+														className="member-nick text-neutral-900 dark:text-neutral-200"
+														onClick={() => goMemberPage(boardArticle?.memberData?._id)}
+													>
+														{boardArticle?.memberData?.memberNick}
+													</Typography>
+													<Moment className={'time-added space-x-2 text-gray-500'} format={'DD MMM, YYYY HH:mm'}>
+														{boardArticle?.createdAt}
+													</Moment>
+												</div>
 											</Stack>
 										</Stack>
 										<Stack className="info">
-											<Stack className="icon-info">
+											<Stack className="icon-info cursor-pointer">
 												{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
-													<ThumbUpAltIcon onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
+													<ThumbUpAltIcon
+														className="text-neutral-900 dark:text-neutral-200"
+														onClick={() => likeBoArticleHandler(user, boardArticle?._id)}
+													/>
 												) : (
 													<ThumbUpOffAltIcon
 														onClick={() => boardArticle?._id && likeBoArticleHandler(user, boardArticle._id)}
 													/>
 												)}
 
-												<Typography className="text">{boardArticle?.articleLikes}</Typography>
+												<Typography className="text text-neutral-900 dark:text-neutral-200">
+													{boardArticle?.articleLikes}
+												</Typography>
 											</Stack>
 											<Stack className="divider"></Stack>
 											<Stack className="icon-info">
-												<VisibilityIcon />
-												<Typography className="text">{boardArticle?.articleViews}</Typography>
+												<VisibilityIcon className="text-neutral-900 dark:text-neutral-200" />
+												<Typography className="text text-neutral-900 dark:text-neutral-200">
+													{boardArticle?.articleViews}
+												</Typography>
 											</Stack>
 											<Stack className="divider"></Stack>
-											<Stack className="icon-info">
-												{total > 0 ? <ChatIcon /> : <ChatBubbleOutlineRoundedIcon />}
-												<Typography className="text">{total}</Typography>
+											<Stack className="icon-info cursor-pointer">
+												{total > 0 ? (
+													<ChatIcon className="text-neutral-900 dark:text-neutral-200" />
+												) : (
+													<ChatBubbleOutlineRoundedIcon className="text-neutral-900 dark:text-neutral-200" />
+												)}
+												<Typography className="text text-neutral-900 dark:text-neutral-200">{total}</Typography>
 											</Stack>
 										</Stack>
 									</Stack>
 									<Stack>
-										<ToastViewerComponent markdown={boardArticle?.articleContent} className={'ytb_play'} />
+										<ToastViewerComponent
+											markdown={boardArticle?.articleContent}
+											className={'ytb_play text-neutral-900 dark:text-neutral-200'}
+										/>
 									</Stack>
 									<Stack className="like-and-dislike">
 										<Stack className="top">
-											<Button>
+											<Button variant="outlined" className="dark:text-neutral-100 text-neutral-800" color="inherit">
 												{boardArticle?.meLiked && boardArticle?.meLiked[0]?.myFavorite ? (
 													<ThumbUpAltIcon onClick={() => likeBoArticleHandler(user, boardArticle?._id)} />
 												) : (
@@ -358,13 +392,13 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 										</Stack>
 									</Stack>
 								</Stack>
-								<Stack
-									className="second-box-config"
-									sx={{ borderBottom: total > 0 ? 'none' : '1px solid #eee', border: '1px solid #eee' }}
-								>
-									<Typography className="title-text">Comments ({total})</Typography>
+								<Stack className="second-box-config mt-10 dark:bg-slate-900 bg-neutral-50 rounded-lg border border-solid border-neutral-300 dark:border-neutral-600">
+									<Typography className="title-text text-neutral-900 dark:text-neutral-200">
+										Comments ( {total} )
+									</Typography>
 									<Stack className="leave-comment">
 										<input
+											className="border border-solid border-neutral-300"
 											type="text"
 											placeholder="Leave a comment"
 											value={comment}
@@ -375,20 +409,22 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 											}}
 										/>
 										<Stack className="button-box">
-											<Typography>{wordsCnt}/100</Typography>
-											<Button onClick={creteCommentHandler}>comment</Button>
+											<Typography className="text-neutral-900 dark:text-neutral-200">{wordsCnt}/100</Typography>
+											<Button variant="contained" color="success" onClick={creteCommentHandler}>
+												comment
+											</Button>
 										</Stack>
 									</Stack>
 								</Stack>
 								{total > 0 && (
-									<Stack className="comments">
+									<Stack className="comments mt-10">
 										<Typography className="comments-title">Comments</Typography>
 									</Stack>
 								)}
 								{comments?.map((commentData, index) => {
 									return (
-										<Stack className="comments-box" key={commentData?._id}>
-											<Stack className="main-comment">
+										<Stack className="comments-box p-2" key={commentData?._id}>
+											<Stack className="main-comment space-y-2 dark:bg-slate-900 bg-neutral-50 rounded-lg border border-solid border-neutral-300 dark:border-neutral-600">
 												<Stack className="member-info">
 													<Stack
 														className="name-date"
@@ -396,7 +432,9 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 													>
 														<img src={getCommentMemberImage(commentData?.memberData?.memberImage)} alt="" />
 														<Stack className="name-date-column">
-															<Typography className="name">{commentData?.memberData?.memberNick}</Typography>
+															<Typography className="name text-neutral-900 dark:text-neutral-200">
+																{commentData?.memberData?.memberNick}
+															</Typography>
 															<Typography className="date">
 																<Moment className={'time-added'} format={'DD.MM.YY HH:mm'}>
 																	{commentData?.createdAt}
@@ -464,6 +502,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 																				height: '40px',
 																				padding: '0px 10px',
 																				borderRadius: '5px',
+																				color: '#000000',
 																			}}
 																		/>
 																		<Stack width={'100%'} flexDirection={'row'} justifyContent={'space-between'}>
@@ -473,14 +512,16 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 																			<Stack sx={{ flexDirection: 'row', alignSelf: 'flex-end', gap: '10px' }}>
 																				<Button
 																					variant="outlined"
-																					color="inherit"
+																					color="error"
+																					className="rounded-lg"
 																					onClick={() => cancelButtonHandler()}
 																				>
 																					Cancel
 																				</Button>
 																				<Button
 																					variant="contained"
-																					color="inherit"
+																					color="info"
+																					className="rounded-lg"
 																					onClick={() => updateButtonHandler(updatedCommentId, undefined)}
 																				>
 																					Update
@@ -494,7 +535,9 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 													)}
 												</Stack>
 												<Stack className="content">
-													<Typography>{commentData?.commentContent}</Typography>
+													<Typography className="text-neutral-900 dark:text-neutral-200">
+														{commentData?.commentContent}
+													</Typography>
 												</Stack>
 											</Stack>
 										</Stack>
@@ -503,6 +546,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 								{total > 0 && (
 									<Stack className="pagination-box">
 										<Pagination
+											variant="outlined"
 											count={Math.ceil(total / searchFilter.limit) || 1}
 											page={searchFilter.page}
 											shape="circular"

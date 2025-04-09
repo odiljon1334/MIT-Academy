@@ -28,7 +28,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 						<div className={'community-img'} style={{ backgroundImage: `url(${articleImage})` }}>
 							<div>{index + 1}</div>
 						</div>
-						<strong>{article?.articleTitle}</strong>
+						<strong className="text-slate-800 dark:text-slate-200">{article?.articleTitle}</strong>
 						<span className="text-gray-500">Free Board</span>
 					</Box>
 				</Link>
@@ -40,7 +40,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 						<Box component={'div'} className="horizontal-card">
 							<img src={articleImage} alt="" />
 							<div>
-								<strong>{article.articleTitle}</strong>
+								<strong className="text-slate-800 dark:text-slate-200">{article.articleTitle}</strong>
 								<span className="text-gray-500">
 									<Moment format="DD.MM.YY">{article?.createdAt}</Moment>
 								</span>

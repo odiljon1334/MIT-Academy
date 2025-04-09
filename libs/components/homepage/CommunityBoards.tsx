@@ -20,6 +20,8 @@ const CommunityBoards = () => {
 	const [newsArticles, setNewsArticles] = useState<BoardArticle[]>([]);
 	const [freeArticles, setFreeArticles] = useState<BoardArticle[]>([]);
 
+	console.log('newsArticles:', newsArticles);
+
 	/** APOLLO REQUESTS **/
 	const {
 		loading: getNewsArticlesLoading,
@@ -54,9 +56,13 @@ const CommunityBoards = () => {
 	} else {
 		return (
 			<Stack className={'community-board'}>
-				<Stack className={'container dark:bg-slate-900/80 rounded-lg'}>
+				<Stack
+					className={
+						'container bg-neutral-50/50 dark:bg-slate-900/50 border border-solid dark:border-neutral-600 border-neutral-300 rounded-lg'
+					}
+				>
 					<Stack>
-						<Typography variant={'h2'} className="font-openSans font-semibold mt-10">
+						<Typography variant={'h2'} className="text-slate-800 dark:text-slate-200 font-openSans font-semibold mt-10">
 							Latest articles
 						</Typography>
 					</Stack>
@@ -66,7 +72,7 @@ const CommunityBoards = () => {
 								<Link href={'/community?articleCategory=NEWS'}>
 									<span className="dark:text-slate-300 text-slate-900">News</span>
 								</Link>
-								<ChevronRight className="w-5 h-5" />
+								<ChevronRight className="w-5 h-5 text-slate-800 dark:text-slate-200" />
 							</Stack>
 							<Stack className={'card-wrap'}>
 								{newsArticles.map((article, index) => {
@@ -79,7 +85,7 @@ const CommunityBoards = () => {
 								<Link href={'/community?articleCategory=FREE'}>
 									<span className="dark:text-slate-300 text-slate-900">Free</span>
 								</Link>
-								<ChevronRight className="w-5 h-5" />
+								<ChevronRight className="w-5 h-5 text-slate-800 dark:text-slate-200" />
 							</Stack>
 							<Stack className={'card-wrap vertical '}>
 								{freeArticles.map((article, index) => {

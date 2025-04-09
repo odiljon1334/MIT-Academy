@@ -1,6 +1,5 @@
 #pc-wrap {
 	#member-page {
-		background: #f6f6f6;
 		.container {
 			.member-page {
 				position: relative;
@@ -14,19 +13,11 @@
 					display: flex;
 					flex-direction: row;
 					margin: 100px 0 200px 0;
-					border-radius: 12px;
-					border: 1px solid #c4c4c4;
-					background: #fff;
-					box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 					.left-config {
 						position: relative;
 						padding: 0 0 0 0;
 						width: 266px;
 						height: 700px;
-						border-radius: 12px;
-						background: #fff;
-						border: 1px solid rgba(196, 196, 196, 0.79);
-						box-shadow: 0px 1px 4px 0px rgba(24, 26, 32, 0.07);
 						margin: 180px 20px 40px 20px;
 						.profile {
 							margin-top: 5px;
@@ -48,7 +39,6 @@
 								display: flex;
 								flex-direction: column;
 								.user-name {
-									color: #181a20;
 									font-family: $font;
 									font-size: 15px;
 									font-style: normal;
@@ -58,18 +48,11 @@
 								.user-phone {
 									display: flex;
 									flex-direction: row;
+									display: flex;
+									flex-direction: row;
+									align-items: center;
 									margin-top: 5px;
-									img {
-										margin-top: 3px;
-										margin-right: 4px;
-										width: 16px;
-										height: 16px;
-									}
-								}
-								.view-list {
-									margin-top: 5px;
-									font-weight: 300;
-									color: rgb(187, 187, 187);
+									gap: 5px;
 								}
 							}
 						}
@@ -80,13 +63,12 @@
 							align-items: center;
 							margin-top: 15px;
 							button {
-								border: 1px solid #b9b9b9;
-								color: #181a20;
 								font-family: $font;
 								font-size: 14px;
 								font-style: normal;
 								font-weight: 400;
 								line-height: normal;
+								border-radius: 6px;
 							}
 							p {
 								color: #b9b9b9;
@@ -104,7 +86,7 @@
 								height: auto;
 								.title {
 									font-family: $font;
-									font-size: 15px;
+									font-size: 18px;
 									font-style: normal;
 									font-weight: 400;
 									line-height: 28px;
@@ -124,8 +106,8 @@
 									}
 									.focus {
 										height: 50px;
-										background: #000000;
-										border-radius: 10px;
+										background: #357a38;
+										border-radius: 6px;
 										p {
 											font-size: 14px;
 											color: #ffffff;
@@ -140,7 +122,7 @@
 											display: flex;
 											flex-direction: row;
 											justify-content: flex-end;
-											margin-left: 11px;
+											margin-left: 10px;
 										}
 										p {
 											width: 40%;
@@ -148,17 +130,8 @@
 										}
 									}
 								}
-								img {
-									width: 16px;
-									height: 16px;
-								}
-								svg {
-									width: 16px;
-									height: 16px;
-								}
 								.sub-title {
-									margin-left: 12px;
-									color: #181a20;
+									margin-left: 10px;
 									font-family: $font;
 									font-size: 14px;
 									font-style: normal;
@@ -169,7 +142,6 @@
 									display: flex;
 									justify-content: flex-end;
 									padding-right: 10px;
-									color: #181a20;
 									font-family: $font;
 									font-size: 14px;
 									font-style: normal;
