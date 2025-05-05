@@ -13,13 +13,17 @@ import { CaretDown } from 'phosphor-react';
 import useDeviceDetect from '../hooks/useDeviceDetect';
 import Switch from '@mui/material/Switch';
 import Link from 'next/link';
-import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
-import { useReactiveVar } from '@apollo/client';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
 import { useTheme } from '../../scss/MaterialTheme/ThemeProvider';
 import { motion } from 'framer-motion';
+import { Bell } from 'lucide-react';
+import NotificationCard from './notification/NotificationCard';
+import { GET_NOTIFICATIONS_COURSE } from '../../apollo/user/query';
+import { T } from '../types/common';
+import { UPDATE_NOTIFICATIONS } from '../../apollo/user/mutation';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 	width: 62,
@@ -77,14 +81,16 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 	},
 }));
 
-const Top = () => {
+const Top = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
 	const user = useReactiveVar(userVar);
 	const { t, i18n } = useTranslation('common');
 	const router = useRouter();
 	const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
 	const [lang, setLang] = useState<string | null>('en');
+	const [notificationAnchorEl, setNotificationAnchorEl] = useState<null | HTMLElement>(null);
 	const drop = Boolean(anchorEl2);
+	const openNotification = Boolean(notificationAnchorEl);
 	const [colorChange, setColorChange] = useState(false);
 	const [anchorEl, setAnchorEl] = React.useState<any | HTMLElement>(null);
 	let open = Boolean(anchorEl);
@@ -93,6 +99,25 @@ const Top = () => {
 	const logoutOpen = Boolean(logoutAnchor);
 	const { theme, toggleTheme } = useTheme();
 	const [svgColor, setSvgColor] = useState('url(#gradientId)');
+	const [unReadNotifications, setUnReadNotifications] = useState<Notification[]>([]);
+
+	const {
+		loading: getNotificationLoading,
+		data: getNotifactionData,
+		error: getNotificationError,
+		refetch: getRefetch,
+	} = useQuery(GET_NOTIFICATIONS_COURSE, {
+		fetchPolicy: 'cache-and-network',
+		variables: {
+			input: initialInput,
+		},
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setUnReadNotifications(data?.getCourseNotifications?.list);
+		},
+	});
+
+	const notifications = getNotifactionData?.getCourseNotifications?.list || [];
 
 	/** LIFECYCLES **/
 	useEffect(() => {
@@ -127,6 +152,10 @@ const Top = () => {
 	}, []);
 
 	/** HANDLERS **/
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
 	const langClick = (e: any) => {
 		setAnchorEl2(e.currentTarget);
 	};
@@ -153,8 +182,12 @@ const Top = () => {
 		}
 	};
 
-	const handleClose = () => {
-		setAnchorEl(null);
+	const handleNotificationClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setNotificationAnchorEl(event.currentTarget);
+	};
+
+	const handleNotificationClose = () => {
+		setNotificationAnchorEl(null);
 	};
 
 	const handleHover = (event: any) => {
@@ -343,7 +376,32 @@ const Top = () => {
 								</FormGroup>
 							</div>
 							<div className={'lan-box space-x-2'}>
-								{user?._id && <NotificationsOutlinedIcon className={'notification-icon w-8 h-8 mr-2 cursor-pointer'} />}
+								{user?._id && (
+									<div className="relative space-y-4 mt-1">
+										<div>
+											<Button
+												variant="outlined"
+												style={{ background: 'none', border: 'none', outline: 'none' }}
+												onClick={handleNotificationClick}
+											>
+												<Bell size={26} color="white" />
+												{notifications.length > 0 && (
+													<span className="absolute -top-1 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+														{unReadNotifications.length > 6 ? '6+' : unReadNotifications.length}
+													</span>
+												)}
+											</Button>
+											<StyledMenu
+												id="notification-menu"
+												anchorEl={notificationAnchorEl}
+												open={openNotification}
+												onClose={handleNotificationClose}
+											>
+												<NotificationCard />
+											</StyledMenu>
+										</div>
+									</div>
+								)}
 								<Button
 									disableRipple
 									className="btn-lang"
@@ -398,6 +456,16 @@ const Top = () => {
 			</Stack>
 		);
 	}
+};
+
+Top.defaultProps = {
+	initialInput: {
+		page: 1,
+		limit: 4,
+		sort: 'createdAt',
+		direction: 'DESC',
+		search: {},
+	},
 };
 
 export default withRouter(Top);

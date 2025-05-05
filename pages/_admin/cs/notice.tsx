@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import withAdminLayout from '../../../libs/components/layout/LayoutAdmin';
 import { Box, Button, InputAdornment, Stack } from '@mui/material';
@@ -13,13 +13,179 @@ import TablePagination from '@mui/material/TablePagination';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { NoticeList } from '../../../libs/components/admin/cs/NoticeList';
+import { NoticeInputUpdate, NoticeInquiry } from '../../../libs/types/notice/notice.input';
+import { useMutation, useQuery } from '@apollo/client';
+import { GET_NOTICES } from '../../../apollo/admin/query';
+import { T } from '../../../libs/types/common';
+import { Notice } from '../../../libs/types/notice/notice';
+import { useRouter } from 'next/router';
+import { Member } from '../../../libs/types/member/member';
+import { NoticeCategory, NoticeStatus } from '../../../libs/enums/notice.enum';
+import { REMOVE_NOTICE, UPDATE_NOTICE } from '../../../apollo/admin/mutation';
+import { sweetConfirmAlert, sweetErrorHandling } from '../../../libs/sweetAlert';
+import { SearchIcon } from 'lucide-react';
 
-const AdminNotice: NextPage = (props: any) => {
+interface NoticeProps {
+	initialInput: NoticeInquiry;
+}
+
+const AdminNotice: NextPage<NoticeProps> = ({ initialInput }) => {
+	const [noticeInquiry, setNoticeInquiry] = useState<NoticeInquiry>(initialInput);
 	const [anchorEl, setAnchorEl] = useState<[] | HTMLElement[]>([]);
+	const [noticeData, setNoticeData] = useState<Notice[]>([]);
+	const [value, setValue] = useState(noticeInquiry?.search?.typeList ? noticeInquiry?.search?.typeList : 'ALL');
+	const [noticeTotal, setNoticeTotal] = useState<number>(0);
+	const router = useRouter();
+
+	const [searchText, setSearchText] = useState('');
+	const [searchType, setSearchType] = useState('ALL');
+
+	const [updateNoticeByAdmin] = useMutation(UPDATE_NOTICE);
+	const [removeNoticeByAdmin] = useMutation(REMOVE_NOTICE);
 
 	/** APOLLO REQUESTS **/
+	const {
+		loading: getNoticesLoading,
+		data: getNoticesData,
+		error: getNoticesError,
+		refetch: getNoticesRefetch,
+	} = useQuery(GET_NOTICES, {
+		fetchPolicy: 'cache-and-network',
+		variables: { input: initialInput },
+		notifyOnNetworkStatusChange: true,
+		onCompleted: (data: T) => {
+			setNoticeData(data?.getNotices?.list);
+			setNoticeTotal(data?.getNotices?.metaCounter[0]?.total ?? 0);
+		},
+	});
+
+	const notices: Notice[] = getNoticesData?.getNotices?.list || [];
+	const membersData: Member[] = getNoticesData?.getNotices?.list?.[0]?.memberData || [];
 	/** LIFECYCLES **/
+	useEffect(() => {
+		getNoticesRefetch({ input: noticeInquiry }).then();
+	}, [noticeInquiry, value]);
 	/** HANDLERS **/
+	const changePageHandler = async (event: unknown, newPage: number) => {
+		noticeInquiry.page = newPage + 1;
+		setNoticeInquiry({ ...noticeInquiry });
+	};
+
+	const changeRowsPerPageHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
+		noticeInquiry.limit = parseInt(event.target.value, 10);
+		noticeInquiry.page = 1;
+		setNoticeInquiry({ ...noticeInquiry });
+	};
+
+	const handleMenuIconClick = (event: React.MouseEvent, index: number, field: 'type' | 'status') => {
+		setAnchorEl((prev: any) => {
+			const newAnchor = { ...prev };
+			newAnchor[index] = { anchor: event.currentTarget, field };
+			return newAnchor;
+		});
+	};
+
+	const handleMenuIconClose = () => {
+		setAnchorEl([]);
+	};
+
+	const updateNoticeHandler = async (updateData: NoticeInputUpdate) => {
+		try {
+			await updateNoticeByAdmin({
+				variables: {
+					input: updateData,
+				},
+			});
+			handleMenuIconClose();
+			await getNoticesRefetch({ input: noticeInquiry });
+		} catch (err: any) {
+			sweetErrorHandling(err).then();
+		}
+	};
+
+	const removeNoticeHandler = async (id: string) => {
+		try {
+			if (await sweetConfirmAlert('Are you sure to remove?')) {
+				await removeNoticeByAdmin({ variables: { input: id } });
+				await getNoticesRefetch({ input: noticeInquiry });
+			}
+			handleMenuIconClose();
+		} catch (err: any) {
+			sweetErrorHandling(err).then();
+		}
+	};
+
+	const textHandler = useCallback((value: string) => {
+		try {
+			setSearchText(value);
+		} catch (err: any) {
+			console.log('textHandler: ', err.message);
+		}
+	}, []);
+
+	const searchTextHandler = () => {
+		try {
+			setNoticeInquiry({
+				...noticeInquiry,
+				search: {
+					...noticeInquiry.search,
+					text: searchText,
+				},
+			});
+		} catch (err: any) {
+			console.log('searchTextHandler: ', err.message);
+		}
+	};
+
+	const searchTypeHandler = async (newValue: string) => {
+		try {
+			setSearchType(newValue);
+
+			if (newValue !== 'ALL') {
+				setNoticeInquiry({
+					...noticeInquiry,
+					page: 1,
+					sort: 'createdAt',
+					search: {
+						...noticeInquiry.search,
+						categoryList: [newValue as NoticeCategory],
+					},
+				});
+			} else {
+				delete noticeInquiry?.search?.categoryList;
+				setNoticeInquiry({ ...noticeInquiry });
+			}
+		} catch (err: any) {
+			console.log('searchTypeHandler: ', err.message);
+		}
+	};
+
+	const handleTabChange = async (event: any, newValue: string) => {
+		setValue(newValue);
+		setSearchText('');
+
+		setNoticeInquiry({ ...noticeInquiry, page: 1, sort: 'createdAt' });
+
+		switch (newValue) {
+			case 'ACTIVE':
+				setNoticeInquiry({ ...noticeInquiry, search: { typeList: [NoticeStatus.ACTIVE] } });
+				break;
+			case 'HOLD':
+				setNoticeInquiry({ ...noticeInquiry, search: { typeList: [NoticeStatus.HOLD] } });
+				break;
+			case 'DELETE':
+				setNoticeInquiry({ ...noticeInquiry, search: { typeList: [NoticeStatus.DELETE] } });
+				break;
+			default:
+				delete noticeInquiry?.search?.typeList;
+				setNoticeInquiry({ ...noticeInquiry });
+				break;
+		}
+	};
+
+	const handleRedirect = () => {
+		router.push('/_admin/cs/faq_create');
+	};
 
 	return (
 		// @ts-ignore
@@ -30,67 +196,104 @@ const AdminNotice: NextPage = (props: any) => {
 					className="btn_add"
 					variant={'contained'}
 					size={'medium'}
-					// onClick={() => router.push(`/_admin/cs/faq_create`)}
+					sx={{ borderRadius: '6px' }}
+					onClick={handleRedirect}
 				>
 					<AddRoundedIcon sx={{ mr: '8px' }} />
 					ADD
 				</Button>
 			</Box>
-			<Box component={'div'} className={'table-wrap'}>
+			<Box
+				component={'div'}
+				className={
+					'table-wrap bg-slate-900/50 border border-cyan-700 border-solid rounded backdrop-blur-sm overflow-hidden'
+				}
+			>
 				<Box component={'div'} sx={{ width: '100%', typography: 'body1' }}>
 					<TabContext value={'value'}>
 						<Box component={'div'}>
 							<List className={'tab-menu'}>
 								<ListItem
-									// onClick={(e) => handleTabChange(e, 'all')}
-									value="all"
-									className={'all' === 'all' ? 'li on' : 'li'}
+									onClick={(e: any) => handleTabChange(e, 'ALL')}
+									value="ALL"
+									className={value === 'ALL' ? 'li on' : 'li'}
 								>
-									All (0)
+									All
 								</ListItem>
 								<ListItem
-									// onClick={(e) => handleTabChange(e, 'active')}
-									value="active"
-									className={'all' === 'all' ? 'li on' : 'li'}
+									onClick={(e: any) => handleTabChange(e, 'ACTIVE')}
+									value="ACTIVE"
+									className={value === 'ACTIVE' ? 'li on' : 'li'}
 								>
-									Active (0)
+									Active
 								</ListItem>
 								<ListItem
-									// onClick={(e) => handleTabChange(e, 'blocked')}
-									value="blocked"
-									className={'all' === 'all' ? 'li on' : 'li'}
+									onClick={(e: any) => handleTabChange(e, 'HOLD')}
+									value="HOLD"
+									className={value === 'HOLD' ? 'li on' : 'li'}
 								>
-									Blocked (0)
+									Hold
 								</ListItem>
 								<ListItem
-									// onClick={(e) => handleTabChange(e, 'deleted')}
-									value="deleted"
-									className={'all' === 'all' ? 'li on' : 'li'}
+									onClick={(e: any) => handleTabChange(e, 'DELETE')}
+									value="DELETE"
+									className={value === 'DELETE' ? 'li on' : 'li'}
 								>
-									Deleted (0)
+									Deleted
 								</ListItem>
 							</List>
 							<Divider />
 							<Stack className={'search-area'} sx={{ m: '24px' }}>
-								<Select sx={{ width: '160px', mr: '20px' }} value={'searchCategory'}>
-									<MenuItem value={'mb_nick'}>mb_nick</MenuItem>
-									<MenuItem value={'mb_id'}>mb_id</MenuItem>
+								<Select sx={{ width: '160px', mr: '20px' }} value={searchType}>
+									<MenuItem value={'ALL'} onClick={() => searchTypeHandler('ALL')}>
+										All
+									</MenuItem>
+
+									<MenuItem value={'FAQ'} onClick={() => searchTypeHandler('FAQ')}>
+										FaQ
+									</MenuItem>
+
+									<MenuItem value={'TERMS'} onClick={() => searchTypeHandler('TERMS')}>
+										Terms
+									</MenuItem>
+
+									<MenuItem value={'INQUIRY'} onClick={() => searchTypeHandler('INQUIRY')}>
+										Inquiry
+									</MenuItem>
+
+									<MenuItem value={'NOTICE'} onClick={() => searchTypeHandler('NOTICE')}>
+										Notice
+									</MenuItem>
 								</Select>
 
 								<OutlinedInput
-									value={'searchInput'}
-									// onChange={(e) => handleInput(e.target.value)}
+									value={searchText}
+									onChange={(e: any) => textHandler(e.target.value)}
 									sx={{ width: '100%' }}
 									className={'search'}
-									placeholder="Search user name"
+									placeholder="Search notice title"
 									onKeyDown={(event) => {
-										// if (event.key == 'Enter') searchTargetHandler().then();
+										if (event.key == 'Enter') searchTextHandler();
 									}}
 									endAdornment={
 										<>
-											{true && <CancelRoundedIcon onClick={() => {}} />}
-											<InputAdornment position="end" onClick={() => {}}>
-												<img src="/img/icons/search_icon.png" alt={'searchIcon'} />
+											{searchText && (
+												<CancelRoundedIcon
+													onClick={async () => {
+														setSearchText('');
+														setNoticeInquiry({
+															...noticeInquiry,
+															search: {
+																...noticeInquiry.search,
+																text: '',
+															},
+														});
+													}}
+													style={{ cursor: 'pointer' }}
+												/>
+											)}
+											<InputAdornment position="end" onClick={() => searchTextHandler()}>
+												<SearchIcon style={{ cursor: 'pointer' }} />
 											</InputAdornment>
 										</>
 									}
@@ -99,23 +302,24 @@ const AdminNotice: NextPage = (props: any) => {
 							<Divider />
 						</Box>
 						<NoticeList
-							// dense={dense}
-							// membersData={membersData}
-							// searchMembers={searchMembers}
+							updateNoticeHandler={updateNoticeHandler}
+							removeNoticeHandler={removeNoticeHandler}
+							membersData={membersData}
+							noticeData={noticeData}
 							anchorEl={anchorEl}
-							// handleMenuIconClick={handleMenuIconClick}
-							// handleMenuIconClose={handleMenuIconClose}
+							handleMenuIconClick={handleMenuIconClick}
+							handleMenuIconClose={handleMenuIconClose}
 							// generateMentorTypeHandle={generateMentorTypeHandle}
 						/>
 
 						<TablePagination
-							rowsPerPageOptions={[20, 40, 60]}
+							rowsPerPageOptions={[10, 20, 40, 60]}
 							component="div"
-							count={4}
-							rowsPerPage={10}
-							page={1}
-							onPageChange={() => {}}
-							onRowsPerPageChange={() => {}}
+							count={noticeTotal}
+							rowsPerPage={noticeInquiry?.limit}
+							page={noticeInquiry?.page - 1}
+							onPageChange={changePageHandler}
+							onRowsPerPageChange={changeRowsPerPageHandler}
 						/>
 					</TabContext>
 				</Box>
@@ -124,4 +328,17 @@ const AdminNotice: NextPage = (props: any) => {
 	);
 };
 
-export default withAdminLayout(AdminNotice);
+AdminNotice.defaultProps = {
+	initialInput: {
+		page: 1,
+		limit: 10,
+		sort: 'createdAt',
+		search: {},
+	},
+};
+
+const AdminNoticeWithDefaults: NextPage = (props) => (
+	<AdminNotice {...props} initialInput={(AdminNotice.defaultProps?.initialInput || {}) as NoticeInquiry} />
+);
+
+export default withAdminLayout(AdminNoticeWithDefaults);

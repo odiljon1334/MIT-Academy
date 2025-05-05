@@ -100,7 +100,7 @@ const CommunityCard = (props: CommunityCardProps) => {
 									<span className="text-md font-openSans font-semibold dark:text-neutral-200 hover:underline">
 										{boardArticle.memberData?.memberNick}
 									</span>
-									<p className="text-[13px] font-openSans font-meduim text-neutral-400">
+									<p className="flex text-[12px] font-openSans font-meduim text-neutral-400">
 										{boardArticle?.memberData?.memberPosition === MemberPosition.UI_UX_DESIGNER
 											? 'UI/UX Designer'
 											: boardArticle?.memberData?.memberPosition === MemberPosition.SOFTWARE_ENGINEER

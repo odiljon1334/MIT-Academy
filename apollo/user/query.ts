@@ -112,11 +112,9 @@ export const GET_COURSE = gql`
 			courseModuls {
 				_id
 				moduleTitle
-				moduleOrder
 				lessons {
 					_id
 					lessonTitle
-					lessonOrder
 					lessonVideo
 					completedLesson
 					lessonDuration
@@ -184,11 +182,9 @@ export const GET_COURSES = gql`
 				courseModuls {
 					_id
 					moduleTitle
-					moduleOrder
 					lessons {
 						_id
 						lessonTitle
-						lessonOrder
 						lessonVideo
 						completedLesson
 						lessonDuration
@@ -290,11 +286,9 @@ export const GET_FAVORITES = gql`
 				courseModuls {
 					_id
 					moduleTitle
-					moduleOrder
 					lessons {
 						_id
 						lessonTitle
-						lessonOrder
 						lessonVideo
 						completedLesson
 						lessonDuration
@@ -376,11 +370,9 @@ export const GET_VISITED = gql`
 				courseModuls {
 					_id
 					moduleTitle
-					moduleOrder
 					lessons {
 						_id
 						lessonTitle
-						lessonOrder
 						lessonVideo
 						completedLesson
 						lessonDuration
@@ -676,6 +668,82 @@ export const GET_MEMBER_FOLLOWINGS = gql`
 					followingId
 					followerId
 					myFollowing
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+/**************************
+ *      Notification      *
+ *************************/
+
+export const GET_NOTIFICATIONS_COURSE = gql`
+	query GetCourseNotifications($input: NotifInquiry!) {
+		getCourseNotifications(input: $input) {
+			list {
+				_id
+				notificationType
+				notificationStatus
+				notificationGroup
+				notificationTitle
+				notificationDesc
+				authorId
+				receiverId
+				propertyId
+				articleId
+				createdAt
+				updatedAt
+				courseData {
+					_id
+					courseType
+					courseStatus
+					courseCategory
+					courseTitle
+					coursePrice
+					courseViews
+					courseLikes
+					courseComments
+					courseRank
+					courseImage
+					courseDesc
+					memberId
+					soldAt
+					deletedAt
+					constructedAt
+					createdAt
+					updatedAt
+				}
+				authorData {
+					_id
+					memberType
+					memberStatus
+					memberAuthType
+					memberPhone
+					memberNick
+					memberPosition
+					memberFullName
+					memberImage
+					memberAddress
+					memberDesc
+					memberCourses
+					memberArticles
+					memberFollowers
+					memberFollowings
+					memberPoints
+					memberLikes
+					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
+					deletedAt
+					createdAt
+					updatedAt
+					accessToken
 				}
 			}
 			metaCounter {

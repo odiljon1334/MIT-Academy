@@ -144,7 +144,7 @@ const CourseCard = (props: CourseCardType) => {
 							<Link
 								href={{
 									pathname: '/intructor/detail',
-									query: { agentId: course?.memberData?._id },
+									query: { intructorId: course?.memberData?._id },
 								}}
 								className="flex flex-row cursor-pointer space-x-2"
 							>

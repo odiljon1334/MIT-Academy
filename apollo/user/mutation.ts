@@ -148,10 +148,8 @@ export const CREATE_COURSE = gql`
 			updatedAt
 			courseModuls {
 				moduleTitle
-				moduleOrder
 				lessons {
 					lessonTitle
-					lessonOrder
 					lessonVideo
 					lessonDuration
 				}
@@ -183,10 +181,8 @@ export const UPDATE_COURSE = gql`
 			updatedAt
 			courseModuls {
 				moduleTitle
-				moduleOrder
 				lessons {
 					lessonTitle
-					lessonOrder
 					lessonVideo
 					completedLesson
 					lessonDuration
@@ -220,11 +216,9 @@ export const LIKE_TARGET_COURSE = gql`
 			courseModuls {
 				_id
 				moduleTitle
-				moduleOrder
 				lessons {
 					_id
 					lessonTitle
-					lessonOrder
 					lessonVideo
 					completedLesson
 					lessonDuration
@@ -320,6 +314,25 @@ export const UPDATE_COMMENT = gql`
 			commentContent
 			commentRefId
 			memberId
+			createdAt
+			updatedAt
+		}
+	}
+`;
+
+export const UPDATE_NOTIFICATIONS = gql`
+	mutation UpdateNotification($input: NotificationUpdate!) {
+		updateNotification(input: $input) {
+			_id
+			notificationType
+			notificationStatus
+			notificationGroup
+			notificationTitle
+			notificationDesc
+			authorId
+			receiverId
+			propertyId
+			articleId
 			createdAt
 			updatedAt
 		}

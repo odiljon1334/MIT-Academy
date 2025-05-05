@@ -15,10 +15,8 @@ export interface CourseInput {
 	courseDesc?: string;
 	courseModuls: {
 		moduleTitle: string;
-		moduleOrder: number;
 		lessons: {
 			lessonTitle: string;
-			lessonOrder: number;
 			lessonVideo: string;
 			completedLesson: boolean;
 			lessonDuration: number;

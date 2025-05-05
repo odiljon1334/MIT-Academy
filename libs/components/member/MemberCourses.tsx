@@ -9,6 +9,7 @@ import { T } from '../../types/common';
 import { useRouter } from 'next/router';
 import { useQuery } from '@apollo/client';
 import { GET_COURSES } from '../../../apollo/user/query';
+import { PackageSearch } from 'lucide-react';
 
 const MyCourses: NextPage = ({ initialInput, ...props }: any) => {
 	const device = useDeviceDetect();
@@ -57,23 +58,37 @@ const MyCourses: NextPage = ({ initialInput, ...props }: any) => {
 			<div id="member-properties-page">
 				<Stack className="main-title-box">
 					<Stack className="right-box">
-						<Typography className="main-title">Properties</Typography>
+						<Typography className="main-title dark:text-slate-50 text-slate-950">Courses</Typography>
 					</Stack>
 				</Stack>
 				<Stack className="properties-list-box">
 					<Stack className="list-box">
 						{instructorCourses?.length > 0 && (
 							<Stack className="listing-title-box bg-neutral-50 dark:bg-slate-900 border border-solid dark:border-neutral-600 border-neutral-300">
-								<Typography className="title-text">Listing title</Typography>
-								<Typography className="title-text">Date Published</Typography>
-								<Typography className="title-text">Status</Typography>
-								<Typography className="title-text">View</Typography>
+								<Typography className="title-text dark:text-slate-200 text-slate-950">Listing title</Typography>
+								<Typography className="title-text dark:text-slate-200 text-slate-950">Date Published</Typography>
+								<Typography className="title-text dark:text-slate-200 text-slate-950">Status</Typography>
+								<Typography className="title-text dark:text-slate-200 text-slate-950">View</Typography>
 							</Stack>
 						)}
 						{instructorCourses?.length === 0 && (
-							<div className={'no-data'}>
-								<img src="/img/icons/icoAlert.svg" alt="" />
-								<p>No Courses found!</p>
+							<div className={'no-data space-y-2'}>
+								<div className="flex flex-col items-center justify-center p-12 text-center min-h-[600px]">
+									<div className="relative">
+										<div className="absolute inset-0 -m-10 bg-blue-100/50 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+										<div className="relative rounded-full bg-white p-6 mb-6 shadow-lg border border-indigo-100 transform transition-all duration-300 hover:scale-105">
+											<PackageSearch className="h-14 w-14 text-indigo-500" />
+										</div>
+									</div>
+									<Typography variant="h4" className="font-semibold mb-3 mt-2 text-neutral-900 dark:text-slate-200">
+										No Courses yet!
+									</Typography>
+									<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">
+										We don't have any followers to display at the moment. Check back soon as our list is updated
+										regularly.
+									</Typography>
+									<div className="w-full max-w-xs h-1 bg-gradient-to-r from-transparent via-indigo-200 to-transparent rounded-full"></div>
+								</div>
 							</div>
 						)}
 						{instructorCourses?.map((course: Course) => {
@@ -92,8 +107,8 @@ const MyCourses: NextPage = ({ initialInput, ...props }: any) => {
 										onChange={paginationHandler}
 									/>
 								</Stack>
-								<Stack className="total-result">
-									<Typography>{total} property available</Typography>
+								<Stack className="total-result dark:text-slate-400 text-slate-950">
+									<Typography>{total} courses available</Typography>
 								</Stack>
 							</Stack>
 						)}

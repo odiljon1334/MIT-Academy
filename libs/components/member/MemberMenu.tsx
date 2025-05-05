@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Stack, Typography, Box, List, ListItem, Button } from '@mui/material';
+import { Stack, Typography, Box, List, ListItem, Button, Chip } from '@mui/material';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 import Link from 'next/link';
 import { Member } from '../../types/member/member';
@@ -12,6 +12,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import HomeIcon from '@mui/icons-material/Home';
 import FollowTheSignsRoundedIcon from '@mui/icons-material/FollowTheSignsRounded';
 import ExploreIcon from '@mui/icons-material/Explore';
+import FaceIcon from '@mui/icons-material/Face';
 
 interface MemberMenuProps {
 	subscribeHandler: any;
@@ -55,12 +56,25 @@ const MemberMenu = (props: MemberMenuProps) => {
 						/>
 					</Box>
 					<Stack className={'user-info'}>
-						<Typography className={'user-name'}>{member?.memberNick}</Typography>
-						<Box component={'div'} className={'user-phone'}>
+						<Typography className={'user-name dark:text-slate-200 text-slate-950'}>{member?.memberNick}</Typography>
+						<Box component={'div'} className={'user-phone dark:text-slate-400 text-slate-950'}>
 							<PhoneIcon className="w-5 h-5" />
 							<Typography className={'p-number'}>{member?.memberPhone}</Typography>
 						</Box>
-						<Typography className={'mt-2 font-openSans font-medium text-md'}>{member?.memberType}</Typography>
+						{member?._id && member?.memberType === 'ADMIN' ? (
+							<a href="/_admin/users" target={'_blank'}>
+								<Chip color="success" icon={<FaceIcon />} label={`${member?.memberType}`} variant="outlined" />
+							</a>
+						) : null}
+						{member?._id && member?.memberType === 'INSTRUCTOR' ? (
+							<Chip
+								className="w-[110px] h-7 mt-2"
+								color="success"
+								icon={<FaceIcon />}
+								label={'Instructor'}
+								variant="outlined"
+							/>
+						) : null}
 					</Stack>
 				</Stack>
 				<Stack className="follow-button-box">
@@ -87,12 +101,12 @@ const MemberMenu = (props: MemberMenuProps) => {
 				</Stack>
 				<Stack className={'sections'}>
 					<Stack className={'section'}>
-						<Typography className="title mb-2">Details</Typography>
+						<Typography className="title mb-2 dark:text-slate-400 text-slate-950">Details</Typography>
 						<List className={'sub-section'}>
 							{member?.memberType === 'INSTRUCTOR' && (
 								<ListItem
 									className={
-										category === 'properties'
+										category === 'courses'
 											? 'focus border border-solid border-neutral-300 dark:border-neutral-600'
 											: 'border border-solid border-neutral-300 dark:border-neutral-600 h-10 p-6'
 									}
@@ -100,12 +114,12 @@ const MemberMenu = (props: MemberMenuProps) => {
 									<Link
 										href={{
 											pathname: '/member',
-											query: { ...router.query, category: 'properties' },
+											query: { ...router.query, category: 'courses' },
 										}}
 										scroll={false}
 										style={{ width: '100%' }}
 									>
-										<div className={'flex-box'}>
+										<div className={'flex-box dark:text-slate-200 text-slate-950'}>
 											<HomeIcon />
 											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 												Courses
@@ -129,7 +143,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 									scroll={false}
 									style={{ width: '100%' }}
 								>
-									<div className={'flex-box'}>
+									<div className={'flex-box dark:text-slate-200 text-slate-950'}>
 										<FollowTheSignsRoundedIcon />
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 											Followers
@@ -152,7 +166,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 									scroll={false}
 									style={{ width: '100%' }}
 								>
-									<div className={'flex-box space-x-2'}>
+									<div className={'flex-box space-x-2 dark:text-slate-200 text-slate-950'}>
 										<FollowTheSignsRoundedIcon />
 										<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 											Followings
@@ -164,7 +178,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 					</Stack>
 					<Stack className={'section'} sx={{ marginTop: '10px' }}>
 						<div>
-							<Typography className="title mb-4" variant={'h5'}>
+							<Typography className="title mb-4 dark:text-slate-400 text-slate-950" variant={'h5'}>
 								Community
 							</Typography>
 							<List className={'sub-section'}>
@@ -183,7 +197,7 @@ const MemberMenu = (props: MemberMenuProps) => {
 										scroll={false}
 										style={{ width: '100%' }}
 									>
-										<div className={'flex-box'}>
+										<div className={'flex-box dark:text-slate-200 text-slate-950'}>
 											<ExploreIcon />
 											<Typography className={'sub-title'} variant={'subtitle1'} component={'p'}>
 												Articles

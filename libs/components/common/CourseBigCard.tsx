@@ -57,7 +57,7 @@ const CourseBigCard = (props: CourseBigCardProps) => {
 							onClick={() => {
 								goCourseDetatilPage(course._id);
 							}}
-							className="flex items-center gap-1 text-md font-openSans font-semibold text-slate-950 dark:text-slate-200 hover:underline"
+							className="flex items-center gap-1 text-md font-openSans font-semibold text-slate-950 dark:text-slate-200 hover:underline cursor-pointer"
 						>
 							{course?.courseTitle
 								? course.courseTitle.length > 15

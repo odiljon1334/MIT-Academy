@@ -68,11 +68,9 @@ export const GET_ALL_COURSES_BY_ADMIN = gql`
 				courseModuls {
 					_id
 					moduleTitle
-					moduleOrder
 					lessons {
 						_id
 						lessonTitle
-						lessonOrder
 						lessonVideo
 						completedLesson
 						lessonDuration
@@ -197,6 +195,57 @@ export const GET_COMMENTS = gql`
 					memberPoints
 					memberLikes
 					memberViews
+					deletedAt
+					createdAt
+					updatedAt
+					accessToken
+				}
+			}
+			metaCounter {
+				total
+			}
+		}
+	}
+`;
+
+export const GET_NOTICES = gql`
+	query GetNotices($input: NoticeInquiry!) {
+		getNotices(input: $input) {
+			list {
+				_id
+				noticeCategory
+				noticeStatus
+				noticeTitle
+				noticeContent
+				event
+				memberId
+				constructedAt
+				createdAt
+				updatedAt
+				deletedAt
+				memberData {
+					_id
+					memberType
+					memberStatus
+					memberAuthType
+					memberPhone
+					memberNick
+					memberPosition
+					memberFullName
+					memberImage
+					memberAddress
+					memberDesc
+					memberCourses
+					memberArticles
+					memberFollowers
+					memberFollowings
+					memberPoints
+					memberLikes
+					memberViews
+					memberComments
+					memberRank
+					memberWarnings
+					memberBlocks
 					deletedAt
 					createdAt
 					updatedAt

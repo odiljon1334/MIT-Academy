@@ -10,6 +10,10 @@ import { ChatsCircle, Headset, User, UserCircleGear } from 'phosphor-react';
 import cookies from 'js-cookie';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
 
+import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '@radix-ui/react-tooltip'; // Adjust the import path if necessary
+import Button from '@mui/material/Button';
+import { Moon, Sun } from 'lucide-react';
+
 const AdminMenuList = (props: any) => {
 	const router = useRouter();
 	const device = useDeviceDetect();
@@ -30,8 +34,8 @@ const AdminMenuList = (props: any) => {
 		if (device === 'mobile') setMobileLayout(true);
 
 		switch (pathnames[1]) {
-			case 'properties':
-				setClickMenu(['Properties']);
+			case 'courses':
+				setClickMenu(['Courses']);
 				break;
 			case 'community':
 				setClickMenu(['Community']);
@@ -84,9 +88,9 @@ const AdminMenuList = (props: any) => {
 			on_click: () => subMenuChangeHandler('Users'),
 		},
 		{
-			title: 'Properties',
+			title: 'Courses',
 			icon: <UserCircleGear size={20} color="#bdbdbd" weight="fill" />,
-			on_click: () => subMenuChangeHandler('Properties'),
+			on_click: () => subMenuChangeHandler('Courses'),
 		},
 		{
 			title: 'Community',
@@ -102,7 +106,7 @@ const AdminMenuList = (props: any) => {
 
 	const sub_menu_set: any = {
 		Users: [{ title: 'List', url: '/_admin/users' }],
-		Properties: [{ title: 'List', url: '/_admin/properties' }],
+		Courses: [{ title: 'List', url: '/_admin/courses' }],
 		Community: [{ title: 'List', url: '/_admin/community' }],
 		Cs: [
 			{ title: 'FAQ', url: '/_admin/cs/faq' },
@@ -111,9 +115,9 @@ const AdminMenuList = (props: any) => {
 	};
 
 	return (
-		<>
+		<div>
 			{menu_set.map((item, index) => (
-				<List className={'menu_wrap'} key={index} disablePadding>
+				<List className={` `} key={index} disablePadding>
 					<ListItemButton
 						onClick={item.on_click}
 						component={'li'}
@@ -143,7 +147,7 @@ const AdminMenuList = (props: any) => {
 						component="li"
 						unmountOnExit
 					>
-						<List className="menu-list" disablePadding>
+						<List className="" disablePadding>
 							{sub_menu_set[item.title] &&
 								sub_menu_set[item.title].map((sub: any, i: number) => (
 									<Link href={sub.url} shallow={true} replace={true} key={i}>
@@ -161,7 +165,7 @@ const AdminMenuList = (props: any) => {
 					</Collapse>
 				</List>
 			))}
-		</>
+		</div>
 	);
 };
 

@@ -9,12 +9,12 @@ import {
 	Table,
 	TableContainer,
 	Button,
-	Menu,
-	Fade,
-	MenuItem,
 	Box,
 	Checkbox,
 	Toolbar,
+	MenuItem,
+	Menu,
+	Fade,
 } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import { IconButton, Tooltip } from '@mui/material';
@@ -22,6 +22,12 @@ import Typography from '@mui/material/Typography';
 import { Stack } from '@mui/material';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { NotePencil } from 'phosphor-react';
+import { NoticeInquiry } from '../../../types/notice/notice.input';
+import { Notice } from '../../../types/notice/notice';
+import { REACT_APP_API_URL } from '../../../config';
+import Moment from 'react-moment';
+import { AlignCenter, PackageOpen } from 'lucide-react';
+import { NoticeStatus } from '../../../enums/notice.enum';
 
 type Order = 'asc' | 'desc';
 
@@ -167,11 +173,13 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
 
 interface NoticeListType {
 	dense?: boolean;
+	updateNoticeHandler: any;
 	membersData?: any;
-	searchMembers?: any;
+	noticeData: Notice[];
 	anchorEl?: any;
 	handleMenuIconClick?: any;
 	handleMenuIconClose?: any;
+	removeNoticeHandler: any;
 	generateMentorTypeHandle?: any;
 }
 
@@ -179,17 +187,17 @@ export const NoticeList = (props: NoticeListType) => {
 	const {
 		dense,
 		membersData,
-		searchMembers,
+		noticeData,
+		updateNoticeHandler,
 		anchorEl,
 		handleMenuIconClick,
 		handleMenuIconClose,
+		removeNoticeHandler,
 		generateMentorTypeHandle,
 	} = props;
 	const router = useRouter();
 
 	/** APOLLO REQUESTS **/
-	/** LIFECYCLES **/
-	/** HANDLERS **/
 
 	return (
 		<Stack>
@@ -198,49 +206,235 @@ export const NoticeList = (props: NoticeListType) => {
 					{/*@ts-ignore*/}
 					<EnhancedTableToolbar />
 					<TableBody>
-						{[1, 2, 3, 4, 5].map((ele: any, index: number) => {
-							const member_image = '/img/profile/defaultUser.svg';
-
-							return (
-								<TableRow hover key={'member._id'} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-									<TableCell padding="checkbox">
-										<Checkbox color="primary" />
-									</TableCell>
-									<TableCell align="left">mb id</TableCell>
-									<TableCell align="left">member.mb_full_name</TableCell>
-									<TableCell align="left">member.mb_phone</TableCell>
-									<TableCell align="left" className={'name'}>
-										<Stack direction={'row'}>
-											<Link href={`/_admin/users/detail?mb_id=$'{member._id'}`}>
-												<div>
-													<Avatar alt="Remy Sharp" src={member_image} sx={{ ml: '2px', mr: '10px' }} />
+						{noticeData && noticeData?.length === 0 && (
+							<TableRow>
+								<TableCell align="center" colSpan={8}>
+									<span className={'no-data'}>
+										<div className="flex flex-col items-center justify-center p-12 text-center min-h-[200px]">
+											<div className="relative">
+												<div className="absolute inset-0 -m-10 bg-blue-100/50 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+												<div className="relative rounded-full bg-white p-6 mb-6 shadow-lg border border-indigo-100 transform transition-all duration-300 hover:scale-105">
+													<PackageOpen className="h-14 w-14 text-indigo-500" />
 												</div>
-											</Link>
-											<Link href={`/_admin/users/detail?mb_id=${'member._id'}`}>
-												<div>member.mb_nick</div>
-											</Link>
-										</Stack>
-									</TableCell>
-									<TableCell align="left">member.mb_phone</TableCell>
-									<TableCell align="left">member.mb_phone</TableCell>
-									<TableCell align="right">
-										<Tooltip title={'delete'}>
-											<IconButton>
-												<DeleteRoundedIcon />
-											</IconButton>
-										</Tooltip>
-										<Tooltip title="edit">
-											<IconButton onClick={() => router.push(`/_admin/cs/notice_create?id=notice._id`)}>
-												<NotePencil size={24} weight="fill" />
-											</IconButton>
-										</Tooltip>
-									</TableCell>
-								</TableRow>
-							);
-						})}
+											</div>
+											<Typography variant="h4" className="dark:text-slate-300 text-slate-950 font-semibold mb-3 mt-2">
+												No Data Found!
+											</Typography>
+											<div className="w-full max-w-xs h-1 bg-gradient-to-r from-transparent via-indigo-200 to-transparent rounded-full"></div>
+										</div>
+									</span>
+								</TableCell>
+							</TableRow>
+						)}
+						{noticeData &&
+							noticeData.length !== 0 &&
+							noticeData.map((notice: Notice, index: number) => {
+								const member_image = membersData?.memberImage
+									? `${REACT_APP_API_URL}/${membersData?.memberImage}`
+									: '/img/profile/defaultUser.svg';
+
+								return (
+									<TableRow
+										hover
+										key={notice._id}
+										sx={{
+											'&:last-child td, &:last-child th': {
+												border: 0,
+											},
+										}}
+									>
+										<TableCell padding="checkbox">
+											<Checkbox color="primary" />
+										</TableCell>
+										<TableCell align="left">
+											<p className="text-lime-600">{notice?.noticeCategory}</p>
+										</TableCell>
+										<TableCell align="left">
+											<p className="text-slate-400">{notice?.noticeTitle}</p>
+										</TableCell>
+										<TableCell align="left">
+											<p className="text-slate-400">{notice?._id}</p>
+										</TableCell>
+										<TableCell align="left">
+											<p className="text-slate-400">{membersData?.memberNick}</p>
+										</TableCell>
+										<TableCell align="left" className={'name'}>
+											<Stack direction={'row'}>
+												<Link href={`/_admin/users/detail?mb_id=${membersData?._id}`}>
+													<div>
+														<Avatar alt="Remy Sharp" src={member_image} sx={{ ml: '2px', mr: '10px' }} />
+													</div>
+												</Link>
+												<Link href={`/_admin/users/detail?mb_id=${membersData?._id}`}>
+													<Moment className="text-slate-500" format={'DD.MM.YY'}>
+														{notice?.createdAt}
+													</Moment>
+												</Link>
+											</Stack>
+										</TableCell>
+										<TableCell align="left">
+											<p className="text-slate-400">{membersData?.memberViews}</p>
+										</TableCell>
+										<TableCell align="right" className="relative">
+											{notice?.noticeStatus === NoticeStatus.HOLD && (
+												<>
+													<Button
+														variant="outlined"
+														sx={{ py: '2px' }}
+														color="warning"
+														className={'badge'}
+														onClick={(e: any) => handleMenuIconClick(e, index)}
+													>
+														{notice.noticeStatus}
+													</Button>
+													<Menu
+														className={'menu-modal relative'}
+														MenuListProps={{
+															'aria-labelledby': 'fade-button',
+														}}
+														anchorEl={anchorEl[index]}
+														open={Boolean(anchorEl[index])}
+														onClose={handleMenuIconClose}
+														TransitionComponent={Fade}
+														sx={{ p: 1, position: 'absolute', left: '1430px', top: '-290px' }}
+													>
+														{Object.values(NoticeStatus)
+															.filter((ele) => ele !== notice.noticeStatus)
+															.map((status: string) => (
+																<MenuItem
+																	onClick={() => updateNoticeHandler({ _id: notice._id, noticeStatus: status })}
+																	key={status}
+																>
+																	<Typography variant={'subtitle1'} component={'span'}>
+																		{status}
+																	</Typography>
+																</MenuItem>
+															))}
+													</Menu>
+												</>
+											)}
+
+											{notice?.noticeStatus === NoticeStatus.DELETE && (
+												<>
+													<Button
+														variant="outlined"
+														sx={{ py: '2px' }}
+														color="primary"
+														className={'badge outline-none'}
+														onClick={(e: any) => handleMenuIconClick(e, index)}
+													>
+														{notice.noticeStatus}
+													</Button>
+
+													<Menu
+														className={'menu-modal'}
+														MenuListProps={{
+															'aria-labelledby': 'fade-button',
+														}}
+														anchorEl={anchorEl[index]}
+														open={Boolean(anchorEl[index])}
+														onClose={handleMenuIconClose}
+														TransitionComponent={Fade}
+														sx={{ p: 1, position: 'absolute', left: '1360px', top: '-290px' }}
+													>
+														{Object.values(NoticeStatus)
+															.filter((ele) => ele !== notice.noticeStatus)
+															.map((status: string) => (
+																<MenuItem
+																	onClick={() => updateNoticeHandler({ _id: notice._id, noticeStatus: status })}
+																	key={status}
+																>
+																	<Typography variant={'subtitle1'} component={'span'}>
+																		{status}
+																	</Typography>
+																</MenuItem>
+															))}
+													</Menu>
+												</>
+											)}
+
+											{notice?.noticeStatus === NoticeStatus.ACTIVE && (
+												<>
+													<Button
+														variant="outlined"
+														sx={{ py: '2px' }}
+														color="success"
+														onClick={(e: any) => handleMenuIconClick(e, index)}
+														className={'badge'}
+													>
+														{notice.noticeStatus}
+													</Button>
+
+													<Menu
+														className={'relative'}
+														MenuListProps={{
+															'aria-labelledby': 'fade-button',
+														}}
+														anchorEl={anchorEl[index]}
+														open={Boolean(anchorEl[index])}
+														onClose={handleMenuIconClose}
+														TransitionComponent={Fade}
+														sx={{ p: 1, position: 'absolute', left: '1430px', top: '-290px' }}
+													>
+														{Object.values(NoticeStatus)
+															.filter((ele) => ele !== notice.noticeStatus)
+															.map((status: string) => (
+																<MenuItem
+																	className="relative"
+																	key={status}
+																	onClick={() => updateNoticeHandler({ _id: notice._id, noticeStatus: status })}
+																>
+																	<Typography variant={'subtitle1'} component={'span'}>
+																		{status}
+																	</Typography>
+																</MenuItem>
+															))}
+													</Menu>
+												</>
+											)}
+										</TableCell>
+										<TableCell align="left">
+											<Tooltip title={'delete'}>
+												<IconButton>
+													{notice?.noticeStatus === NoticeStatus.DELETE && (
+														<Button
+															variant="outlined"
+															sx={{
+																p: '3px',
+																border: 'none',
+																':hover': { border: 'none' },
+																background: 'none',
+																outline: 'none',
+															}}
+															onClick={() => removeNoticeHandler(notice._id)}
+														>
+															<DeleteRoundedIcon />
+														</Button>
+													)}
+												</IconButton>
+											</Tooltip>
+											<Tooltip title="edit">
+												<IconButton onClick={() => router.push(`/_admin/cs/notice_create?id=${notice._id}`)}>
+													<NotePencil size={24} weight="fill" />
+												</IconButton>
+											</Tooltip>
+										</TableCell>
+									</TableRow>
+								);
+							})}
 					</TableBody>
 				</Table>
 			</TableContainer>
 		</Stack>
 	);
+};
+
+NoticeList.defaultProps = {
+	initialInput: {
+		page: 1,
+		limit: 4,
+		sort: 'createdAt',
+		direction: 'DESC',
+		search: {},
+	},
 };

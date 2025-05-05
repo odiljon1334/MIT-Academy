@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {
 	Box,
 	Button,
+	Chip,
 	Fade,
 	Menu,
 	MenuItem,
@@ -24,6 +25,7 @@ import { REACT_APP_API_URL } from '../../../config';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Typography from '@mui/material/Typography';
 import { BoardArticleStatus } from '../../../enums/board-article.enum';
+import { PackageOpen } from 'lucide-react';
 
 interface Data {
 	category: string;
@@ -48,49 +50,49 @@ const headCells: readonly HeadCell[] = [
 		id: 'article_id',
 		numeric: true,
 		disablePadding: false,
-		label: 'ARTICLE ID',
+		label: 'ID',
 	},
 	{
 		id: 'title',
 		numeric: true,
 		disablePadding: false,
-		label: 'TITLE',
+		label: 'Title',
 	},
 	{
 		id: 'category',
 		numeric: true,
 		disablePadding: false,
-		label: 'CATEGORY',
+		label: 'Category',
 	},
 	{
 		id: 'writer',
 		numeric: true,
 		disablePadding: false,
-		label: 'WRITER',
+		label: 'Wtiter',
 	},
 	{
 		id: 'view',
 		numeric: false,
 		disablePadding: false,
-		label: 'VIEW',
+		label: 'View',
 	},
 	{
 		id: 'like',
 		numeric: false,
 		disablePadding: false,
-		label: 'LIKE',
+		label: 'Like',
 	},
 	{
 		id: 'register',
 		numeric: true,
 		disablePadding: false,
-		label: 'REGISTER DATE',
+		label: 'Register Date',
 	},
 	{
 		id: 'status',
 		numeric: false,
 		disablePadding: false,
-		label: 'STATUS',
+		label: 'Status',
 	},
 ];
 
@@ -103,7 +105,7 @@ interface EnhancedTableProps {
 
 function EnhancedTableHead(props: EnhancedTableProps) {
 	return (
-		<TableHead>
+		<TableHead className={'bg-slate-700'}>
 			<TableRow>
 				{headCells.map((headCell) => (
 					<TableCell
@@ -142,7 +144,20 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 						{articles.length === 0 && (
 							<TableRow>
 								<TableCell align="center" colSpan={8}>
-									<span className={'no-data'}>data not found!</span>
+									<span className={'no-data'}>
+										<div className="flex flex-col items-center justify-center p-12 text-center min-h-[300px]">
+											<div className="relative">
+												<div className="absolute inset-0 -m-10 bg-blue-100/50 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+												<div className="relative rounded-full bg-white p-6 mb-6 shadow-lg border border-indigo-100 transform transition-all duration-300 hover:scale-105">
+													<PackageOpen className="h-14 w-14 text-indigo-500" />
+												</div>
+											</div>
+											<Typography variant="h4" className="dark:text-slate-300 text-slate-950 font-semibold mb-3 mt-2">
+												No Data Found!
+											</Typography>
+											<div className="w-full max-w-xs h-1 bg-gradient-to-r from-transparent via-indigo-200 to-transparent rounded-full"></div>
+										</div>
+									</span>
 								</TableCell>
 							</TableRow>
 						)}
@@ -152,7 +167,7 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 								<TableRow hover key={article._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 									<TableCell align="left">{article._id}</TableCell>
 									<TableCell align="left">
-										<Box component={'div'}>
+										<Box component={'div'} className={'text-slate-300'}>
 											{article.articleTitle}
 											{article.articleStatus === BoardArticleStatus.ACTIVE && (
 												<Link
@@ -168,7 +183,9 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 											)}
 										</Box>
 									</TableCell>
-									<TableCell align="left">{article.articleCategory}</TableCell>
+									<TableCell align="left">
+										<p className="font-semibold text-purple-500">{article.articleCategory}</p>
+									</TableCell>
 									<TableCell align="left" className={'name'}>
 										<Link href={`/member?memberId=${article?.memberData?._id}`}>
 											<Avatar
@@ -180,31 +197,47 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 												}
 												sx={{ ml: '2px', mr: '10px' }}
 											/>
-											{article?.memberData?.memberNick}
+											<p className="font-sans font-medium text-slate-400">{article?.memberData?.memberNick}</p>
 										</Link>
 									</TableCell>
-									<TableCell align="center">{article?.articleViews}</TableCell>
-									<TableCell align="center">{article?.articleLikes}</TableCell>
+									<TableCell align="center">
+										<p className="text-slate-400">{article?.articleViews}</p>
+									</TableCell>
+									<TableCell align="center">
+										<p className="text-slate-400">{article?.articleLikes}</p>
+									</TableCell>
 									<TableCell align="left">
-										<Moment format={'DD.MM.YY HH:mm'}>{article?.createdAt}</Moment>
+										<span className="text-slate-400">
+											<Moment format={'DD.MM.YY HH:mm'}>{article?.createdAt}</Moment>
+										</span>
 									</TableCell>
 									<TableCell align="center">
 										{article.articleStatus === BoardArticleStatus.DELETE ? (
 											<Button
 												variant="outlined"
-												sx={{ p: '3px', border: 'none', ':hover': { border: '1px solid #000000' } }}
+												sx={{
+													p: '3px',
+													border: 'none',
+													':hover': { border: 'none', outline: 'none' },
+												}}
 												onClick={() => removeArticleHandler(article._id)}
 											>
 												<DeleteIcon fontSize="small" />
 											</Button>
 										) : (
 											<>
-												<Button onClick={(e: any) => menuIconClickHandler(e, index)} className={'badge success'}>
+												<Button
+													variant="outlined"
+													color="success"
+													sx={{ py: '2px', borderRadius: '50px', border: '1.5px solid' }}
+													onClick={(e: any) => menuIconClickHandler(e, index)}
+												>
 													{article.articleStatus}
 												</Button>
 
 												<Menu
 													className={'menu-modal'}
+													sx={{ p: 1 }}
 													MenuListProps={{
 														'aria-labelledby': 'fade-button',
 													}}
@@ -212,12 +245,12 @@ const CommunityArticleList = (props: CommunityArticleListProps) => {
 													open={Boolean(anchorEl[index])}
 													onClose={menuIconCloseHandler}
 													TransitionComponent={Fade}
-													sx={{ p: 1 }}
 												>
 													{Object.values(BoardArticleStatus)
 														.filter((ele) => ele !== article.articleStatus)
 														.map((status: string) => (
 															<MenuItem
+																sx={{ background: 'slategray' }}
 																onClick={() => updateArticleHandler({ _id: article._id, articleStatus: status })}
 																key={status}
 															>

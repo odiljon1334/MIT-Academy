@@ -10,7 +10,6 @@ import Card from '@mui/material/Card';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import StarIcon from '@mui/icons-material/Star';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { useRouter } from 'next/router';
 import { Course } from '../../libs/types/course/course';
@@ -29,6 +28,7 @@ import { CREATE_COMMENT, LIKE_TARGET_COURSE } from '../../apollo/user/mutation';
 import { Message } from '../../libs/enums/common.enum';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { PackageOpen } from 'lucide-react';
+import StarsIcon from '@mui/icons-material/Stars';
 import { MemberPosition } from '../../libs/enums/member.enum';
 
 export const getStaticProps = async ({ locale }: any) => ({
@@ -134,9 +134,7 @@ const InstructorDetail: NextPage = ({ initialInput, initialComment, ...props }: 
 	}, [searchFilter]);
 
 	useEffect(() => {
-		if (commentInquiry.search.commentRefId) {
-			getCommentsRefetch({ variables: { input: commentInquiry } }).then();
-		}
+		getCommentsRefetch({ variables: { input: commentInquiry } });
 	}, [commentInquiry]);
 
 	/** HANDLERS **/
@@ -298,7 +296,7 @@ const InstructorDetail: NextPage = ({ initialInput, initialComment, ...props }: 
 												color="primary"
 											/>
 										</Stack>
-										<span>
+										<span className="text-slate-500 font-openSans font-normal text-md">
 											Total {courseTotal} propert{courseTotal > 1 ? 'ies' : 'y'} available
 										</span>
 									</>
@@ -311,7 +309,7 @@ const InstructorDetail: NextPage = ({ initialInput, initialComment, ...props }: 
 													<PackageOpen className="h-14 w-14 text-indigo-500" />
 												</div>
 											</div>
-											<Typography variant="h4" className="font-semibold mb-3 mt-2">
+											<Typography variant="h4" className="dark:text-slate-200 text-slate-950 font-semibold mb-3 mt-2">
 												No Courses found!
 											</Typography>
 											<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">
@@ -330,8 +328,8 @@ const InstructorDetail: NextPage = ({ initialInput, initialComment, ...props }: 
 							}
 						>
 							<Stack className={'main-intro'}>
-								<span>Reviews</span>
-								<p>Glad you're back at EduCampus!</p>
+								<span className="dark:text-slate-200 text-slate-950">Reviews</span>
+								<p className="text-slate-600">Glad you're back at EduCampus!</p>
 							</Stack>
 							{commentTotal !== 0 && (
 								<Stack
@@ -339,8 +337,11 @@ const InstructorDetail: NextPage = ({ initialInput, initialComment, ...props }: 
 										'review-wrap dark:bg-slate-800 bg-white border border-solid border-gray-300 dark:border-gray-500'
 									}
 								>
-									<Box component={'div'} className={'title-box'}>
-										<StarIcon />
+									<Box
+										component={'div'}
+										className={'flex flex-row items-center title-box text-neutral-800 dark:text-slate-200'}
+									>
+										<StarsIcon className="text-amber-500" />
 										<span>
 											{commentTotal} review{commentTotal > 1 ? 's' : ''}
 										</span>
@@ -366,8 +367,8 @@ const InstructorDetail: NextPage = ({ initialInput, initialComment, ...props }: 
 									'leave-review-config dark:bg-slate-800 bg-white border border-solid border-gray-300 dark:border-gray-500'
 								}
 							>
-								<Typography className={'main-title'}>Leave A Review</Typography>
-								<Typography className={'review-title'}>Review</Typography>
+								<Typography className={'main-title dark:text-slate-200 text-slate-950'}>Leave A Review</Typography>
+								<Typography className={'review-title text-slate-500'}>Review</Typography>
 								<textarea
 									onChange={({ target: { value } }: any) => {
 										setInsertCommentData({ ...insertCommentData, commentContent: value });

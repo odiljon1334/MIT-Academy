@@ -39,8 +39,8 @@ export const UPDATE_MEMBER_BY_ADMIN = gql`
  *************************/
 
 export const UPDATE_COURSE_BY_ADMIN = gql`
-	mutation UpdatePropertyByAdmin($input: PropertyUpdate!) {
-		updatePropertyByAdmin(input: $input) {
+	mutation UpdateCourseByAdmin($input: CourseUpdate!) {
+		updateCourseByAdmin(input: $input) {
 			_id
 			courseType
 			courseStatus
@@ -62,11 +62,9 @@ export const UPDATE_COURSE_BY_ADMIN = gql`
 			courseModuls {
 				_id
 				moduleTitle
-				moduleOrder
 				lessons {
 					_id
 					lessonTitle
-					lessonOrder
 					lessonVideo
 					completedLesson
 					lessonDuration
@@ -100,11 +98,9 @@ export const REMOVE_COURSE_BY_ADMIN = gql`
 			courseModuls {
 				_id
 				moduleTitle
-				moduleOrder
 				lessons {
 					_id
 					lessonTitle
-					lessonOrder
 					lessonVideo
 					completedLesson
 					lessonDuration
@@ -169,6 +165,60 @@ export const REMOVE_COMMENT_BY_ADMIN = gql`
 			memberId
 			createdAt
 			updatedAt
+		}
+	}
+`;
+
+export const CREATE_NOTICE = gql`
+	mutation CreateNotice($input: NoticeInput!) {
+		createNotice(input: $input) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTitle
+			noticeContent
+			event
+			memberId
+			constructedAt
+			createdAt
+			updatedAt
+			deletedAt
+		}
+	}
+`;
+
+export const UPDATE_NOTICE = gql`
+	mutation UpdateNotice($input: NoticeUpdateInput!) {
+		updateNotice(input: $input) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTitle
+			noticeContent
+			event
+			memberId
+			constructedAt
+			createdAt
+			updatedAt
+			deletedAt
+		}
+	}
+`;
+
+export const REMOVE_NOTICE = gql`
+	mutation RemoveNotice($input: String!) {
+		removeNotice(noticeId: $input) {
+			_id
+			noticeCategory
+			noticeStatus
+			noticeTitle
+			noticeContent
+			event
+			memberId
+			constructedAt
+			createdAt
+			updatedAt
+			deletedAt
 		}
 	}
 `;

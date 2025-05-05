@@ -13,12 +13,14 @@ import TopContent from '../course/Top';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useTranslation } from 'react-i18next';
 
 const withLayoutFull = (Component: any) => {
 	return (props: any) => {
 		const router = useRouter();
 		const device = useDeviceDetect();
 		const user = useReactiveVar(userVar);
+		const { t, i18n } = useTranslation('common');
 		const showBreadcrumbs = !['/login', '/signup'].includes(router.pathname);
 
 		const canvasRef = useRef<HTMLCanvasElement>(null);

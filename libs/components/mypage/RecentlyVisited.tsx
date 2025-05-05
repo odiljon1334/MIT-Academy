@@ -63,7 +63,7 @@ const RecentlyVisited: NextPage = () => {
 										<FolderSearch className="h-14 w-14 text-indigo-500" />
 									</div>
 								</div>
-								<Typography variant="h4" className="font-semibold mb-3 mt-2">
+								<Typography variant="h4" className="font-semibold mb-3 mt-2 dark:text-slate-200 text-neutral-900">
 									No Recently Visited Courses found!
 								</Typography>
 								<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">

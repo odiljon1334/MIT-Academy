@@ -28,11 +28,9 @@ export interface Course {
 	courseModuls: {
 		_id: string;
 		moduleTitle: string;
-		moduleOrder: number;
 		lessons: {
 			_id: string;
 			lessonTitle: string;
-			lessonOrder: number;
 			lessonVideo: string;
 			completedLesson: boolean;
 			lessonDuration: number;

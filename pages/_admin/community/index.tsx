@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import withAdminLayout from '../../../libs/components/layout/LayoutAdmin';
-import { Box, Stack, MenuItem } from '@mui/material';
+import { Box, Stack, MenuItem, Badge, Button } from '@mui/material';
 import { List, ListItem } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -18,6 +18,8 @@ import { useMutation, useQuery } from '@apollo/client';
 import { GET_ALL_BOARD_ARTICLES_BY_ADMIN } from '../../../apollo/admin/query';
 import { T } from '../../../libs/types/common';
 import { REMOVE_BOARD_ARTICLE_BY_ADMIN, UPDATE_BOARD_ARTICLE_BY_ADMIN } from '../../../apollo/admin/mutation';
+import { Activity, RefreshCw } from 'lucide-react';
+import { color } from 'framer-motion';
 
 const AdminCommunity: NextPage = ({ initialInquiry, ...props }: any) => {
 	const [anchorEl, setAnchorEl] = useState<any>([]);
@@ -144,11 +146,32 @@ const AdminCommunity: NextPage = ({ initialInquiry, ...props }: any) => {
 	console.log('+articles', articles);
 
 	return (
-		<Box component={'div'} className={'content'}>
-			<Typography variant={'h2'} className={'tit'} sx={{ mb: '24px' }}>
-				Arricle List
-			</Typography>
-			<Box component={'div'} className={'table-wrap'}>
+		<Box component={'div'} className={'content container flex flex-col'}>
+			<div className="flex flex-row items-center justify-between">
+				<Typography variant={'h2'} className={'tit flex items-center'} sx={{ mb: '24px' }}>
+					<Activity className="mr-2 h-5 w-5 text-cyan-500" />
+					Article List
+				</Typography>
+				<div className="flex items-center space-x-2">
+					<Badge
+						variant="outline"
+						className="flex flex-row items-center justify-center border-2 border-solid rounded-full w-[55px] p-0.5 bg-slate-800/50 text-cyan-400 border-cyan-500/50 text-xs"
+					>
+						<div className="h-1.5 w-1.5 rounded-full bg-cyan-500 mr-1 animate-pulse"></div>
+						LIVE
+					</Badge>
+					<Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400">
+						<RefreshCw className="h-4 w-4" />
+					</Button>
+				</div>
+			</div>
+			<div className="w-full border border-slate-500 border-solid mb-8"></div>
+			<Box
+				component={'div'}
+				className={
+					'table-wrap bg-slate-900/50 border border-cyan-700 border-solid rounded backdrop-blur-sm overflow-hidden'
+				}
+			>
 				<Box component={'div'} sx={{ width: '100%', typography: 'body1' }}>
 					<TabContext value={value}>
 						<Box component={'div'}>

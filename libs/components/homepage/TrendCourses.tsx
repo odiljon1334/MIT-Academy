@@ -147,7 +147,7 @@ const TrendCourses = (props: TrendCourseProps) => {
 											<PackageOpen className="h-14 w-14 text-indigo-500" />
 										</div>
 									</div>
-									<Typography variant="h4" className="font-semibold mb-3 mt-2">
+									<Typography variant="h4" className="dark:text-slate-300 text-slate-950 font-semibold mb-3 mt-2">
 										Trends Courses Empty!
 									</Typography>
 									<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">

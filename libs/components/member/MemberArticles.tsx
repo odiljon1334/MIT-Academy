@@ -70,7 +70,7 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 			<div id="member-articles-page">
 				<Stack className="main-title-box">
 					<Stack className="right-box">
-						<Typography className="main-title">Articles</Typography>
+						<Typography className="main-title dark:text-slate-200 text-slate-950">Articles</Typography>
 					</Stack>
 				</Stack>
 				<Stack className="articles-list-box">
@@ -103,8 +103,8 @@ const MemberArticles: NextPage = ({ initialInput, ...props }: any) => {
 								onChange={paginationHandler}
 							/>
 						</Stack>
-						<Stack className="total-result">
-							<Typography>{total} property available</Typography>
+						<Stack className="total-result dark:text-slate-400 text-slate-950">
+							<Typography>{total} Article available</Typography>
 						</Stack>
 					</Stack>
 				)}

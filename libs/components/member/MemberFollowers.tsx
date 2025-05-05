@@ -13,6 +13,7 @@ import { T } from '../../types/common';
 import { GET_MEMBER_FOLLOWERS } from '../../../apollo/user/query';
 import { Card, CardContent, CardMedia, Paper } from '@mui/material';
 import { UserRoundPlus } from 'lucide-react';
+import { MemberPosition } from '../../enums/member.enum';
 
 interface MemberFollowsProps {
 	initialInput: FollowInquiry;
@@ -127,7 +128,31 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 											{follower?.followerData?.memberNick}
 										</Typography>
 										<Typography variant="body2" color="text.secondary" className="font-medium">
-											Senior Journalist
+											{follower?.followerData?.memberPosition === MemberPosition.UI_UX_DESIGNER
+												? 'UI/UX Designer'
+												: follower?.followerData?.memberPosition === MemberPosition.SOFTWARE_ENGINEER
+												? 'Software Engineer'
+												: follower?.followerData?.memberPosition === MemberPosition.FRONTEND_DEVELOPER
+												? 'Frontend Developer'
+												: follower?.followerData?.memberPosition === MemberPosition.BACKEND_DEVELOPER
+												? 'Backend Developer'
+												: follower?.followerData?.memberPosition === MemberPosition.FULLSTACK_DEVELOPER
+												? 'Fullstack Developer'
+												: follower?.followerData?.memberPosition === MemberPosition.DATA_SCIENTIST
+												? 'Data Scientist'
+												: follower?.followerData?.memberPosition === MemberPosition.WEB_DEVELOPER
+												? 'Web Developer'
+												: follower?.followerData?.memberPosition === MemberPosition.MOBILE_DEVELOPER
+												? 'Mobile Developer'
+												: follower?.followerData?.memberPosition === MemberPosition.MACHINE_LEARNING_ENGINEER
+												? 'Machine Learning Eng'
+												: follower?.followerData?.memberPosition === MemberPosition.DEVOPS_ENGINEER
+												? 'DevOps Engineer'
+												: follower?.followerData?.memberPosition === MemberPosition.GAME_DEVELOPER
+												? 'Game Developer'
+												: follower?.followerData?.memberPosition === MemberPosition.GRAPHIC_DESIGNER
+												? 'Graphic Designer'
+												: null}
 										</Typography>
 										<Paper
 											elevation={3}
@@ -135,7 +160,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 										>
 											<Box className="text-center">
 												<Typography variant="caption" className="font-medium">
-													Properties
+													Courses
 												</Typography>
 												<Typography variant="body1" className="font-bold">
 													{follower?.followerData?.memberCourses}
@@ -219,7 +244,7 @@ const MemberFollowers = (props: MemberFollowsProps) => {
 								color="primary"
 							/>
 						</Stack>
-						<Stack className="total-result">
+						<Stack className="total-result dark:text-slate-400 text-slate-950">
 							<Typography>Total followers ( {total} )</Typography>
 						</Stack>
 					</Stack>

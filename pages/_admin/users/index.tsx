@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import withAdminLayout from '../../../libs/components/layout/LayoutAdmin';
 import { MemberPanelList } from '../../../libs/components/admin/users/MemberList';
-import { Box, InputAdornment, List, ListItem, Stack } from '@mui/material';
+import { Badge, Box, Button, InputAdornment, List, ListItem, Stack } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Select from '@mui/material/Select';
@@ -20,6 +20,8 @@ import { useMutation, useQuery } from '@apollo/client';
 import { UPDATE_MEMBER_BY_ADMIN } from '../../../apollo/admin/mutation';
 import { GET_ALL_MEMBERS_BY_ADMIN } from '../../../apollo/admin/query';
 import { T } from '../../../libs/types/common';
+import { Activity, RefreshCw } from 'lucide-react';
+import SearchIcon from '@mui/icons-material/Search';
 
 const AdminUsers: NextPage = ({ initialInquiry, ...props }: any) => {
 	const [anchorEl, setAnchorEl] = useState<[] | HTMLElement[]>([]);
@@ -67,10 +69,12 @@ const AdminUsers: NextPage = ({ initialInquiry, ...props }: any) => {
 		setMembersInquiry({ ...membersInquiry });
 	};
 
-	const menuIconClickHandler = (e: any, index: number) => {
-		const tempAnchor = anchorEl.slice();
-		tempAnchor[index] = e.currentTarget;
-		setAnchorEl(tempAnchor);
+	const menuIconClickHandler = (event: React.MouseEvent, index: number, field: 'type' | 'status') => {
+		setAnchorEl((prev: any) => {
+			const newAnchor = { ...prev };
+			newAnchor[index] = { anchor: event.currentTarget, field };
+			return newAnchor;
+		});
 	};
 
 	const menuIconCloseHandler = () => {
@@ -161,10 +165,31 @@ const AdminUsers: NextPage = ({ initialInquiry, ...props }: any) => {
 
 	return (
 		<Box component={'div'} className={'content'}>
-			<Typography variant={'h2'} className={'tit'} sx={{ mb: '24px' }}>
-				Member List
-			</Typography>
-			<Box component={'div'} className={'table-wrap'}>
+			<div className="flex flex-row items-center justify-between">
+				<Typography variant={'h2'} className={'tit flex items-center'} sx={{ mb: '24px' }}>
+					<Activity className="mr-2 h-5 w-5 text-cyan-500" />
+					Member List
+				</Typography>
+				<div className="flex items-center space-x-2">
+					<Badge
+						variant="outline"
+						className="flex flex-row items-center justify-center border-2 border-solid rounded-full w-[55px] p-0.5 bg-slate-800/50 text-cyan-400 border-cyan-500/50 text-xs"
+					>
+						<div className="h-1.5 w-1.5 rounded-full bg-cyan-500 mr-1 animate-pulse"></div>
+						LIVE
+					</Badge>
+					<Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400">
+						<RefreshCw className="h-4 w-4" />
+					</Button>
+				</div>
+			</div>
+			<div className="w-full border border-slate-500 border-solid mb-8"></div>
+			<Box
+				component={'div'}
+				className={
+					'table-wrap bg-slate-900/50 border border-cyan-700 border-solid rounded backdrop-blur-sm overflow-hidden'
+				}
+			>
 				<Box component={'div'} sx={{ width: '100%', typography: 'body1' }}>
 					<TabContext value={value}>
 						<Box component={'div'}>
@@ -227,7 +252,7 @@ const AdminUsers: NextPage = ({ initialInquiry, ...props }: any) => {
 												/>
 											)}
 											<InputAdornment position="end" onClick={() => searchTextHandler()}>
-												<img src="/img/icons/search_icon.png" alt={'searchIcon'} />
+												<SearchIcon sx={{ cursor: 'pointer' }} />
 											</InputAdornment>
 										</>
 									}

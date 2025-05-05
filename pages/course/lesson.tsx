@@ -11,6 +11,8 @@ import { LIKE_TARGET_COURSE } from '../../apollo/user/mutation';
 import { GET_COURSE } from '../../apollo/user/query';
 import { CourseSidebar } from '../../libs/components/course/CourseSidebar';
 import withLayoutFull from '../../libs/components/layout/LayoutFull';
+import { useTranslation } from 'react-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // Declare YouTube API types
 declare global {
@@ -21,9 +23,16 @@ declare global {
 	}
 }
 
+export const getStaticProps = async ({ locale }: any) => ({
+	props: {
+		...(await serverSideTranslations(locale, ['common'])),
+	},
+});
+
 const LessonVideo = () => {
 	const router = useRouter();
 	const user = useReactiveVar(userVar);
+	const { t, i18n } = useTranslation('common');
 	const [duration, setDuration] = useState(0);
 	const playerRef = useRef<any>(null);
 	const [courseId, setCourseId] = useState<string | null>(null);

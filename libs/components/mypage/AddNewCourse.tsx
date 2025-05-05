@@ -57,11 +57,9 @@ const AddCourse = ({ initialValues, ...props }: any) => {
 				courseModuls: getCourseData.getCourse.courseModuls?.length
 					? getCourseData.getCourse.courseModuls.map((module: any) => ({
 							moduleTitle: module.moduleTitle || '',
-							moduleOrder: module.moduleOrder || 0,
 							lessons: module.lessons?.length
 								? module.lessons.map((lesson: any) => ({
 										lessonTitle: lesson.lessonTitle || '',
-										lessonOrder: lesson.lessonOrder || 1,
 										lessonVideo: lesson.lessonVideo || '',
 										lessonDuration: lesson.lessonDuration || 0,
 								  }))
@@ -145,7 +143,7 @@ const AddCourse = ({ initialValues, ...props }: any) => {
 				router.push({
 					pathname: '/mypage',
 					query: {
-						category: 'addCourse',
+						category: 'myCourses',
 					},
 				});
 			}, 1500);
@@ -346,20 +344,6 @@ const AddCourse = ({ initialValues, ...props }: any) => {
 																}}
 															/>
 														</label>
-														<label htmlFor="input" className="w-full text-neutral-800 dark:text-slate-200">
-															Lesson Order
-															<input
-																type="number"
-																placeholder="Lesson Order"
-																className="description-input w-full p-4 border rounded-md text-neutral-800"
-																value={lesson.lessonOrder}
-																onChange={(e) => {
-																	const updatedModules = [...insertCourseData.courseModuls];
-																	updatedModules[moduleIndex].lessons[lessonIndex].lessonOrder = Number(e.target.value);
-																	setInsertCourseData({ ...insertCourseData, courseModuls: updatedModules });
-																}}
-															/>
-														</label>
 													</div>
 													<div className="flex flex-row space-x-2 mb-4">
 														<label htmlFor="" className="w-full text-neutral-800 dark:text-slate-200">
@@ -417,7 +401,6 @@ const AddCourse = ({ initialValues, ...props }: any) => {
 													const updatedModules = [...insertCourseData.courseModuls];
 													updatedModules[moduleIndex].lessons.push({
 														lessonTitle: '',
-														lessonOrder: 0,
 														lessonVideo: '',
 														lessonDuration: 0,
 														completedLesson: false,
@@ -457,10 +440,7 @@ const AddCourse = ({ initialValues, ...props }: any) => {
 									variant="contained"
 									color="success"
 									onClick={() => {
-										const updatedModules = [
-											...insertCourseData.courseModuls,
-											{ moduleTitle: '', moduleOrder: 0, lessons: [] },
-										];
+										const updatedModules = [...insertCourseData.courseModuls, { moduleTitle: '', lessons: [] }];
 										setInsertCourseData({ ...insertCourseData, courseModuls: updatedModules });
 									}}
 								>
@@ -641,11 +621,9 @@ AddCourse.defaultProps = {
 		courseModuls: [
 			{
 				moduleTitle: '',
-				moduleOrder: 0,
 				lessons: [
 					{
 						lessonTitle: '',
-						lessonOrder: 0,
 						lessonVideo: '',
 						lessonDuration: 0,
 					},

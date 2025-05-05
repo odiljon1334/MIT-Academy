@@ -1,8 +1,13 @@
 import React from 'react';
 import useDeviceDetect from '../../hooks/useDeviceDetect';
+import withAdminLayout from '../layout/LayoutAdmin';
+import TuiEditor from '../community/Teditor';
+import { useRouter } from 'next/router';
 
 const Inquiry = () => {
 	const device = useDeviceDetect();
+	const router = useRouter();
+	const path = router.asPath;
 
 	/** APOLLO REQUESTS **/
 	/** LIFECYCLES **/
@@ -11,8 +16,15 @@ const Inquiry = () => {
 	if (device === 'mobile') {
 		return <div>Inquiry MOBILE</div>;
 	} else {
-		return <div>Inquiry PC</div>;
+		return (
+			<>
+				<div className="w-full">
+					<p>salom</p>
+					<p>{path}</p>
+				</div>
+			</>
+		);
 	}
 };
 
-export default Inquiry;
+export default withAdminLayout(Inquiry);
