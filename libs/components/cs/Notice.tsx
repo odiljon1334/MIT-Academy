@@ -99,5 +99,4 @@ const Notice = ({ initialInput = { page: 1, limit: 10, sort: 'createdAt', search
 	}
 };
 
-// Default props are now handled in the function parameter destructuring
 export default Notice;
