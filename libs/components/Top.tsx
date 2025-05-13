@@ -23,7 +23,6 @@ import { Bell } from 'lucide-react';
 import NotificationCard from './notification/NotificationCard';
 import { GET_NOTIFICATIONS_COURSE } from '../../apollo/user/query';
 import { T } from '../types/common';
-import { UPDATE_NOTIFICATIONS } from '../../apollo/user/mutation';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 	width: 62,
@@ -110,6 +109,7 @@ const Top = ({ initialInput, ...props }: any) => {
 		fetchPolicy: 'cache-and-network',
 		variables: {
 			input: initialInput,
+			skip: !user?._id,
 		},
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {

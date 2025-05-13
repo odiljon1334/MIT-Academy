@@ -1,15 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import {
-	Box,
-	Button,
-	FormControl,
-	MenuItem,
-	Stack,
-	Typography,
-	Select,
-	TextField,
-	outlinedInputClasses,
-} from '@mui/material';
+import { Box, Button, FormControl, MenuItem, Stack, Typography, Select } from '@mui/material';
 import { BoardArticleCategory } from '../../enums/board-article.enum';
 import { Editor } from '@toast-ui/react-editor';
 import { getJwtToken } from '../../auth';
@@ -146,8 +136,8 @@ const TuiEditor = () => {
 							label="category"
 							sx={{ borderRadius: '8px', outline: 'none' }}
 						>
-							<MenuItem value={BoardArticleCategory.FREE}>Educate</MenuItem>
-							<MenuItem value={BoardArticleCategory.HUMOR}>Academy</MenuItem>
+							<MenuItem value={BoardArticleCategory.FREE}>Free</MenuItem>
+							<MenuItem value={BoardArticleCategory.HUMOR}>Humor</MenuItem>
 							<MenuItem value={BoardArticleCategory.NEWS}>News</MenuItem>
 							<MenuItem value={BoardArticleCategory.RECOMMEND}>Recommendation</MenuItem>
 						</Select>

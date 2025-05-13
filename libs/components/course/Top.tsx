@@ -48,7 +48,7 @@ const TopContent = () => {
 							<h1 className="flex flex-row text-4xl font-openSans text-white font-bold">{course?.courseTitle}</h1>
 							<p className="text-1xl text-white font-openSans font-medium ">
 								{course?.courseDesc
-									? course.courseDesc.length > 1010
+									? course.courseDesc.length > 10
 										? course.courseDesc.substring(0, 190) + '...'
 										: course.courseDesc
 									: 'No Description!'}

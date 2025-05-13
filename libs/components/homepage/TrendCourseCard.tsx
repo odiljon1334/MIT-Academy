@@ -36,7 +36,9 @@ const TrendCourseCard = (props: TrendPropertyCardProps) => {
 				<Box
 					component={'div'}
 					className={'card-img'}
-					style={{ backgroundImage: `url(${REACT_APP_API_URL}/${course?.courseImage})` }}
+					style={{
+						backgroundImage: `url(${REACT_APP_API_URL}/${course?.courseImage})`,
+					}}
 					onClick={() => {
 						pushDetailHandler(course._id);
 					}}
@@ -165,11 +167,11 @@ const TrendCourseCard = (props: TrendPropertyCardProps) => {
 								src={`${REACT_APP_API_URL}/${course.memberData?.memberImage}`}
 								alt=""
 							/>
-							<div className="flex flex-col">
+							<div className="flex flex-col w-full">
 								<span className="text-slate-800 dark:text-slate-200 text-sm font-normal">
 									{course?.memberData?.memberNick}
 								</span>
-								<p className="text-sm font-openSans text-slate-500">
+								<p className="text-[12px] font-openSans text-slate-500">
 									{course?.memberData?.memberPosition === MemberPosition.UI_UX_DESIGNER
 										? 'UI/UX Designer'
 										: course?.memberData?.memberPosition === MemberPosition.SOFTWARE_ENGINEER

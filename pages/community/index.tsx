@@ -206,7 +206,10 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 																<NewspaperOutlinedIcon className="h-14 w-14 text-indigo-500" />
 															</div>
 														</div>
-														<Typography variant="h4" className="font-semibold mb-3 mt-2">
+														<Typography
+															variant="h4"
+															className="font-semibold mb-3 mt-2 text-neutral-900 dark:text-neutral-200"
+														>
 															No Articles Found!
 														</Typography>
 														<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">
@@ -240,7 +243,10 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 																<NewspaperOutlinedIcon className="h-14 w-14 text-indigo-500" />
 															</div>
 														</div>
-														<Typography variant="h4" className="font-semibold mb-3 mt-2">
+														<Typography
+															variant="h4"
+															className="font-semibold mb-3 mt-2 text-neutral-900 dark:text-neutral-200"
+														>
 															No Articles Found!
 														</Typography>
 														<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">
@@ -274,7 +280,10 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 																<NewspaperOutlinedIcon className="h-14 w-14 text-indigo-500" />
 															</div>
 														</div>
-														<Typography variant="h4" className="font-semibold mb-3 mt-2">
+														<Typography
+															variant="h4"
+															className="font-semibold mb-3 mt-2 text-neutral-900 dark:text-neutral-200"
+														>
 															No Articles Found!
 														</Typography>
 														<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">
@@ -308,7 +317,10 @@ const Community: NextPage = ({ initialInput, ...props }: T) => {
 																<NewspaperOutlinedIcon className="h-14 w-14 text-indigo-500" />
 															</div>
 														</div>
-														<Typography variant="h4" className="font-semibold mb-3 mt-2">
+														<Typography
+															variant="h4"
+															className="font-semibold mb-3 mt-2 text-neutral-900 dark:text-neutral-200"
+														>
 															No Articles Found!
 														</Typography>
 														<Typography variant="body1" className="text-gray-600 max-w-md mb-8 leading-relaxed">

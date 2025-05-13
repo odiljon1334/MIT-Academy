@@ -345,6 +345,7 @@ const CommunityDetail: NextPage = ({ initialInput, ...props }: T) => {
 													/>
 												) : (
 													<ThumbUpOffAltIcon
+														className="text-neutral-900 dark:text-neutral-200"
 														onClick={() => boardArticle?._id && likeBoArticleHandler(user, boardArticle._id)}
 													/>
 												)}

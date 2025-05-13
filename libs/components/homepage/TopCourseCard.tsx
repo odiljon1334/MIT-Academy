@@ -169,7 +169,7 @@ const TopPropertyCard = (props: TopCourseCardProps) => {
 								<span className="text-slate-800 dark:text-slate-200 text-sm font-normal">
 									{course?.memberData?.memberNick}
 								</span>
-								<p className="text-sm font-openSans text-slate-500">
+								<p className="text-[13px] font-openSans text-slate-500">
 									{course?.memberData?.memberPosition === MemberPosition.UI_UX_DESIGNER
 										? 'UI/UX Designer'
 										: course?.memberData?.memberPosition === MemberPosition.SOFTWARE_ENGINEER

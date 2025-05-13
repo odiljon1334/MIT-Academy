@@ -12,7 +12,6 @@ import { UPDATE_NOTIFICATIONS } from '../../../apollo/user/mutation';
 import { sweetErrorHandling } from '../../sweetAlert';
 import { NotificationStatus } from '../../enums/notification.enum';
 import { userVar } from '../../../apollo/store';
-import router from 'next/router';
 
 interface NotificationCardPageProps {
 	initialInput: NotifInquiry;

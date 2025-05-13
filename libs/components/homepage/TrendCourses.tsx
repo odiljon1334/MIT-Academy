@@ -59,7 +59,6 @@ const TrendCourses = (props: TrendCourseProps) => {
 		}
 	};
 
-	if (trendCourses) console.log('trendCourses:', trendCourses);
 	if (!trendCourses) return null;
 
 	if (device === 'mobile') {
