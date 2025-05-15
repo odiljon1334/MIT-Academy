@@ -1,4 +1,3 @@
-version: '3.3'
 services:
   edu-campus:
     container_name: edu-campus
