@@ -9,7 +9,7 @@ import { NoticeInquiry } from '../../types/notice/notice.input';
 import Moment from 'react-moment';
 
 interface NoticeProps {
-	initialInput: NoticeInquiry;
+	initialInput?: NoticeInquiry;
 }
 
 const Notice = ({ initialInput = { page: 1, limit: 10, sort: 'createdAt', search: {} } }: NoticeProps) => {

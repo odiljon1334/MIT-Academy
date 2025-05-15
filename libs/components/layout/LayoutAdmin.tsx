@@ -180,7 +180,7 @@ const withAdminLayout = (Component: ComponentType) => {
 				className="min-h-screen space-x-4 bg-gradient-to-br from-black to-slate-900 text-slate-100 relative overflow-hidden"
 			>
 				<canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-30" />
-				<Box component={'div'} sx={{ display: 'flex', justifyContent: 'space-between', gap: 5 }} spacing={2}>
+				<Box component={'div'} sx={{ display: 'flex', justifyContent: 'space-between', gap: 5 }}>
 					<div>
 						<AppBar
 							position="fixed"
