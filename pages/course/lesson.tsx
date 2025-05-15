@@ -65,6 +65,11 @@ const LessonVideo = () => {
 		}
 	}, [router.query.id, courseId]);
 
+	/** LIFECYCLES **/
+	useEffect(() => {
+		if (!user._id) router.push('/').then();
+	}, [user]);
+
 	// Set isMounted when component mounts and false when unmounts
 	useEffect(() => {
 		isMounted.current = true;

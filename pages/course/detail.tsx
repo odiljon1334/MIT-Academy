@@ -619,17 +619,26 @@ const CourseDetail: NextPage<{ initialComment?: CommentsInquiry }> = ({
 								</Stack>
 								<Stack className={'info-box'}>
 									{course && course._id && (
-										<Link
-											href={{
-												pathname: '/course/lesson',
-												query: { id: course._id },
+										<Button
+											variant="contained"
+											color="success"
+											className="send-message flex flex-row items-center justify-center w-full cursor-pointer gap-2"
+											disabled={!user?._id}
+											onClick={() => {
+												if (!user?._id) return;
+												router.push({
+													pathname: '/course/lesson',
+													query: { id: course._id },
+												});
 											}}
 										>
-											<Button variant="contained" color="success" className={'send-message'}>
-												<Typography className={'title'}>Pay for a lifetime pass</Typography>
+											<div className="flex items-center gap-2">
+												<Typography className="title text-[13px] font-semibold whitespace-nowrap">
+													PAY FOR A LIFETIME PASS
+												</Typography>
 												<ArrowOutwardIcon fontSize="small" className="text-white" />
-											</Button>
-										</Link>
+											</div>
+										</Button>
 									)}
 								</Stack>
 							</Stack>
