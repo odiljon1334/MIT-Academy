@@ -8,7 +8,6 @@ import { logIn, signUp } from '../../libs/auth';
 import { sweetMixinErrorAlert } from '../../libs/sweetAlert';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { MemberPosition } from '../../libs/enums/member.enum';
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const getStaticProps = async ({ locale }: any) => ({
@@ -59,8 +58,11 @@ const Join: NextPage = () => {
 	const doSignUp = useCallback(async () => {
 		console.warn(input);
 		console.log('input:', input);
+
+		const finalPosition = input.position === '' ? MemberPosition.STUDENT : input.position;
+
 		try {
-			await signUp(input.nick, input.password, input.phone, input.type, input.position);
+			await signUp(input.nick, input.password, input.phone, input.type, finalPosition);
 			await router.push(`${router.query.referrer ?? '/'}`);
 		} catch (err: any) {
 			await sweetMixinErrorAlert(err.message);
@@ -170,10 +172,7 @@ const Join: NextPage = () => {
 												className="p-4 w-full border border-solid border-neutral-300 dark:border-neutral-600 rounded-md"
 												onChange={(e) => handleInput('position', e.target.value as MemberPosition)}
 											>
-												<option
-													className="flex flex-col items-center justify-around text-slate-900"
-													value={MemberPosition.STUDENT}
-												>
+												<option className="flex flex-col items-center justify-around text-slate-900" value="">
 													Select Position
 												</option>
 												{Object.values(MemberPosition).map((position) => (
