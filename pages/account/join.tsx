@@ -170,7 +170,10 @@ const Join: NextPage = () => {
 												className="p-4 w-full border border-solid border-neutral-300 dark:border-neutral-600 rounded-md"
 												onChange={(e) => handleInput('position', e.target.value as MemberPosition)}
 											>
-												<option className="flex flex-col items-center justify-around text-slate-900" value="">
+												<option
+													className="flex flex-col items-center justify-around text-slate-900"
+													value={MemberPosition.STUDENT}
+												>
 													Select Position
 												</option>
 												{Object.values(MemberPosition).map((position) => (
