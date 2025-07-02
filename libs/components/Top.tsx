@@ -386,8 +386,8 @@ const Top = ({ initialInput, ...props }: any) => {
 											>
 												<Bell size={26} color="white" />
 												{notifications.length > 0 && (
-													<span className="absolute -top-1 right-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-														{unReadNotifications.length > 6 ? '6+' : unReadNotifications.length}
+													<span className="absolute -top-1 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+														{unReadNotifications.length > 5 ? '5+' : unReadNotifications.length}
 													</span>
 												)}
 											</Button>

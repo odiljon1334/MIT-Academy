@@ -35,7 +35,6 @@ const NotificationCardPage = (props: NotificationCardPageProps) => {
 		refetch: getCoursesRefetch,
 	} = useQuery(GET_NOTIFICATIONS, {
 		fetchPolicy: 'cache-and-network',
-		variables: { input: initialInput },
 		skip: !user?._id,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
@@ -44,6 +43,7 @@ const NotificationCardPage = (props: NotificationCardPageProps) => {
 	});
 
 	const notifications: Notification[] = getNotifactionData?.getNotifications?.list || [];
+	console.log('notifications:', notifications);
 
 	/** HANDLERS **/
 	const updateNotifications = useCallback(async () => {
