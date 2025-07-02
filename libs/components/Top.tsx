@@ -116,6 +116,7 @@ const Top = ({ initialInput, ...props }: any) => {
 			setLang(localStorage.getItem('locale'));
 		}
 	}, [router, notificationsList, user]);
+	console.log('notificationsTOP:', notifications);
 
 	useEffect(() => {
 		switch (router.pathname) {
