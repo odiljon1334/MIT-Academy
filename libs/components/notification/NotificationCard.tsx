@@ -1,7 +1,7 @@
 import { Box, Typography, Card, CardContent, Avatar, Button, Divider } from '@mui/material';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import { formatDistanceToNow } from 'date-fns';
-import { GET_NOTIFICATIONS_COURSE } from '../../../apollo/user/query';
+import { GET_NOTIFICATIONS } from '../../../apollo/user/query';
 import { NotifInquiry } from '../../types/notification/notification.input';
 import { Notification } from '../../types/notification/notification';
 import { useCallback, useEffect, useState } from 'react';
@@ -29,21 +29,21 @@ const NotificationCardPage = (props: NotificationCardPageProps) => {
 
 	/** APOLLO REQUESTS **/
 	const {
-		loading: getCoursesNotificationLoading,
-		data: getCoursesNotifactionData,
-		error: getCoursesNotificationError,
+		loading: getNotificationLoading,
+		data: getNotifactionData,
+		error: getNotificationError,
 		refetch: getCoursesRefetch,
-	} = useQuery(GET_NOTIFICATIONS_COURSE, {
+	} = useQuery(GET_NOTIFICATIONS, {
 		fetchPolicy: 'cache-and-network',
 		variables: { input: initialInput },
 		skip: !user?._id,
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setUnReadNotifications(data?.getCourseNotifications?.list);
+			setUnReadNotifications(data?.getNotifications?.list);
 		},
 	});
 
-	const notifications: Notification[] = getCoursesNotifactionData?.getCourseNotifications?.list || [];
+	const notifications: Notification[] = getNotifactionData?.getNotifications?.list || [];
 
 	/** HANDLERS **/
 	const updateNotifications = useCallback(async () => {
@@ -62,9 +62,8 @@ const NotificationCardPage = (props: NotificationCardPageProps) => {
 		}
 	}, [updateNotificationData]);
 
-	if (getCoursesNotificationLoading) return <Typography className="text-center mt-10">Loading...</Typography>;
-	if (getCoursesNotificationError)
-		return <Typography className="text-center mt-10">Error loading notifications</Typography>;
+	if (getNotificationLoading) return <Typography className="text-center mt-10">Loading...</Typography>;
+	if (getNotificationError) return <Typography className="text-center mt-10">Error loading notifications</Typography>;
 
 	return (
 		<Box className=" bg-slate-900 border border-solid dark:border-neutral-600 rounded max-w-2xl mx-auto p-4">
