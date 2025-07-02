@@ -20,9 +20,6 @@ const NotificationCardPage = () => {
 	const [notificationCount, setNotificationCount] = React.useState<number>(0);
 
 	const notificationsList = useReactiveVar(notificationsVar);
-	const [updateNotificationData, setUpdateNotificationData] = useState<{
-		input: { receiverId: string | undefined; notificationStatus: string };
-	}>();
 
 	const [updateNotification] = useMutation(UPDATE_NOTIFICATIONS);
 
@@ -31,6 +28,8 @@ const NotificationCardPage = () => {
 		setNotifications(notificationsList?.list ?? []);
 		setNotificationCount(notificationsList?.metaCounter[0]?.total ?? 0);
 	}, [notificationsList, user]);
+
+	console.log('notifications:', notifications);
 
 	/** HANDLERS **/
 	const updateNotifications = async (user: any, notificationId: any) => {
@@ -57,7 +56,7 @@ const NotificationCardPage = () => {
 			<Typography variant="h5" className="mb-4 font-bold text-center text-white">
 				Notifications
 			</Typography>
-			{notifications.length === 0 && (
+			{notificationCount === 0 && (
 				<Typography className="text-center text-gray-500">
 					<Divider className="mb-4" />
 					<div className="flex flex-col items-center justify-center p-8 text-center">
