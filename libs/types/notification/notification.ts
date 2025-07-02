@@ -88,7 +88,7 @@ export interface TotalCounter {
 	total: number;
 }
 
-export interface Courses {
-	list: [];
+export interface Notifications {
+	list: Notification[];
 	metaCounter: TotalCounter[];
 }

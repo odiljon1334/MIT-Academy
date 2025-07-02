@@ -14,7 +14,7 @@ import useDeviceDetect from '../hooks/useDeviceDetect';
 import Switch from '@mui/material/Switch';
 import Link from 'next/link';
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
-import { userVar } from '../../apollo/store';
+import { notificationsVar, userVar } from '../../apollo/store';
 import { Logout } from '@mui/icons-material';
 import { REACT_APP_API_URL } from '../config';
 import { useTheme } from '../../scss/MaterialTheme/ThemeProvider';
@@ -98,36 +98,24 @@ const Top = ({ initialInput, ...props }: any) => {
 	const logoutOpen = Boolean(logoutAnchor);
 	const { theme, toggleTheme } = useTheme();
 	const [svgColor, setSvgColor] = useState('url(#gradientId)');
-	const [unReadNotifications, setUnReadNotifications] = useState<Notification[]>([]);
+	const [notifications, setNotifications] = React.useState<Notification[]>([]);
+	const [notificationCount, setNotificationCount] = React.useState<number>(0);
 
-	const {
-		loading: getNotificationLoading,
-		data: getNotifactionData,
-		error: getNotificationError,
-		refetch: getRefetch,
-	} = useQuery(GET_NOTIFICATIONS, {
-		fetchPolicy: 'cache-and-network',
-		variables: {
-			input: initialInput,
-			skip: !user?._id,
-		},
-		notifyOnNetworkStatusChange: true,
-		onCompleted: (data: T) => {
-			setUnReadNotifications(data?.getNotifications?.list);
-		},
-	});
-
-	const notifications = getNotifactionData?.getNotifications?.list || [];
+	const notificationsList = useReactiveVar(notificationsVar);
 
 	/** LIFECYCLES **/
 	useEffect(() => {
+		// @ts-ignore
+		setNotifications(notificationsList?.list ?? []);
+		setNotificationCount(notificationsList?.metaCounter[0]?.total ?? 0);
+
 		if (localStorage.getItem('locale') === null) {
 			localStorage.setItem('locale', 'en');
 			setLang('en');
 		} else {
 			setLang(localStorage.getItem('locale'));
 		}
-	}, [router]);
+	}, [router, notificationsList, user]);
 
 	useEffect(() => {
 		switch (router.pathname) {
@@ -387,7 +375,7 @@ const Top = ({ initialInput, ...props }: any) => {
 												<Bell size={26} color="white" />
 												{notifications.length > 0 && (
 													<span className="absolute -top-1 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-														{unReadNotifications.length > 5 ? '5+' : unReadNotifications.length}
+														{notificationCount > 5 ? '5+' : notificationCount}
 													</span>
 												)}
 											</Button>

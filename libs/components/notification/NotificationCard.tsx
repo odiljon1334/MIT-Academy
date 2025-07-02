@@ -6,49 +6,38 @@ import { NotifInquiry } from '../../types/notification/notification.input';
 import { Notification } from '../../types/notification/notification';
 import { useCallback, useEffect, useState } from 'react';
 import { T } from '../../types/common';
-import { REACT_APP_API_URL } from '../../config';
+import { Messages, REACT_APP_API_URL } from '../../config';
 import { PackageOpen } from 'lucide-react';
 import { UPDATE_NOTIFICATIONS } from '../../../apollo/user/mutation';
-import { sweetErrorHandling } from '../../sweetAlert';
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from '../../sweetAlert';
 import { NotificationStatus } from '../../enums/notification.enum';
-import { userVar } from '../../../apollo/store';
+import { notificationsVar, userVar } from '../../../apollo/store';
+import React from 'react';
 
-interface NotificationCardPageProps {
-	initialInput: NotifInquiry;
-}
-
-const NotificationCardPage = (props: NotificationCardPageProps) => {
-	const { initialInput } = props;
+const NotificationCardPage = () => {
 	const user = useReactiveVar(userVar);
-	const [unReadNotifications, setUnReadNotifications] = useState<Notification[]>([]);
+	const [notifications, setNotifications] = React.useState<Notification[]>([]);
+	const [notificationCount, setNotificationCount] = React.useState<number>(0);
+
+	const notificationsList = useReactiveVar(notificationsVar);
 	const [updateNotificationData, setUpdateNotificationData] = useState<{
 		input: { receiverId: string | undefined; notificationStatus: string };
 	}>();
 
 	const [updateNotification] = useMutation(UPDATE_NOTIFICATIONS);
 
-	/** APOLLO REQUESTS **/
-	const {
-		loading: getNotificationLoading,
-		data: getNotifactionData,
-		error: getNotificationError,
-		refetch: getCoursesRefetch,
-	} = useQuery(GET_NOTIFICATIONS, {
-		fetchPolicy: 'cache-and-network',
-		skip: !user?._id,
-		notifyOnNetworkStatusChange: true,
-		onCompleted: (data: T) => {
-			setUnReadNotifications(data?.getNotifications?.list);
-		},
-	});
-
-	const notifications: Notification[] = getNotifactionData?.getNotifications?.list || [];
-	console.log('notifications:', notifications);
+	useEffect(() => {
+		// @ts-ignore
+		setNotifications(notificationsList?.list ?? []);
+		setNotificationCount(notificationsList?.metaCounter[0]?.total ?? 0);
+	}, [notificationsList, user]);
 
 	/** HANDLERS **/
-	const updateNotifications = useCallback(async () => {
+	const updateNotifications = async (user: any, notificationId: any) => {
 		try {
-			const result = await updateNotification({
+			if (!notificationId) return;
+			if (!user._id) throw new Error(Messages.error2);
+			await updateNotification({
 				variables: {
 					input: {
 						receiverId: user?._id,
@@ -56,14 +45,12 @@ const NotificationCardPage = (props: NotificationCardPageProps) => {
 					},
 				},
 			});
+			await sweetTopSmallSuccessAlert('success', 800);
 		} catch (err: any) {
 			sweetErrorHandling(err).then();
 			console.error(err);
 		}
-	}, [updateNotificationData]);
-
-	if (getNotificationLoading) return <Typography className="text-center mt-10">Loading...</Typography>;
-	if (getNotificationError) return <Typography className="text-center mt-10">Error loading notifications</Typography>;
+	};
 
 	return (
 		<Box className=" bg-slate-900 border border-solid dark:border-neutral-600 rounded max-w-2xl mx-auto p-4">
@@ -106,6 +93,8 @@ const NotificationCardPage = (props: NotificationCardPageProps) => {
 									? ` ❤️${notif?.notificationDesc || ''}`
 									: notif.notificationType === 'COMMENT'
 									? ` 💬 ${notif?.notificationDesc || ''}`
+									: notif.notificationType === 'FOLLOW'
+									? ` 🫂 ${notif?.notificationDesc || ''}`
 									: ''}
 								{notif.courseData?.courseTitle && `: "${notif.courseData.courseTitle}"`}
 							</Typography>
@@ -117,19 +106,17 @@ const NotificationCardPage = (props: NotificationCardPageProps) => {
 							<span className="text-xs bg-red-100 px-2 py-1 rounded-full text-red-500">New</span>
 						)}
 					</CardContent>
+					<Button
+						variant="contained"
+						className="text-sm font-normal rounded"
+						color="inherit"
+						onClick={() => updateNotifications(user, notif._id)}
+						disabled={!notifications.some((n: Notification) => n.notificationStatus === NotificationStatus.WAIT)}
+					>
+						Mark as read
+					</Button>
 				</Card>
 			))}
-			{notifications.length > 0 && (
-				<Button
-					variant="contained"
-					className="text-sm font-normal rounded"
-					color="inherit"
-					onClick={updateNotifications}
-					disabled={!notifications.some((n: Notification) => n.notificationStatus === NotificationStatus.WAIT)}
-				>
-					Mark all as read
-				</Button>
-			)}
 		</Box>
 	);
 };
