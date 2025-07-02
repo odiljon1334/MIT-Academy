@@ -21,7 +21,7 @@ import { useTheme } from '../../scss/MaterialTheme/ThemeProvider';
 import { motion } from 'framer-motion';
 import { Bell } from 'lucide-react';
 import NotificationCard from './notification/NotificationCard';
-import { GET_NOTIFICATIONS_COURSE } from '../../apollo/user/query';
+import { GET_NOTIFICATIONS } from '../../apollo/user/query';
 import { T } from '../types/common';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -105,7 +105,7 @@ const Top = ({ initialInput, ...props }: any) => {
 		data: getNotifactionData,
 		error: getNotificationError,
 		refetch: getRefetch,
-	} = useQuery(GET_NOTIFICATIONS_COURSE, {
+	} = useQuery(GET_NOTIFICATIONS, {
 		fetchPolicy: 'cache-and-network',
 		variables: {
 			input: initialInput,
@@ -113,11 +113,11 @@ const Top = ({ initialInput, ...props }: any) => {
 		},
 		notifyOnNetworkStatusChange: true,
 		onCompleted: (data: T) => {
-			setUnReadNotifications(data?.getCourseNotifications?.list);
+			setUnReadNotifications(data?.getNotifications?.list);
 		},
 	});
 
-	const notifications = getNotifactionData?.getCourseNotifications?.list || [];
+	const notifications = getNotifactionData?.getNotifications?.list || [];
 
 	/** LIFECYCLES **/
 	useEffect(() => {

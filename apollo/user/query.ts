@@ -681,9 +681,9 @@ export const GET_MEMBER_FOLLOWINGS = gql`
  *      Notification      *
  *************************/
 
-export const GET_NOTIFICATIONS_COURSE = gql`
-	query GetCourseNotifications($input: NotifInquiry!) {
-		getCourseNotifications(input: $input) {
+export const GET_NOTIFICATIONS = gql`
+	query GetNotifications {
+		getNotifications {
 			list {
 				_id
 				notificationType
