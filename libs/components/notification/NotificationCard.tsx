@@ -1,10 +1,8 @@
 import { Box, Typography, Card, CardContent, Avatar, Button, Divider } from '@mui/material';
-import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import { useMutation, useReactiveVar } from '@apollo/client';
 import { formatDistanceToNow } from 'date-fns';
-import { GET_NOTIFICATIONS } from '../../../apollo/user/query';
-import { NotifInquiry } from '../../types/notification/notification.input';
 import { Notification } from '../../types/notification/notification';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { T } from '../../types/common';
 import { Messages, REACT_APP_API_URL } from '../../config';
 import { PackageOpen } from 'lucide-react';
@@ -28,8 +26,6 @@ const NotificationCardPage = () => {
 		setNotifications(notificationsList?.list ?? []);
 		setNotificationCount(notificationsList?.metaCounter[0]?.total ?? 0);
 	}, [notificationsList, user]);
-
-	console.log('notifications:', notifications);
 
 	/** HANDLERS **/
 	const updateNotifications = async (user: any, notificationId: any) => {
@@ -56,7 +52,7 @@ const NotificationCardPage = () => {
 			<Typography variant="h5" className="mb-4 font-bold text-center text-white">
 				Notifications
 			</Typography>
-			{notificationCount === 0 && (
+			{notifications.length === 0 && (
 				<Typography className="text-center text-gray-500">
 					<Divider className="mb-4" />
 					<div className="flex flex-col items-center justify-center p-8 text-center">
@@ -105,15 +101,17 @@ const NotificationCardPage = () => {
 							<span className="text-xs bg-red-100 px-2 py-1 rounded-full text-red-500">New</span>
 						)}
 					</CardContent>
-					<Button
-						variant="contained"
-						className="text-sm font-normal rounded"
-						color="inherit"
-						onClick={() => updateNotifications(user, notif._id)}
-						disabled={!notifications.some((n: Notification) => n.notificationStatus === NotificationStatus.WAIT)}
-					>
-						Mark as read
-					</Button>
+					<div className="flex justify-center p-4">
+						<Button
+							variant="contained"
+							className="text-sm font-normal rounded"
+							color="inherit"
+							onClick={() => updateNotifications(user, notif._id)}
+							disabled={!notifications.some((n: Notification) => n.notificationStatus === NotificationStatus.WAIT)}
+						>
+							Mark as read
+						</Button>
+					</div>
 				</Card>
 			))}
 		</Box>

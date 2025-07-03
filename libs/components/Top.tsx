@@ -116,7 +116,6 @@ const Top = ({ initialInput, ...props }: any) => {
 			setLang(localStorage.getItem('locale'));
 		}
 	}, [router, notificationsList, user]);
-	console.log('notificationsTOP:', notifications);
 
 	useEffect(() => {
 		switch (router.pathname) {
@@ -376,7 +375,7 @@ const Top = ({ initialInput, ...props }: any) => {
 												<Bell size={26} color="white" />
 												{notifications.length > 0 && (
 													<span className="absolute -top-1 right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-														{notificationCount > 5 ? '5+' : notificationCount}
+														{notifications.length > 5 ? '5+' : notifications.length}
 													</span>
 												)}
 											</Button>
