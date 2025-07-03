@@ -84,21 +84,14 @@ export interface Notification {
 	};
 	followData?: {
 		_id: string;
-		followingId: string;
-		followerId: string;
+		memberType: string;
+		memberStatus: string;
+		memberNick: string;
+		memberFullName: string;
+		memberImage: string;
+		deletedAt?: Date;
 		createdAt: Date;
 		updatedAt: Date;
-		followerData?: {
-			_id: string;
-			memberType: string;
-			memberStatus: string;
-			memberNick: string;
-			memberFullName: string;
-			memberImage: string;
-			deletedAt?: Date;
-			createdAt: Date;
-			updatedAt: Date;
-		};
 	};
 }
 
