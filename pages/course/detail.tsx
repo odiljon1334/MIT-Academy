@@ -655,9 +655,17 @@ const CourseDetail: NextPage<{ initialComment?: CommentsInquiry }> = ({
 										</Typography>
 									</Stack>
 									<Stack className={'pagination-box'}>
-										<WestIcon className={'swiper-similar-prev'} />
+										<WestIcon
+											className={
+												'swiper-similar-prev dark:bg-slate-800 dark:text-slate-400 rounded-full w-[50px] h-[50px] p-3'
+											}
+										/>
 										<div className={'swiper-similar-pagination'}></div>
-										<EastIcon className={'swiper-similar-next'} />
+										<EastIcon
+											className={
+												'swiper-similar-next dark:bg-slate-800 dark:text-slate-400 rounded-full w-[50px] h-[50px] p-3'
+											}
+										/>
 									</Stack>
 								</Stack>
 								<Stack className={'cards-box'}>
