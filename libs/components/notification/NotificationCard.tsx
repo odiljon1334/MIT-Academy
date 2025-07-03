@@ -101,7 +101,7 @@ const NotificationCardPage = () => {
 							<span className="text-xs bg-red-100 px-2 py-1 rounded-full text-red-500">New</span>
 						)}
 					</CardContent>
-					<div className="flex justify-center p-4">
+					<div className="flex justify-start p-2">
 						<Button
 							variant="contained"
 							className="text-sm font-normal rounded"
