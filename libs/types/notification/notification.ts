@@ -82,6 +82,24 @@ export interface Notification {
 		createdAt: Date;
 		updatedAt: Date;
 	};
+	followData?: {
+		_id: string;
+		followingId: string;
+		followerId: string;
+		createdAt: Date;
+		updatedAt: Date;
+		followerData?: {
+			_id: string;
+			memberType: string;
+			memberStatus: string;
+			memberNick: string;
+			memberFullName: string;
+			memberImage: string;
+			deletedAt?: Date;
+			createdAt: Date;
+			updatedAt: Date;
+		};
+	};
 }
 
 export interface TotalCounter {
