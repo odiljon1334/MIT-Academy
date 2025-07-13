@@ -35,8 +35,9 @@ const NotificationCardPage = () => {
 			await updateNotification({
 				variables: {
 					input: {
+						_id: notificationId,
 						receiverId: user?._id,
-						notificationStatus: 'READ',
+						notificationStatus: NotificationStatus.READ,
 					},
 				},
 			});
