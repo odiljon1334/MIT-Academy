@@ -7,8 +7,8 @@ export default function Document() {
 				{/* Favicon va boshqa ikonkalar */}
 				<link rel="icon" type="image/svg+xml" href="/img/logo/favicon-book.svg" />
 				<link rel="apple-touch-icon" sizes="180x180" href="/img/logo/apple-touch-icon.png" />
-				<link rel="icon" type="image/png" sizes="32x32" href="/img/logo/favicon-32x32.png" />
-				<link rel="icon" type="image/png" sizes="16x16" href="/img/logo/favicon-16x16.png" />
+				<link rel="icon" type="image/png" sizes="32x32" href="/img/logo/favicon-book.svg" />
+				<link rel="icon" type="image/png" sizes="16x16" href="/img/logo/favicon-book.svg" />
 				<link rel="manifest" href="/site.webmanifest" />
 
 				{/* Asosiy SEO metalar */}
