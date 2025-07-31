@@ -38,7 +38,7 @@ export default function Document() {
 				/>
 				<meta property="og:type" content="website" />
 				<meta property="og:url" content="https://educampus.uz" />
-				<meta property="og:image" content="https://educampus.uz/img/logo/educeo.png" />
+				<meta property="og:image" content="https://educampus.uz/img/logo/educeo.jpg" />
 				<meta property="og:locale" content="uz_UZ" />
 				<meta property="og:locale:alternate" content="ru_RU" />
 				<meta property="og:locale:alternate" content="en_US" />
