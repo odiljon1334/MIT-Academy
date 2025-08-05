@@ -14,36 +14,19 @@ export default function Document() {
 				{/* Asosiy SEO metalar */}
 				<meta name="robots" content="index, follow, max-image-preview:large" />
 				<meta name="googlebot" content="index, follow" />
-
-				<meta
-					name="keywords"
-					content="EDUcampus, onlayn ta'lim, online education, онлайн образование, 온라인 교육, kurslar, courses, курсы, 코스, dasturlash, programming, программирование, 프로그래밍, IT, web dasturlash, web development, веб-разработка, 웹 개발"
-				/>
-
-				<meta
-					name="description"
-					content="EDUcampus - O'zbekistonda yetakchi onlayn ta'lim platformasi. Professional mutaxassislar tomonidan tayyorlangan yuqori sifatli kurslar. | EDUcampus - ведущая онлайн-образовательная платформа в Узбекистане. Высококачественные курсы от профессиональных экспертов. | EDUcampus - leading online education platform in Uzbekistan. High-quality courses prepared by professional experts. | EDUcampus - 우즈베키스탄의 선도적인 온라인 교육 플랫폼. 전문가가 준비한 고품질 코스."
-				/>
-
-				<meta property="og:image" content="http://educampus.uz/img/logo/educeo.jpg" />
-
 				{/* Ijtimoiy tarmoqlar uchun Open Graph metalar - ko'p tilli */}
+				<meta property="og:type" content="website" />
+				<meta property="og:site_name" content="Educampus" />
 				<meta
 					property="og:title"
-					content="EDUcampus - O'zbekistondagi yetakchi ta'lim platformasi | Ведущая образовательная платформа в Узбекистане | Leading education platform in Uzbekistan | 우즈베키스탄의 선도적인 교육 플랫폼"
+					content="EDUcampus - Leading education platform in Uzbekistan | 우즈베키스탄의 선도적인 교육 플랫폼"
 				/>
 				<meta
 					property="og:description"
-					content="Yuqori sifatli onlayn kurslar orqali professional ko'nikmalarni rivojlantiring. | Развивайте профессиональные навыки через высококачественные онлайн-курсы. | Develop professional skills through high-quality online courses. | 고품질 온라인 코스를 통해 전문 기술을 개발하세요."
+					content="Develop professional skills through high-quality online courses. | 고품질 온라인 코스를 통해 전문 기술을 개발하세요."
 				/>
-				<meta property="og:image" content="http://educampus.uz/img/logo/educeo.jpg" />
-
-				<meta property="og:type" content="website" />
+				<meta property="og:image" content="/img/logo/educeo.jpg" />
 				<meta property="og:url" content="https://educampus.uz" />
-				<meta property="og:locale" content="uz_UZ" />
-				<meta property="og:locale:alternate" content="ru_RU" />
-				<meta property="og:locale:alternate" content="en_US" />
-				<meta property="og:locale:alternate" content="ko_KR" />
 
 				{/* Twitter uchun metalar */}
 				<meta name="twitter:card" content="summary_large_image" />
