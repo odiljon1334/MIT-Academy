@@ -23,7 +23,7 @@ export default function Document() {
 					content="Develop professional skills through high-quality online courses. | 고품질 온라인 코스를 통해 전문 기술을 개발하세요."
 				/>
 				<meta property="og:image" content="http://educampus.uz/img/logo/educeo.jpg" />
-				<meta property="og:url" content="httpa://educampus.uz" />
+				<meta property="og:url" content="http://educampus.uz" />
 
 				{/* Twitter Card (ixtiyoriy) */}
 				<meta name="twitter:card" content="summary_large_image" />
