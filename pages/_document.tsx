@@ -27,6 +27,7 @@ export default function Document() {
 					content="EDUcampus - O'zbekistonda yetakchi onlayn ta'lim platformasi. Professional mutaxassislar tomonidan tayyorlangan yuqori sifatli kurslar. | EDUcampus - ведущая онлайн-образовательная платформа в Узбекистане. Высококачественные курсы от профессиональных экспертов. | EDUcampus - leading online education platform in Uzbekistan. High-quality courses prepared by professional experts. | EDUcampus - 우즈베키스탄의 선도적인 온라인 교육 플랫폼. 전문가가 준비한 고품질 코스."
 				/>
 
+				<meta property="og:image" content="/img/logo/educeo.jpg" />
 				{/* Ijtimoiy tarmoqlar uchun Open Graph metalar - ko'p tilli */}
 				<meta
 					property="og:title"
@@ -38,7 +39,6 @@ export default function Document() {
 				/>
 				<meta property="og:type" content="website" />
 				<meta property="og:url" content="https://educampus.uz" />
-				<meta property="og:image" content="https://educampus.uz/img/logo/educeo.jpg" />
 				<meta property="og:locale" content="uz_UZ" />
 				<meta property="og:locale:alternate" content="ru_RU" />
 				<meta property="og:locale:alternate" content="en_US" />
